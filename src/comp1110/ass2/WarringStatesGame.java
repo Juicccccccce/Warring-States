@@ -3,7 +3,7 @@ package comp1110.ass2;
 /**
  * This class provides the text interface for the Warring States game
  */
-public class WarringStatesGame {
+public class    WarringStatesGame {
 
     /**
      * Determine whether a card placement is well-formed according to the following:
@@ -16,8 +16,17 @@ public class WarringStatesGame {
      * @return true if the card placement is well-formed
      */
     static boolean isCardPlacementWellFormed(String cardPlacement) {
-        // FIXME Task 2: determine whether a card placement is well-formed
-        return false;
+        char cardArray[] = cardPlacement.toCharArray();
+        if (cardPlacement.length() == 3) {
+            if (cardArray[0] >= 'a' && cardArray[0] <= 'g' || cardArray[0] == 'z') {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
     }
 
     /**
