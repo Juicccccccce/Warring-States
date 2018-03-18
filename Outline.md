@@ -21,53 +21,54 @@ Methods/Instances will be `in code blocks`.
 Completed tasks will have a ~~strikethrough~~.              
 
 ### [WarringStatesGame](https://gitlab.cecs.anu.edu.au/u6124186/comp1110-ass2-tue11c/blob/master/src/comp1110/ass2/WarringStatesGame.java)
-    * ~~Task 2 (`isCardPlacementWellFormed`)~~
-        - Create an array of char from the *cardPlacement* input.
-        - Define variable *a* as of type **int** containing values of the addition the second element of the array with the first element of the array (first subtracted by char ‘a’)
-        - Define variable *ascii* as of type **int** containing the value of the ascii representation of the third element of the array
-        - Check length of *cardPlacement* (if is equivalent to 3, proceed, otherwise return false)
-        - Check if second element of array is a numeric value 
-        - Check if ascii representation of third element in array is in between 65 and 90 (‘A’ to ‘Z’) or 48 and 57 (0 to 9)
-        - Check if first element of array is in between *char* ‘a’ and ‘g’ (kingdoms) or char ‘z’ (Zhang Yi)
-        - If it’s in between ‘a’ and ‘g’, check if variable *a* is in between 0 and 7 (highest number of cards available)
-        - If it’s is equivalent to ‘z’, check if variable *a* is equivalent to 9 (Zhang Yi)
+* ~~Task 2 (`isCardPlacementWellFormed`)~~
+   - Create an array of char from the *cardPlacement* input.
+   - Define variable *a* as of type **int** containing values of the addition the second element of the array with the first element of the array (first subtracted by char ‘a’)
+   - Define variable *ascii* as of type **int** containing the value of the ascii representation of the third element of the array
+   - Check length of *cardPlacement* (if is equivalent to 3, proceed, otherwise return false)
+   - Check if second element of array is a numeric value 
+   - Check if ascii representation of third element in array is in between 65 and 90 (‘A’ to ‘Z’) or 48 and 57 (0 to 9)
+   - Check if first element of array is in between *char* ‘a’ and ‘g’ (kingdoms) or char ‘z’ (Zhang Yi)
+   - If it’s in between ‘a’ and ‘g’, check if variable *a* is in between 0 and 7 (highest number of cards available)
+   - If it’s is equivalent to ‘z’, check if variable *a* is equivalent to 9 (Zhang Yi)
         
-    * Task 3 (`isPlacementWellFormed`)
-        - Check if *placement* is divisible by 3 and it’s length shorter than or equivalent to 108
-        - Split *placement* into array of array of **char** (Larger array contains all card placements represented by three characters, smaller array represent individula card placements, i.e. {{a,0,1},{b,2,A}, ...})
-        - Use is `cardPlacementWellFormed` on array of **char** representing card placements. Use a loop to traverse through all the card placements in the array
-        - Check for card duplicates (array should not have cards where the first two characters are the same)
-        - Check if the third element of the card placement arrays are unique (Location should not have more than one card)
+* Task 3 (`isPlacementWellFormed`)
+   - Check if *placement* is divisible by 3 and it’s length shorter than or equivalent to 108
+   - Split *placement* into array of array of **char** (Larger array contains all card placements represented by three characters, smaller array represent individula card placements, i.e. {{a,0,1},{b,2,A}, ...})
+   - Use is `cardPlacementWellFormed` on array of **char** representing card placements. Use a loop to traverse through all the card placements in the array
+   - Check for card duplicates (array should not have cards where the first two characters are the same)
+   - Check if the third element of the card placement arrays are unique (Location should not have more than one card)
         
-    * Task 5 (`isMoveLegal`)
-        - Create arrays for each column and row (i.e.{4,5,6,7,8,9}, {4,Y,S,M,G,A})
-        - Split placement into array similar to Task 3
-        - Check if *locationChar* is equivalent to third element of any card placement array
-        - Check if *locationChar* is in same column or row array as third character of Zhang Yi’s card
-        - Check if the the row or column contains same first two characters of the cardPlacement before or after *locationChar*
+* Task 5 (`isMoveLegal`)
+   - Create arrays for each column and row (i.e.{4,5,6,7,8,9}, {4,Y,S,M,G,A})
+   - Split placement into array similar to Task 3
+   - Check if *locationChar* is equivalent to third element of any card placement array
+   - Check if *locationChar* is in same column or row array as third character of Zhang Yi’s card
+   - Check if the the row or column contains same first two characters of the cardPlacement before or after *locationChar*
         
-    * Task 6 (isMoveSequenceValid)
+* Task 6 (`isMoveSequenceValid`)
     
-    * Task 7 (getSupporters)
+* Task 7 (`getSupporters`)
     
-    * Task 8 (getFlags)
+* Task 8 (`getFlags`)
     
-    * Task 10 (generateMove)
+* Task 10 (`generateMove)`
 
 ### [Viewer](https://gitlab.cecs.anu.edu.au/u6124186/comp1110-ass2-tue11c/blob/master/src/comp1110/ass2/gui/Viewer.java)
-    * Task 4 (makePlacement)
+* Task 4 (`makePlacement`)
     
+
 ### [Game](https://gitlab.cecs.anu.edu.au/u6124186/comp1110-ass2-tue11c/blob/master/src/comp1110/ass2/gui/Game.java)
-    * Task 9
+* Task 9
     
-    * Task 11
+* Task 11
     
-    * Task 12
+* Task 12
 
 		
 
 
 ## Contacts
-Chan Tze Hsern (0481954596 u6124186@anu.edu.au)
-Zipri Ye (0404134972 u5735283@anu.edu.au)
-Xinli Xu(0451637153 u6105656@anu.edu.au)
+- Chan Tze Hsern (0481954596 u6124186@anu.edu.au)
+- Zipri Ye (0404134972 u5735283@anu.edu.au)
+- Xinli Xu(0451637153 u6105656@anu.edu.au)
