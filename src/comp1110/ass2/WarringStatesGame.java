@@ -17,22 +17,24 @@ public class    WarringStatesGame {
      */
     static boolean isCardPlacementWellFormed(String cardPlacement) {
         char cardArray[] = cardPlacement.toCharArray();
-        int a = (int)(cardArray[0]-'a') + Character.getNumericValue(cardArray[1]);
+        int a = (cardArray[0]-'a') + Character.getNumericValue(cardArray[1]);
         int ascii = (int) cardArray[2];
-        boolean x=false;
         if (cardPlacement.length() == 3) {
             if (Character.isDigit(cardArray[1])) {
-            if (ascii >=65 && ascii <= 90 || ascii >=48 && ascii <= 57) {
-                if (cardArray[0] >= 'a' && cardArray[0] <= 'g') {
-                    if(a < 8 && a >= 0) {
-                        x=true;
-                    }
+                if (ascii >= 65 && ascii <= 90 || ascii >= 48 && ascii <= 57) {
+                    if (cardArray[0] >= 'a' && cardArray[0] <= 'g') {
+                        if (a >= 0 && a < 8) {
+                            return true;
+                        }
+                    } else if (cardArray[0] == 'z') {
+                        if (Character.getNumericValue(cardArray[1]) == 9) {
+                             return true;
+                        }
+                     }
                 }
-                else if (cardArray[0] == 'z') {
-                    if (Character.getNumericValue(cardArray[1])== 9) {x=true;
-                }
-        }}}}
-        return x;
+            }
+        }
+          return false;
     }
 
 
@@ -47,7 +49,14 @@ public class    WarringStatesGame {
      * @return true if the placement is well-formed
      */
     static boolean isPlacementWellFormed(String placement) {
-        // FIXME Task 3: determine whether a placement is well-formed
+  //      char placementString[] = placement.toCharArray();
+  //      StringBuilder cardInString = new StringBuilder();
+
+       if (placement.length() % 3 == 0 && placement.length() <= 108 ) {
+
+       } else {
+           return false;
+       }
         return false;
     }
 
