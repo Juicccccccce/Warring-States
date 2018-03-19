@@ -10,8 +10,6 @@
 7. If you think your code needs to be cleaned up, mention it in the commit message or open an issue.
 8. Add comments to explain what your code does.
 
-## Design
-
 ## Tasks
 Below are the planned implementations of each task and reasons for specific steps and conditions. The tasks are categorized in order in accordance to location. The steps are simplified for the time being. It will be modified in the future by adding details about the steps. 
 
@@ -34,7 +32,7 @@ Completed tasks will have a ~~strikethrough~~.
         
 * Task 3 (`isPlacementWellFormed`)
    - Check if *placement* is divisible by 3 and it’s length shorter than or equivalent to 108
-   - Split *placement* into array of array of **char** (Larger array contains all card placements represented by three characters, smaller array represent individula card placements, i.e. {{a,0,1},{b,2,A}, ...})
+   - Split *placement* into array of array of **char** (Larger array contains all card placements represented by three characters, smaller array represent individual card placements, i.e. {{a,0,1},{b,2,A}, ...})
    - Use is `cardPlacementWellFormed` on array of **char** representing card placements. Use a loop to traverse through all the card placements in the array
    - Check for card duplicates (array should not have cards where the first two characters are the same)
    - Check if the third element of the card placement arrays are unique (Location should not have more than one card)
@@ -47,10 +45,22 @@ Completed tasks will have a ~~strikethrough~~.
    - Check if the the row or column contains same first two characters of the cardPlacement before or after *locationChar*
         
 * Task 6 (`isMoveSequenceValid`)
+   - Create array representing the board (i.e {{4, Y, S, M, G, A}}, {5, Z, T, N, H, B}, ...})
+   - Split *moveSequence* into array of **char**
+   - Use IsMoveLegal with inputs *setup* & array of `MoveSequence` 
+   - Update setup for every element in `MoveSequence` array checked 
     
 * Task 7 (`getSupporters`)
+   - Create arrays for 4 players 
+   - Split setup into array in format {{card, location}} (i.e. {{a1, Y}, {b2, N},...)
+   - Compare *moveSequence* to setup array (compare location)
+   - Update player array in order (player 0 gets first card, player 1 gets second card etc...)
     
 * Task 8 (`getFlags`)
+   - Set up 7 arrays representing each kingdom in the game for each player
+   - Create a method similar to `getSupporters` with inputs from *setup*, *moveSequence* and *numPlayers* (difference is each card goes to the correct kingdom array of the correct player kingdom)
+   - Calculate the length of arrays (Player gets flag with the largest array of a kingdom)
+   - Create array that is in order of players who has the flag of the kingdom (i.e. player 0 gets Qin flag, so 0 is the first element of the array)
     
 * Task 10 (`generateMove)`
 
