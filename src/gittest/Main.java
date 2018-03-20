@@ -1,7 +1,7 @@
 package gittest;
 
 public class Main {
-    A a = new A();
+    B b = new B();
     public static void main(String[] args) {
 
     }
