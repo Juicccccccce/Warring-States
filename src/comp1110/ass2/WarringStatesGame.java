@@ -17,7 +17,7 @@ public class    WarringStatesGame {
      */
     static boolean isCardPlacementWellFormed(String cardPlacement) {
         char cardArray[] = cardPlacement.toCharArray();
-        int a = (cardArray[0]-'a') + Character.getNumericValue(cardArray[1]);
+        int a = (int)(cardArray[0]-'a') + Character.getNumericValue(cardArray[1]);
         int ascii = (int) cardArray[2];
         if (cardPlacement.length() == 3) {
             if (Character.isDigit(cardArray[1])) {
