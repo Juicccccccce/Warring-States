@@ -92,6 +92,32 @@ public class    WarringStatesGame {
         }}
         return false;}}
 
+    public static char findZhangPosition(String placement) {
+        int j = placement.length();
+        char z = 'a';
+        for (int i= 0;i<j; i=i+3) {
+            if(placement.charAt(i)=='Z') {
+                return z = placement.charAt(i+2);
+            }
+        }
+    return z;}
+
+    public static boolean isSameRow(String placement) {
+        int j = placement.length();
+        char locationArray[] = {};
+        for (int i=2;i<j;i=i+3) {
+            if (findZhangPosition(placement)=='4') {
+
+            }
+
+        }
+    }
+    public static String findSameRow(String placement) {
+        int j = placement.length();
+        String z =" ";
+        for (int )
+    }
+
     /**
      * Determine whether a move sequence is valid.
      * To be valid, the move sequence must be comprised of 1..N location characters
