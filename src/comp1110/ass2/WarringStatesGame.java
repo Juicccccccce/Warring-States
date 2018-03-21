@@ -74,8 +74,23 @@ public class    WarringStatesGame {
      */
     public static boolean isMoveLegal(String placement, char locationChar) {
         // FIXME Task 5: determine whether a given move is legal
-        return false;
-    }
+        int ascii = (int)(locationChar);
+        int a = placement.length();
+        if ((ascii >= 65 && ascii <= 90) || (ascii >= 48 && ascii <= 57 )) {
+            if (isCardExist(placement,locationChar)) {
+
+            }
+        }
+        return false;}
+    // check whether there is a card at the chosen location
+    public static boolean isCardExist (String placement,char locationChar) {
+        int c = placement.length();
+        {for (int b = 2; b < c; b++) {
+            char d = placement.charAt(b);
+           if (d == locationChar) {
+            return true;
+        }}
+        return false;}}
 
     /**
      * Determine whether a move sequence is valid.
