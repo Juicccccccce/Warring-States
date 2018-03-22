@@ -78,9 +78,8 @@ public class    WarringStatesGame {
      */
     public static boolean isMoveLegal(String placement, char locationChar) {
         // FIXME Task 5: determine whether a given move is legal
-        int ascii = (int)(locationChar);
         int a = placement.length();
-        if ((ascii >= 65 && ascii <= 90) || (ascii >= 48 && ascii <= 57 )) {
+        if (changeToNumber(locationChar) >= 65 && changeToNumber(locationChar) <= 101) {
             if (isCardExist(placement,locationChar)) {
                 if(isSameColumn(placement,locationChar)||(isSameRow(placement,locationChar))) {
                    if(checkFurtherCard(placement,locationChar)) {
@@ -95,8 +94,8 @@ public class    WarringStatesGame {
     // check whether there is a card at the chosen location
     public static boolean isCardExist (String placement,char locationChar) {
         int c = placement.length();
-        {for (int b = 2; b < c; b++) {
-            char d = placement.charAt(b);
+        {for (int b = 0; b < c; b=b+3) {
+            char d = placement.charAt(b+2);
            if (d == locationChar) {
             return true;
         }}
@@ -186,18 +185,18 @@ public class    WarringStatesGame {
         int l = colmunlist.size();
         char n = '1';
         char c = '1';
-        for (int i=0;i<j;j=j+3) {
+        {for (int i=0;i<j;i=i+3) {
             if (isSameColumn(Character.toString(placement.charAt(i+2)),locationChar)) {
                    rowlist.add(placement.charAt(i));
                    rowlist.add(placement.charAt(i+1));
                    rowlist.add(placement.charAt(i+2));
             }
-            else { if(isSameRow(Character.toString(placement.charAt(i+2)),locationChar))
+            else {
                 colmunlist.add(placement.charAt(i));
                 colmunlist.add(placement.charAt(i+1));
                 colmunlist.add(placement.charAt(i+2));
             }
-        }
+        }}
         if (isSameRow(placement,locationChar)) {
             for (int m=0; m<k;m=m+3) {
                 if( rowlist.get(m+2) ==locationChar) {
