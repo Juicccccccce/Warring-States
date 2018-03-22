@@ -175,10 +175,10 @@ public class    WarringStatesGame {
 
     public static boolean checkFurtherCard(String placement,char locationChar) {
         int j = placement.length();
-        ArrayList<String> rowlist = new ArrayList<String>();
-        ArrayList<String> colmunlist = new ArrayList<String>();
-        ArrayList<String> row = new ArrayList<String>();
-        ArrayList<String> col = new ArrayList<String>();
+        ArrayList<Character> rowlist = new ArrayList<>();
+        ArrayList<Character> colmunlist = new ArrayList<>();
+        ArrayList<Character> row = new ArrayList<>();
+        ArrayList<Character> col = new ArrayList<>();
         int e = row.size();
         int f = col.size();
         boolean h = true;
@@ -188,23 +188,23 @@ public class    WarringStatesGame {
         char c = '1';
         for (int i=0;i<j;j=j+3) {
             if (isSameColumn(Character.toString(placement.charAt(i+2)),locationChar)) {
-                   rowlist.add(Character.toString(placement.charAt(i)));
-                   rowlist.add(Character.toString(placement.charAt(i+1)));
-                   rowlist.add(Character.toString(placement.charAt(i+2)));
+                   rowlist.add(placement.charAt(i));
+                   rowlist.add(placement.charAt(i+1));
+                   rowlist.add(placement.charAt(i+2));
             }
             else { if(isSameRow(Character.toString(placement.charAt(i+2)),locationChar))
-                colmunlist.add(Character.toString(placement.charAt(i)));
-                colmunlist.add(Character.toString(placement.charAt(i+1)));
-                colmunlist.add(Character.toString(placement.charAt(i+2)));
+                colmunlist.add(placement.charAt(i));
+                colmunlist.add(placement.charAt(i+1));
+                colmunlist.add(placement.charAt(i+2));
             }
         }
         if (isSameRow(placement,locationChar)) {
             for (int m=0; m<k;m=m+3) {
-                if( rowlist.get(m+2).charAt(0) ==locationChar) {
-                    n = rowlist.get(m).charAt(0);
+                if( rowlist.get(m+2) ==locationChar) {
+                    n = rowlist.get(m);
                     for (int a=0; a < k; a=a+3 ) {
-                        if (rowlist.get(a).charAt(0)==n) {
-                            row.add(Character.toString(rowlist.get(a+2).charAt(0)));
+                        if (rowlist.get(a)==n) {
+                            row.add(rowlist.get(a+2));
                         }
                     }
                 }
@@ -212,11 +212,11 @@ public class    WarringStatesGame {
         }
         else {if (isSameColumn(placement,locationChar)) {
             for (int b=0;b<l;b=b+3) {
-                if (colmunlist.get(b+2).charAt(0) == locationChar) {
-                    c = colmunlist.get(b).charAt(0);
+                if (colmunlist.get(b+2) == locationChar) {
+                    c = colmunlist.get(b);
                     for(int d =0; d<l;d=d+3){
-                        if (colmunlist.get(d).charAt(0)==c) {
-                            col.add(Character.toString(colmunlist.get(d+2).charAt(0)));
+                        if (colmunlist.get(d)==c) {
+                            col.add(colmunlist.get(d+2));
                         }
                     }
                 }
@@ -227,14 +227,14 @@ public class    WarringStatesGame {
         if(isSameColumn(placement,locationChar)) {
             if (changeToNumber(findZhangPosition(placement)) > changeToNumber(locationChar)) {
                 for (int g = 0; g<f;g++) {
-                    if (changeToNumber(row.get(g).charAt(0)) < changeToNumber(locationChar)) {
+                    if (changeToNumber(row.get(g)) < changeToNumber(locationChar)) {
                         h = false;
                     }
                 }
             }
             else { if(changeToNumber(findZhangPosition(placement)) < changeToNumber(locationChar)) {
                 for (int x = 0; x < f;x++) {
-                    if (changeToNumber(row.get(x).charAt(0)) > changeToNumber(locationChar)) {
+                    if (changeToNumber(row.get(x)) > changeToNumber(locationChar)) {
                         h = false;
                     }
                 }
@@ -245,14 +245,14 @@ public class    WarringStatesGame {
     }
         else {if (changeToNumber(findZhangPosition(placement)) > changeToNumber(locationChar)) {
             for (int o = 0; o<e;o++) {
-                if (changeToNumber(col.get(o).charAt(0)) < changeToNumber(locationChar)) {
+                if (changeToNumber(col.get(o)) < changeToNumber(locationChar)) {
                     h = false;
                 }
             }
         }
         else { if(changeToNumber(findZhangPosition(placement)) < changeToNumber(locationChar)) {
             for (int p = 0; p < f;p++) {
-                if (changeToNumber(col.get(p).charAt(0)) > changeToNumber(locationChar)) {
+                if (changeToNumber(col.get(p)) > changeToNumber(locationChar)) {
                     h = false;
                 }
             }
