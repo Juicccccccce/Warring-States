@@ -106,17 +106,13 @@ public class    WarringStatesGame {
         int j = placement.length();
         char z = 'a';
         for (int i= 0;i<j; i=i+3) {
-            if(placement.charAt(i)=='Z') {
+            if(placement.charAt(i)=='z') {
                 return z = placement.charAt(i+2);
             }
         }
     return z;}
 
     public static boolean isSameColumn(String placement,char locationChar) {
-        int j = placement.length();
-        char locationArray[] = {};
-        for (int i=2;i<j;i=i+3) {
-            if (findZhangPosition(placement)=='4') {
                   if (((findZhangPosition(placement) == 'A')||(findZhangPosition(placement)=='B')||(findZhangPosition(placement)=='C')||(findZhangPosition(placement)=='D')||(findZhangPosition(placement)=='E')||(findZhangPosition(placement)=='F'))&&((locationChar=='A')||(locationChar=='B')||(locationChar=='C')||(locationChar=='D')||(locationChar=='E')||(locationChar=='F'))) {
                       return true;
                   }
@@ -139,15 +135,10 @@ public class    WarringStatesGame {
                   }}
 
         }}
-    }}
-
-
     return false;}
+
+
     public static boolean isSameRow(String placement,char locationChar) {
-        int j = placement.length();
-        char locationArray[] = {};
-        for (int i=2;i<j;i=i+3) {
-            if (findZhangPosition(placement)=='4') {
                 if (((findZhangPosition(placement) == '4')||(findZhangPosition(placement)=='Y')||(findZhangPosition(placement)=='S')||(findZhangPosition(placement)=='M')||(findZhangPosition(placement)=='G')||(findZhangPosition(placement)=='A'))&&((locationChar=='4')||(locationChar=='Y')||(locationChar=='S')||(locationChar=='M')||(locationChar=='G')||(locationChar=='A'))) {
                     return true;
                 }
@@ -170,8 +161,6 @@ public class    WarringStatesGame {
                 }}
 
                 }}
-            }}
-
 
         return false;}
 
@@ -179,7 +168,7 @@ public class    WarringStatesGame {
         int a = (int) (locationChar);
         int b = 0;
         if(Character.isDigit(locationChar)) {
-            b = 91 + a;
+            b = 91 + (locationChar-'0');
         }
         else {b = (int) locationChar;}
         return b;}
