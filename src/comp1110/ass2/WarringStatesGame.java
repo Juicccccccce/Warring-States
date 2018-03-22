@@ -1,5 +1,9 @@
 package comp1110.ass2;
 
+import gittest.A;
+
+import java.util.ArrayList;
+
 /**
  * This class provides the text interface for the Warring States game
  */
@@ -78,10 +82,16 @@ public class    WarringStatesGame {
         int a = placement.length();
         if ((ascii >= 65 && ascii <= 90) || (ascii >= 48 && ascii <= 57 )) {
             if (isCardExist(placement,locationChar)) {
+                if(isSameColumn(placement,locationChar)||(isSameRow(placement,locationChar))) {
+                   if(checkFurtherCard(placement,locationChar)) {
+                       return true;
+                   }
+                }
 
             }
         }
         return false;}
+
     // check whether there is a card at the chosen location
     public static boolean isCardExist (String placement,char locationChar) {
         int c = placement.length();
@@ -102,21 +112,164 @@ public class    WarringStatesGame {
         }
     return z;}
 
-    public static boolean isSameRow(String placement) {
+    public static boolean isSameColumn(String placement,char locationChar) {
         int j = placement.length();
         char locationArray[] = {};
         for (int i=2;i<j;i=i+3) {
             if (findZhangPosition(placement)=='4') {
+                  if (((findZhangPosition(placement) == 'A')||(findZhangPosition(placement)=='B')||(findZhangPosition(placement)=='C')||(findZhangPosition(placement)=='D')||(findZhangPosition(placement)=='E')||(findZhangPosition(placement)=='F'))&&((locationChar=='A')||(locationChar=='B')||(locationChar=='C')||(locationChar=='D')||(locationChar=='E')||(locationChar=='F'))) {
+                      return true;
+                  }
+                  else {if (((findZhangPosition(placement) == 'G')||(findZhangPosition(placement)=='H')||(findZhangPosition(placement)=='I')||(findZhangPosition(placement)=='J')||(findZhangPosition(placement)=='K')||(findZhangPosition(placement)=='L'))&&((locationChar=='G')||(locationChar=='H')||(locationChar=='I')||(locationChar=='J')||(locationChar=='K')||(locationChar=='L'))) {
+                      return true;
+                  }
+                  else {if (((findZhangPosition(placement) == 'M')||(findZhangPosition(placement)=='N')||(findZhangPosition(placement)=='O')||(findZhangPosition(placement)=='P')||(findZhangPosition(placement)=='Q')||(findZhangPosition(placement)=='R'))&&((locationChar=='M')||(locationChar=='N')||(locationChar=='O')||(locationChar=='P')||(locationChar=='Q')||(locationChar=='R'))) {
+                      return true;
+                  }
+                       else {if (((findZhangPosition(placement) == 'S')||(findZhangPosition(placement)=='T')||(findZhangPosition(placement)=='U')||(findZhangPosition(placement)=='V')||(findZhangPosition(placement)=='W')||(findZhangPosition(placement)=='X'))&&((locationChar=='S')||(locationChar=='T')||(locationChar=='U')||(locationChar=='V')||(locationChar=='W')||(locationChar=='X'))) {
+                      return true;
+                  }
+                             else {if (((findZhangPosition(placement) == 'Y')||(findZhangPosition(placement)=='Z')||(findZhangPosition(placement)=='0')||(findZhangPosition(placement)=='1')||(findZhangPosition(placement)=='2')||(findZhangPosition(placement)=='3'))&&((locationChar=='Y')||(locationChar=='Z')||(locationChar=='0')||(locationChar=='1')||(locationChar=='2')||(locationChar=='3'))) {
+                                 return true;
+                  }
+                                   else if (((findZhangPosition(placement) == '4')||(findZhangPosition(placement)=='5')||(findZhangPosition(placement)=='6')||(findZhangPosition(placement)=='7')||(findZhangPosition(placement)=='8')||(findZhangPosition(placement)=='9'))&&((locationChar=='4')||(locationChar=='5')||(locationChar=='6')||(locationChar=='7')||(locationChar=='8')||(locationChar=='9'))) {
+                                      return true;
+                  }
 
-            }
+                  }}
 
-        }
-    }
-    public static String findSameRow(String placement) {
+        }}
+    }}
+
+
+    return false;}
+    public static boolean isSameRow(String placement,char locationChar) {
         int j = placement.length();
-        String z =" ";
-        for (int )
+        char locationArray[] = {};
+        for (int i=2;i<j;i=i+3) {
+            if (findZhangPosition(placement)=='4') {
+                if (((findZhangPosition(placement) == '4')||(findZhangPosition(placement)=='Y')||(findZhangPosition(placement)=='S')||(findZhangPosition(placement)=='M')||(findZhangPosition(placement)=='G')||(findZhangPosition(placement)=='A'))&&((locationChar=='4')||(locationChar=='Y')||(locationChar=='S')||(locationChar=='M')||(locationChar=='G')||(locationChar=='A'))) {
+                    return true;
+                }
+                else {if (((findZhangPosition(placement) == '5')||(findZhangPosition(placement)=='Z')||(findZhangPosition(placement)=='T')||(findZhangPosition(placement)=='N')||(findZhangPosition(placement)=='H')||(findZhangPosition(placement)=='B'))&&((locationChar=='5')||(locationChar=='Z')||(locationChar=='T')||(locationChar=='N')||(locationChar=='H')||(locationChar=='B'))) {
+                    return true;
+                }
+                else {if (((findZhangPosition(placement) == '6')||(findZhangPosition(placement)=='0')||(findZhangPosition(placement)=='U')||(findZhangPosition(placement)=='O')||(findZhangPosition(placement)=='I')||(findZhangPosition(placement)=='C'))&&((locationChar=='6')||(locationChar=='0')||(locationChar=='U')||(locationChar=='O')||(locationChar=='I')||(locationChar=='C'))) {
+                    return true;
+                }
+                else {if (((findZhangPosition(placement) == '7')||(findZhangPosition(placement)=='1')||(findZhangPosition(placement)=='V')||(findZhangPosition(placement)=='P')||(findZhangPosition(placement)=='J')||(findZhangPosition(placement)=='D'))&&((locationChar=='7')||(locationChar=='1')||(locationChar=='V')||(locationChar=='P')||(locationChar=='J')||(locationChar=='D'))) {
+                    return true;
+                }
+                else {if (((findZhangPosition(placement) == '8')||(findZhangPosition(placement)=='2')||(findZhangPosition(placement)=='W')||(findZhangPosition(placement)=='Q')||(findZhangPosition(placement)=='K')||(findZhangPosition(placement)=='E'))&&((locationChar=='8')||(locationChar=='2')||(locationChar=='W')||(locationChar=='Q')||(locationChar=='K')||(locationChar=='E'))) {
+                    return true;
+                }
+                else if (((findZhangPosition(placement) == '9')||(findZhangPosition(placement)=='3')||(findZhangPosition(placement)=='X')||(findZhangPosition(placement)=='R')||(findZhangPosition(placement)=='L')||(findZhangPosition(placement)=='F'))&&((locationChar=='9')||(locationChar=='3')||(locationChar=='X')||(locationChar=='R')||(locationChar=='L')||(locationChar=='F'))) {
+                    return true;
+                }
+
+                }}
+
+                }}
+            }}
+
+
+        return false;}
+
+    public static int changeToNumber(char locationChar) {
+        int a = (int) (locationChar);
+        int b = 0;
+        if(Character.isDigit(locationChar)) {
+            b = 91 + a;
+        }
+        else {b = (int) locationChar;}
+        return b;}
+
+    public static boolean checkFurtherCard(String placement,char locationChar) {
+        int j = placement.length();
+        ArrayList<String> rowlist = new ArrayList<String>();
+        ArrayList<String> colmunlist = new ArrayList<String>();
+        ArrayList<String> row = new ArrayList<String>();
+        ArrayList<String> col = new ArrayList<String>();
+        int e = row.size();
+        int f = col.size();
+        boolean h = true;
+        int k = rowlist.size();
+        int l = colmunlist.size();
+        char n = '1';
+        char c = '1';
+        for (int i=0;i<j;j=j+3) {
+            if (isSameColumn(Character.toString(placement.charAt(i+2)),locationChar)) {
+                   rowlist.add(Character.toString(placement.charAt(i)));
+                   rowlist.add(Character.toString(placement.charAt(i+1)));
+                   rowlist.add(Character.toString(placement.charAt(i+2)));
+            }
+            else { if(isSameRow(Character.toString(placement.charAt(i+2)),locationChar))
+                colmunlist.add(Character.toString(placement.charAt(i)));
+                colmunlist.add(Character.toString(placement.charAt(i+1)));
+                colmunlist.add(Character.toString(placement.charAt(i+2)));
+            }
+        }
+        if (isSameRow(placement,locationChar)) {
+            for (int m=0; m<k;m=m+3) {
+                if( rowlist.get(m+2).charAt(0) ==locationChar) {
+                    n = rowlist.get(m).charAt(0);
+                    for (int a=0; a < k; a=a+3 ) {
+                        if (rowlist.get(a).charAt(0)==n) {
+                            row.add(Character.toString(rowlist.get(a+2).charAt(0)));
+                        }
+                    }
+                }
+            }
+        }
+        else {if (isSameColumn(placement,locationChar)) {
+            for (int b=0;b<l;b=b+3) {
+                if (colmunlist.get(b+2).charAt(0) == locationChar) {
+                    c = colmunlist.get(b).charAt(0);
+                    for(int d =0; d<l;d=d+3){
+                        if (colmunlist.get(d).charAt(0)==c) {
+                            col.add(Character.toString(colmunlist.get(d+2).charAt(0)));
+                        }
+                    }
+                }
+            }
+        }
+
+
+        if(isSameColumn(placement,locationChar)) {
+            if (changeToNumber(findZhangPosition(placement)) > changeToNumber(locationChar)) {
+                for (int g = 0; g<f;g++) {
+                    if (changeToNumber(row.get(g).charAt(0)) < changeToNumber(locationChar)) {
+                        h = false;
+                    }
+                }
+            }
+            else { if(changeToNumber(findZhangPosition(placement)) < changeToNumber(locationChar)) {
+                for (int x = 0; x < f;x++) {
+                    if (changeToNumber(row.get(x).charAt(0)) > changeToNumber(locationChar)) {
+                        h = false;
+                    }
+                }
+            }
+        }
+
+
     }
+        else {if (changeToNumber(findZhangPosition(placement)) > changeToNumber(locationChar)) {
+            for (int o = 0; o<e;o++) {
+                if (changeToNumber(col.get(o).charAt(0)) < changeToNumber(locationChar)) {
+                    h = false;
+                }
+            }
+        }
+        else { if(changeToNumber(findZhangPosition(placement)) < changeToNumber(locationChar)) {
+            for (int p = 0; p < f;p++) {
+                if (changeToNumber(col.get(p).charAt(0)) > changeToNumber(locationChar)) {
+                    h = false;
+                }
+            }
+        }
+        }}}
+    return h;}
 
     /**
      * Determine whether a move sequence is valid.
