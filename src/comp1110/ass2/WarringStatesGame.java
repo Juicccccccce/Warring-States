@@ -3,6 +3,8 @@ package comp1110.ass2;
 import gittest.A;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This class provides the text interface for the Warring States game
@@ -53,16 +55,66 @@ public class    WarringStatesGame {
      * @return true if the placement is well-formed
      */
     static boolean isPlacementWellFormed(String placement) {
-  //      char placementString[] = placement.toCharArray();
-  //      StringBuilder cardInString = new StringBuilder();
+        if (placement != null) {
+            if (placement.length() % 3 == 0 && placement.length() <= 108) {
+                if (locationUnique(locationsString(placement))) {
+                    if (checkDuplicates(dupCards(placement))) {
+                        for (int z = 0; z < cardsPos(placement).size(); ++z) {
+                            if (isCardPlacementWellFormed(cardsPos(placement).get(z))) {
+                                return true;
+                            }
+                        }
+                    }
+                }
 
-       if (placement.length() % 3 == 0 && placement.length() <= 108 ) {
+            }
 
-       } else {
-           return false;
-       }
+        }
         return false;
     }
+
+    public static boolean locationUnique(String locations) {
+        for (char q : locations.toCharArray()) {
+            if (locations.indexOf(q) == locations.lastIndexOf(q)) {
+                return true;
+            }
+        } return false;
+    }
+
+    public static String locationsString(String str) {
+            String loc = "";
+            for (int z = 2; z <= str.length(); z += 3) {
+                loc = Character.toString(str.charAt(z));
+            } return loc;
+        }
+
+    public static ArrayList<String> cardsPos(String pl) {
+        ArrayList<String> cards = new ArrayList<>();
+        int j = 0;
+        for (int n = 3; n <= pl.length(); n += 3) {
+            cards.add(pl.substring(j, n));
+            j += 3;
+        } return cards;
+    }
+
+
+    public static ArrayList<String> dupCards(String pl) {
+        String a = pl.replaceAll("(..).", "$1");
+        ArrayList<String> cards = new ArrayList<>();
+        for (int i = 0; i <a.length(); i+= 2){
+            cards.add(a.substring(i, Math.min(a.length(), i + 3)));
+        }
+        return cards;
+    }
+
+   public static boolean checkDuplicates(ArrayList<String> cards) {
+       Set<String> s = new HashSet<>();
+       for (String l : cards) {
+           if (!(s.add(l))) {
+               return false;
+           }
+       } return true;
+   }
 
     /**
      * Determine whether a given move is legal given a provided valid placement:
