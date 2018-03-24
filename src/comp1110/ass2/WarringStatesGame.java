@@ -73,21 +73,31 @@ public class    WarringStatesGame {
         return false;
     }
 
-    public static boolean locationUnique(String locations) {
-        for (char q : locations.toCharArray()) {
-            if (locations.indexOf(q) == locations.lastIndexOf(q)) {
-                return true;
-            }
-        } return false;
-    }
-
+    // Create a string of locations of the card placements by
+    // extracting the third character from the input string
     public static String locationsString(String str) {
             String loc = "";
             for (int z = 2; z <= str.length(); z += 3) {
-                loc = Character.toString(str.charAt(z));
+                loc = loc + Character.toString(str.charAt(z));
             } return loc;
         }
 
+
+    // Check if the string of locations created from locationsString
+    // is unique
+    public static boolean locationUnique(String locations) {
+        boolean t = true;
+        for (int y = 0; y < locations.length(); ++y) {
+            for (int z = y + 1; z < locations.length(); ++z) {
+                if (locations.charAt(y) == locations.charAt(z)) {
+                    t = false;
+                }
+            }
+        }
+        return t;
+    }
+
+    // Splits the input string into ArrayList<String> of three-character elements
     public static ArrayList<String> cardsPos(String pl) {
         ArrayList<String> cards = new ArrayList<>();
         int j = 0;
@@ -97,16 +107,18 @@ public class    WarringStatesGame {
         } return cards;
     }
 
-
+    // Creates ArrayList<String> consisting of cards (two-character placements)
+    // by removing every third element of input string
     public static ArrayList<String> dupCards(String pl) {
         String a = pl.replaceAll("(..).", "$1");
         ArrayList<String> cards = new ArrayList<>();
         for (int i = 0; i <a.length(); i+= 2){
-            cards.add(a.substring(i, Math.min(a.length(), i + 3)));
+            cards.add(a.substring(i, Math.min(a.length(), i + 2)));
         }
         return cards;
     }
 
+   // Check if there are any duplicate cards in a string
    public static boolean checkDuplicates(ArrayList<String> cards) {
        Set<String> s = new HashSet<>();
        for (String l : cards) {
