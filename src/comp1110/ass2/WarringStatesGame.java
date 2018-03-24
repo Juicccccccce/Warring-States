@@ -3,8 +3,6 @@ package comp1110.ass2;
 import gittest.A;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * This class provides the text interface for the Warring States game
@@ -55,78 +53,16 @@ public class    WarringStatesGame {
      * @return true if the placement is well-formed
      */
     static boolean isPlacementWellFormed(String placement) {
-        if (placement != null) {
-            if (placement.length() % 3 == 0 && placement.length() <= 108) {
-                if (locationUnique(locationsString(placement))) {
-                    if (checkDuplicates(dupCards(placement))) {
-                        for (int z = 0; z < cardsPos(placement).size(); ++z) {
-                            if (isCardPlacementWellFormed(cardsPos(placement).get(z))) {
-                                return true;
-                            }
-                        }
-                    }
-                }
+  //      char placementString[] = placement.toCharArray();
+  //      StringBuilder cardInString = new StringBuilder();
 
-            }
+       if (placement.length() % 3 == 0 && placement.length() <= 108 ) {
 
-        }
+       } else {
+           return false;
+       }
         return false;
     }
-
-    // Create a string of locations of the card placements by
-    // extracting the third character from the input string
-    public static String locationsString(String str) {
-            String loc = "";
-            for (int z = 2; z <= str.length(); z += 3) {
-                loc = loc + Character.toString(str.charAt(z));
-            } return loc;
-        }
-
-
-    // Check if the string of locations created from locationsString
-    // is unique
-    public static boolean locationUnique(String locations) {
-        boolean t = true;
-        for (int y = 0; y < locations.length(); ++y) {
-            for (int z = y + 1; z < locations.length(); ++z) {
-                if (locations.charAt(y) == locations.charAt(z)) {
-                    t = false;
-                }
-            }
-        }
-        return t;
-    }
-
-    // Splits the input string into ArrayList<String> of three-character elements
-    public static ArrayList<String> cardsPos(String pl) {
-        ArrayList<String> cards = new ArrayList<>();
-        int j = 0;
-        for (int n = 3; n <= pl.length(); n += 3) {
-            cards.add(pl.substring(j, n));
-            j += 3;
-        } return cards;
-    }
-
-    // Creates ArrayList<String> consisting of cards (two-character placements)
-    // by removing every third element of input string
-    public static ArrayList<String> dupCards(String pl) {
-        String a = pl.replaceAll("(..).", "$1");
-        ArrayList<String> cards = new ArrayList<>();
-        for (int i = 0; i <a.length(); i+= 2){
-            cards.add(a.substring(i, Math.min(a.length(), i + 2)));
-        }
-        return cards;
-    }
-
-   // Check if there are any duplicate cards in a string
-   public static boolean checkDuplicates(ArrayList<String> cards) {
-       Set<String> s = new HashSet<>();
-       for (String l : cards) {
-           if (!(s.add(l))) {
-               return false;
-           }
-       } return true;
-   }
 
     /**
      * Determine whether a given move is legal given a provided valid placement:
