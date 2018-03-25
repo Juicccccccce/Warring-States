@@ -175,6 +175,7 @@ public class WarringStatesGame {
         }
     }
 
+    // find the location for ZhangYi
     public static char findZhangPosition(String placement) {
         int j = placement.length();
         char z = 'a';
@@ -186,25 +187,7 @@ public class WarringStatesGame {
         return z;
     }
 
-    public static String findZhangString(String placement) {
-        int j = placement.length();
-        char z = 'a';
-        String a = "";
-        ArrayList<Character> list = new ArrayList<>();
-        for (int i = 0; i < j; i = i + 3) {
-            if (placement.charAt(i) == 'z') {
-                list.add(placement.charAt(i));
-                list.add(placement.charAt(i + 1));
-                list.add(placement.charAt(i + 2));
-            }
-        }
-        StringBuilder builder = new StringBuilder(list.size());
-        for (Character ch : list) {
-            builder.append(ch);
-        }
-        return builder.toString();
-    }
-
+    // check whether locationChar is in the same colmun with ZhangYi
     public static boolean isSameColumn(String placement, char locationChar) {
         if (((findZhangPosition(placement) == 'A') || (findZhangPosition(placement) == 'B') || (findZhangPosition(placement) == 'C') || (findZhangPosition(placement) == 'D') || (findZhangPosition(placement) == 'E') || (findZhangPosition(placement) == 'F')) && ((locationChar == 'A') || (locationChar == 'B') || (locationChar == 'C') || (locationChar == 'D') || (locationChar == 'E') || (locationChar == 'F'))) {
             return true;
@@ -233,6 +216,7 @@ public class WarringStatesGame {
     }
 
 
+    //check whether locationChar and ZhangYi is in the same row
     public static boolean isSameRow(String placement, char locationChar) {
         if (((findZhangPosition(placement) == '4') || (findZhangPosition(placement) == 'Y') || (findZhangPosition(placement) == 'S') || (findZhangPosition(placement) == 'M') || (findZhangPosition(placement) == 'G') || (findZhangPosition(placement) == 'A')) && ((locationChar == '4') || (locationChar == 'Y') || (locationChar == 'S') || (locationChar == 'M') || (locationChar == 'G') || (locationChar == 'A'))) {
             return true;
@@ -261,6 +245,8 @@ public class WarringStatesGame {
         return false;
     }
 
+    //change all locations in board to a number (For A to Z, using ascii number. 0 to 9, define new values. 0 is set to 92. 1 to 93.
+    // and so on.
     public static int changeToNumber(char locationChar) {
         int a = (int) (locationChar);
         int b = 0;
@@ -272,11 +258,7 @@ public class WarringStatesGame {
         return b;
     }
 
-    public static String addElement(String a, char b) {
-        String str = a + b;
-        return str;
-    }
-
+    //get all cards in same column with ZhangYi
     public static ArrayList<Character> getRowlist(String placement) {
         int j = placement.length();
         ArrayList<Character> rowlist = new ArrayList<>();
@@ -293,6 +275,7 @@ public class WarringStatesGame {
         return rowlist;
     }
 
+    //get all cards in same row with ZhangYi
     public static ArrayList<Character> getcolumnlist(String placement) {
         int j = placement.length();
         ArrayList<Character> colmunlist = new ArrayList<>();
@@ -308,6 +291,7 @@ public class WarringStatesGame {
         return colmunlist;
     }
 
+    //get all cards'(which are in same row with ZhangYi and same kingdom with locationChar) location characters
     public static ArrayList<Character> getrow(String placement, char locationChar) {
         ArrayList<Character> row = new ArrayList<Character>();
         ArrayList<Character> rowlist = getRowlist(placement);
@@ -327,6 +311,7 @@ public class WarringStatesGame {
         return row;
     }
 
+    //get all cards'(which are in same column with ZhangYi and same kingdom with locationChar) location characters
     public static ArrayList<Character> getcol(String placement, char locationChar) {
         ArrayList<Character> colmunlist = getcolumnlist(placement);
         ArrayList<Character> col = new ArrayList<Character>();
@@ -345,6 +330,7 @@ public class WarringStatesGame {
         return col;
     }
 
+    //to check whether there are some further cards for locationChar
     public static boolean checkFurtherCard(String placement, char locationChar) {
         int j = placement.length();
         boolean h = true;
@@ -418,13 +404,8 @@ public class WarringStatesGame {
         for (int i = 0; i < j; i++) {
             if (setup.equals("")) {return false;}
             if (isMoveLegal(setup, moveSequence.charAt(i))) {
-                System.out.println("Setup : " + setup);
-                System.out.println("Move Sequence : " + moveSequence);
-                System.out.println("CurrentMove : " + moveSequence.charAt(i));
                 setup = deleteEmptyLocation(setup, moveSequence.charAt(i));
-                setup += "z9" + moveSequence.charAt(i);
-                System.out.println("New Setup : " + setup);
-
+                setup += "z9" + moveSequence.charAt(i);   //update ZhangYi's position
             } else {
                 return false;
 
@@ -433,6 +414,8 @@ public class WarringStatesGame {
         return true;
     }
 
+    //give a locationChar, return the index of the kingdom card stored in string
+    // setup(e.g. if setput string is a01a19z9S, locationChar is 1, the return index should be 0.
     public static int getThePositionInSetup(String setup, char locationChar) {
         int a = setup.length();
 
@@ -444,7 +427,8 @@ public class WarringStatesGame {
         return -1;
     }
 
-
+    //For a valid move, the location for ZhangYi before moving and the cards between ZhangYi and locationChar
+    // should be deleted.
     public static String deleteEmptyLocation(String setup, char locationChar) {
         char zhangLocation = findZhangPosition(setup); // LocationChar
 
@@ -455,30 +439,17 @@ public class WarringStatesGame {
         if (isSameRow(setup, locationChar)) {
             row.add(zhangLocation);
             for (int e = 0; e < row.size(); e++) {
-                    System.out.println("Current Location with same Kingdom in Row : " + row.get(e));
-                    System.out.println("ZhangLocation : " + zhangLocation);
-                    System.out.println("locationChar : " + locationChar);
                     int index = getThePositionInSetup(setup,row.get(e));
                     if (index == -1) {
                         return "";
                     }
                 if (changeToNumber(zhangLocation) > changeToNumber(locationChar)) {
                     if ((changeToNumber(zhangLocation) >= changeToNumber(row.get(e))) && (changeToNumber(locationChar) <= changeToNumber(row.get(e)))) {
-                        System.out.println("Inside if loop");
-                        System.out.println("Setup : " + setup);
-                        System.out.println("Index : " + index);
                         setup = setup.substring(0,index) + setup.substring(index + 3);
-                        System.out.println("New setup : " + setup);
                     }
                 } else {
-                    System.out.println("Inside else loop");
                     if ((changeToNumber(zhangLocation) <= changeToNumber(row.get(e))) && (changeToNumber(locationChar) >= changeToNumber(row.get(e)))) {
-                        System.out.println("Current Location considered : " + row.get(e));
-                        System.out.println("Setup : " + setup);
-
-                        System.out.println("Index : " + index);
                         setup = setup.substring(0,index) + setup.substring(index + 3);
-                        System.out.println("New setup : " + setup);
                     }
                 }
             }
@@ -489,29 +460,17 @@ public class WarringStatesGame {
             if (isSameColumn(setup, locationChar)) {
                 col.add(zhangLocation);
                 for (int f = 0; f < col.size(); f++) {
-                        System.out.println("Current Location with same Kingdom in Column : " + col.get(f));
-                        System.out.println("ZhangLocation : " + zhangLocation);
-                        System.out.println("locationChar : " + locationChar);
                     int index = getThePositionInSetup(setup, col.get(f));
                     if (index == -1) {
                         return "";
                     }
                     if (changeToNumber(zhangLocation) > changeToNumber(locationChar)) {
-                        System.out.println("Inside if block");
                         if ((changeToNumber(zhangLocation) >= changeToNumber(col.get(f))) && (changeToNumber(locationChar) <= changeToNumber(col.get(f)))) {
-                            System.out.println("Setup : " + setup);
-                            System.out.println("Index : " + index);
                             setup = setup.substring(0, index) + setup.substring(index + 3);
-                            System.out.println("New setup : " + setup);
                         }
                     } else {
-                        System.out.println("Inside else block");
                         if ((changeToNumber(zhangLocation) <= changeToNumber(col.get(f))) && (changeToNumber(locationChar) >= changeToNumber(col.get(f)))) {
-                            System.out.println("Current location considered : " + col.get(f));
-                            System.out.println("Setup : " + setup);
-                            System.out.println("Index : " + index);
                             setup = setup.substring(0, index) + setup.substring(index + 3);
-                            System.out.println("New setup : " + setup);
                         }
                     }
                 }
@@ -520,21 +479,7 @@ public class WarringStatesGame {
 
         return setup;
     }
-//    // works fine
-//    public static String replaceNewPosition(String setup, char locationChar) {
-//
-//
-//        int length = setup.length();
-//        StringBuilder str = new StringBuilder();
-//        str.append(setup);
-//        for (int x = 0; x < length; x = x + 3) {
-//            if (setup.charAt(x + 2) == locationChar) {
-//                str.setCharAt(x, 'z');
-//                str.setCharAt(x + 1, '9');
-//            }
-//        }
-//        return str.toString();
-//    }
+
 
     /**
      * Get the list of supporters for the chosen player, given the provided
