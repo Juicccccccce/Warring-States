@@ -387,9 +387,16 @@ public class    WarringStatesGame {
             if (isMoveLegal(setup,moveSequence.charAt(i))) {
                 setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
                 setup = replaceNewPosition(setup,moveSequence.charAt(i));
+                System.out.println(setup);
+                System.out.println(moveSequence);
             }
-            else { r = false; 
-        }}
+            else {
+                System.out.println(setup);
+                System.out.println(moveSequence);
+                r = false;
+                break;
+            }
+        }
         return r;
     }
 
@@ -398,7 +405,7 @@ public class    WarringStatesGame {
         int c = 0;
         for (int b =0; b<a ; b=b+3) {
             if(setup.charAt(b+2)==locationChar) {
-                c = b;
+                c = b+2;
             }
         }
         return c;
@@ -417,9 +424,14 @@ public class    WarringStatesGame {
         if (isSameRow(setup,locationChar)) {
             if (rowlength != 0) {
               for (int e = 0; e < rowlength; e++) {
-                if(((changeToNumber(row.get(e))>changeToNumber(findZhangPosition(setup)))&& ((changeToNumber(row.get(e))) < changeToNumber(locationChar))) || ((changeToNumber(row.get(e))<changeToNumber(findZhangPosition(setup)))&& ((changeToNumber(row.get(e))) > changeToNumber(locationChar)))) {
+                if(changeToNumber(findZhangPosition(setup))>changeToNumber(locationChar)) {
+                    if ((changeToNumber(findZhangPosition(setup))>changeToNumber(row.get(e))) && (changeToNumber(locationChar) < changeToNumber(row.get(e)))) {
+                    list.add(getThePositionInSetup(setup,row.get(e)));
+                }}
+                else { if((changeToNumber(findZhangPosition(setup))<changeToNumber(row.get(e))) && (changeToNumber(locationChar) > changeToNumber(row.get(e)))) {
                     list.add(getThePositionInSetup(setup,row.get(e)));
                 }
+                    }
             }
         }}
 
@@ -427,16 +439,17 @@ public class    WarringStatesGame {
             if (collength != 0) {
               for (int f = 0; f < collength; f++) {
                   if (changeToNumber(findZhangPosition(setup))>changeToNumber(locationChar)) {
-                      if ((changeToNumber(findZhangPosition(setup)) > changeToNumber(col.get(f))) && (changeToNumber(findZhangPosition(setup)) <changeToNumber(col.get(f)))) {
+                      if ((changeToNumber(findZhangPosition(setup)) > changeToNumber(col.get(f))) && (changeToNumber(locationChar) <changeToNumber(col.get(f)))) {
                           list.add(getThePositionInSetup(setup,col.get(f)));
                       }}
                       else {
-                      if ((changeToNumber(findZhangPosition(setup)) < changeToNumber(col.get(f))) && (changeToNumber(findZhangPosition(setup)) >changeToNumber(col.get(f)))) {
+                      if ((changeToNumber(findZhangPosition(setup)) < changeToNumber(col.get(f))) && (changeToNumber(locationChar) >changeToNumber(col.get(f)))) {
                           list.add(getThePositionInSetup(setup,col.get(f)));
                 }
             }
         }}}
 
+        list.add(getThePositionInSetup(setup,findZhangPosition(setup)));
         StringBuilder builders = new StringBuilder(list.size());
         for(Integer in : list){
             builders.append(in);
@@ -448,11 +461,11 @@ public class    WarringStatesGame {
         for (int g = 0; g < strlength; g++) {
             builder.delete(g,g+3);
         }
-        for (int b =0; b < c; b = b +3) {
-            if (setup.charAt(b+2)==a) {
-                builder.delete(d,d+3);
-            }
-        }
+     //   for (int b =0; b < c; b = b +3) {
+       //     if (setup.charAt(b+2)==a) {
+         //       builder.delete(b,b+3);
+          //  }
+       // }
         String s = builder.toString();
         return s;
     }
