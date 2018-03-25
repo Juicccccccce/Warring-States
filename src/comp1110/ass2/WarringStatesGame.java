@@ -187,24 +187,26 @@ public class WarringStatesGame {
         return z;
     }
 
-    // check whether locationChar is in the same colmun with ZhangYi
+    // check whether locationChar is in the same column with ZhangYi
     public static boolean isSameColumn(String placement, char locationChar) {
-        if (((findZhangPosition(placement) == 'A') || (findZhangPosition(placement) == 'B') || (findZhangPosition(placement) == 'C') || (findZhangPosition(placement) == 'D') || (findZhangPosition(placement) == 'E') || (findZhangPosition(placement) == 'F')) && ((locationChar == 'A') || (locationChar == 'B') || (locationChar == 'C') || (locationChar == 'D') || (locationChar == 'E') || (locationChar == 'F'))) {
+        if (((findZhangPosition(placement) >= 'A') && (findZhangPosition(placement) <= 'F')) && ((locationChar >= 'A') && (locationChar <= 'F'))) {
             return true;
         } else {
-            if (((findZhangPosition(placement) == 'G') || (findZhangPosition(placement) == 'H') || (findZhangPosition(placement) == 'I') || (findZhangPosition(placement) == 'J') || (findZhangPosition(placement) == 'K') || (findZhangPosition(placement) == 'L')) && ((locationChar == 'G') || (locationChar == 'H') || (locationChar == 'I') || (locationChar == 'J') || (locationChar == 'K') || (locationChar == 'L'))) {
+            if (((findZhangPosition(placement) >= 'G') && (findZhangPosition(placement) <= 'L')) && ((locationChar >= 'G') && (locationChar <= 'L'))) {
                 return true;
             } else {
-                if (((findZhangPosition(placement) == 'M') || (findZhangPosition(placement) == 'N') || (findZhangPosition(placement) == 'O') || (findZhangPosition(placement) == 'P') || (findZhangPosition(placement) == 'Q') || (findZhangPosition(placement) == 'R')) && ((locationChar == 'M') || (locationChar == 'N') || (locationChar == 'O') || (locationChar == 'P') || (locationChar == 'Q') || (locationChar == 'R'))) {
+                if (((findZhangPosition(placement) >= 'M') && (findZhangPosition(placement) <= 'R')) && ((locationChar == 'M') || (locationChar >= 'N') && (locationChar <= 'R'))) {
                     return true;
                 } else {
-                    if (((findZhangPosition(placement) == 'S') || (findZhangPosition(placement) == 'T') || (findZhangPosition(placement) == 'U') || (findZhangPosition(placement) == 'V') || (findZhangPosition(placement) == 'W') || (findZhangPosition(placement) == 'X')) && ((locationChar == 'S') || (locationChar == 'T') || (locationChar == 'U') || (locationChar == 'V') || (locationChar == 'W') || (locationChar == 'X'))) {
+                    if (((findZhangPosition(placement) >= 'S') && (findZhangPosition(placement) <= 'X')) && ((locationChar >= 'S') && (locationChar <= 'X'))) {
                         return true;
                     } else {
-                        if (((findZhangPosition(placement) == 'Y') || (findZhangPosition(placement) == 'Z') || (findZhangPosition(placement) == '0') || (findZhangPosition(placement) == '1') || (findZhangPosition(placement) == '2') || (findZhangPosition(placement) == '3')) && ((locationChar == 'Y') || (locationChar == 'Z') || (locationChar == '0') || (locationChar == '1') || (locationChar == '2') || (locationChar == '3'))) {
+                        if (((findZhangPosition(placement) == 'Y') || (findZhangPosition(placement) == 'Z') || (findZhangPosition(placement) >= '0') && (findZhangPosition(placement) <= '3')) && ((locationChar == 'Y') || (locationChar == 'Z') || (locationChar >= '0') && (locationChar <= '3'))) {
                             return true;
-                        } else if (((findZhangPosition(placement) == '4') || (findZhangPosition(placement) == '5') || (findZhangPosition(placement) == '6') || (findZhangPosition(placement) == '7') || (findZhangPosition(placement) == '8') || (findZhangPosition(placement) == '9')) && ((locationChar == '4') || (locationChar == '5') || (locationChar == '6') || (locationChar == '7') || (locationChar == '8') || (locationChar == '9'))) {
-                            return true;
+                        } else {
+                            if (((findZhangPosition(placement) >= '4') && (findZhangPosition(placement) <= '9')) && ((locationChar >= '4') && (locationChar <= '9'))) {
+                                return true;
+                            }
                         }
 
                     }
