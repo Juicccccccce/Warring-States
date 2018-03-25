@@ -385,28 +385,76 @@ public class    WarringStatesGame {
         boolean r = true;
         for (int i =0; i < j ; i++) {
             if (isMoveLegal(setup,moveSequence.charAt(i))) {
-                setup = deleteEmptyLocation(setup);
+                setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
                 setup = replaceNewPosition(setup,moveSequence.charAt(i));
             }
-            else { r = false;
+            else { r = false; 
         }}
         return r;
     }
 
-    public static String deleteEmptyLocation(String setup) {
+    public static int getThePositionInSetup(String setup, char locationChar) {
+        int a = setup.length();
+        int c = 0;
+        for (int b =0; b<a ; b=b+3) {
+            if(setup.charAt(b+2)==locationChar) {
+                c = b;
+            }
+        }
+        return c;
+    }
+
+
+    public static String deleteEmptyLocation(String setup,char locationChar) {
         char a = findZhangPosition(setup);
         int c = setup.length();
         int d = 0;
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        ArrayList<Character> col = getcol(setup,locationChar);
+        int collength = col.size();
+        ArrayList<Character> row = getrow(setup,locationChar);
+        int rowlength = row.size();
+        if (isSameRow(setup,locationChar)) {
+            if (rowlength != 0) {
+              for (int e = 0; e < rowlength; e++) {
+                if(((changeToNumber(row.get(e))>changeToNumber(findZhangPosition(setup)))&& ((changeToNumber(row.get(e))) < changeToNumber(locationChar))) || ((changeToNumber(row.get(e))<changeToNumber(findZhangPosition(setup)))&& ((changeToNumber(row.get(e))) > changeToNumber(locationChar)))) {
+                    list.add(getThePositionInSetup(setup,row.get(e)));
+                }
+            }
+        }}
+
+        if (isSameColumn(setup,locationChar)) {
+            if (collength != 0) {
+              for (int f = 0; f < collength; f++) {
+                  if (changeToNumber(findZhangPosition(setup))>changeToNumber(locationChar)) {
+                      if ((changeToNumber(findZhangPosition(setup)) > changeToNumber(col.get(f))) && (changeToNumber(findZhangPosition(setup)) <changeToNumber(col.get(f)))) {
+                          list.add(getThePositionInSetup(setup,col.get(f)));
+                      }}
+                      else {
+                      if ((changeToNumber(findZhangPosition(setup)) < changeToNumber(col.get(f))) && (changeToNumber(findZhangPosition(setup)) >changeToNumber(col.get(f)))) {
+                          list.add(getThePositionInSetup(setup,col.get(f)));
+                }
+            }
+        }}}
+
+        StringBuilder builders = new StringBuilder(list.size());
+        for(Integer in : list){
+            builders.append(in);
+        }
+
+        String str = builders.toString();
+        int strlength = str.length();
+        StringBuilder builder = new StringBuilder(setup);
+        for (int g = 0; g < strlength; g++) {
+            builder.delete(g,g+3);
+        }
         for (int b =0; b < c; b = b +3) {
             if (setup.charAt(b+2)==a) {
-                d = b;
+                builder.delete(d,d+3);
             }
         }
-        StringBuilder builder = new StringBuilder(setup);
-        builder.delete(d,d+3);
-        String str = builder.toString();
-        return str;
-
+        String s = builder.toString();
+        return s;
     }
 
     public static String replaceNewPosition(String setup,char locationChar) {
