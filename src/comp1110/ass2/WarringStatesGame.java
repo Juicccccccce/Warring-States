@@ -578,6 +578,7 @@ public class WarringStatesGame {
     /**
      * Generate a legal move, given the provided placement string.
      * A move is valid if:
+     *
      * - the location char is in the range A .. Z or 0..9
      * - there is a card at the chosen location;
      * - the destination location is different to Zhang Yi's current location;
