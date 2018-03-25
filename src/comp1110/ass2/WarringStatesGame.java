@@ -381,7 +381,47 @@ public class    WarringStatesGame {
      */
     static boolean isMoveSequenceValid(String setup, String moveSequence) {
         // FIXME Task 6: determine whether a placement sequence is valid
-        return false;
+        int j = moveSequence.length();
+        boolean r = true;
+        for (int i =0; i < j ; i++) {
+            if (isMoveLegal(setup,moveSequence.charAt(i))) {
+                setup = deleteEmptyLocation(setup);
+                setup = replaceNewPosition(setup,moveSequence.charAt(i));
+            }
+            else { r = false;
+        }}
+        return r;
+    }
+
+    public static String deleteEmptyLocation(String setup) {
+        char a = findZhangPosition(setup);
+        int c = setup.length();
+        int d = 0;
+        for (int b =0; b < c; b = b +3) {
+            if (setup.charAt(b+2)==a) {
+                d = b;
+            }
+        }
+        StringBuilder builder = new StringBuilder(setup);
+        builder.delete(d,d+3);
+        String str = builder.toString();
+        return str;
+
+    }
+
+    public static String replaceNewPosition(String setup,char locationChar) {
+        int length = setup.length();
+        StringBuilder str = new StringBuilder();
+        str.append(setup);
+        String a = " ";
+        for (int x=0; x < length; x = x+3) {
+            if (setup.charAt(x+2) == locationChar) {
+                    str.setCharAt(x,'z');
+                    str.setCharAt(x+1,'9');
+            }
+        }
+        String string = str.toString();
+        return string;
     }
 
     /**
