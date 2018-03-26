@@ -401,6 +401,7 @@ public class WarringStatesGame {
      * @return True if the placement sequence is valid
      */
     static boolean isMoveSequenceValid(String setup, String moveSequence) {
+        System.out.println(setup);
         // FIXME Task 6: determine whether a placement sequence is valid
         int j = moveSequence.length();
         for (int i = 0; i < j; i++) {

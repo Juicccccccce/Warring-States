@@ -41,6 +41,8 @@ public class Viewer extends Application {
      *
      * @param placement A valid placement string
      */
+
+    //Determine which kingdom the char refers to
     public static String determineKingdomName(char a) {
         String b = " ";
         switch (a) {
@@ -70,6 +72,7 @@ public class Viewer extends Application {
                 break;
         } return b;}
 
+        // Return the coodinate for a locationChar
     public static int[] determineCoordinate(char locationChar) {
         int[] xy = new int[2];
         if (locationChar == '4' || locationChar == 'Y' || locationChar == 'S' || locationChar == 'M' || locationChar == 'G' || locationChar == 'A') {
@@ -121,6 +124,7 @@ public class Viewer extends Application {
         return xy;
     }
 
+    //Set the color for different kingdom
     public static Color getColor(char kingdom) {
         if (kingdom == 'a') {
             return Color.PINK;
@@ -141,7 +145,12 @@ public class Viewer extends Application {
                                 return Color.PURPLE;
                             } else {
                                 if (kingdom == 'z') {
-                                    return Color.BLACK;
+                                    return Color.RED;
+                                }
+                                else {
+                                    if (kingdom == 'g') {
+                                        return Color.GRAY;
+                                    }
                                 }
                             }
                         }
@@ -165,7 +174,7 @@ public class Viewer extends Application {
         for (int i = 0; i < length; i += 3) {
             int a = determineCoordinate(placement.charAt(i+2))[0];
             int b = determineCoordinate(placement.charAt(i+2))[1];
-            Rectangle rct = new Rectangle(60*b,60*a,50,50);
+            Rectangle rct = new Rectangle(60*b,60*a,60,60);
             rct.setFill(getColor(placement.charAt(i)));
             String str = determineKingdomName(placement.charAt(i)) +  placement.charAt(i+1);
             Text label = new Text(str);
