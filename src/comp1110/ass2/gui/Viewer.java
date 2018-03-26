@@ -1,14 +1,22 @@
 package comp1110.ass2.gui;
 
+import com.sun.xml.internal.bind.v2.runtime.Coordinator;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -33,8 +41,139 @@ public class Viewer extends Application {
      *
      * @param placement A valid placement string
      */
+    public static String determineKingdomName(char a) {
+        String b = " ";
+        switch (a) {
+            case 'a':
+                b = "Qin";
+                break;
+            case 'b':
+                b = "Qi";
+                break;
+            case 'c':
+                b = "Chu";
+                break;
+            case 'd':
+                b= "Zhao";
+                break;
+            case 'e':
+                b = "Han";
+                break;
+            case 'f':
+                b = "Wei";
+                break;
+            case 'g':
+                b ="Yan";
+                break;
+            case 'z':
+                b = "ZhangYi";
+                break;
+        } return b;}
+
+    public static int[] determineCoordinate(char locationChar) {
+        int[] xy = new int[2];
+        if (locationChar == '4' || locationChar == 'Y' || locationChar == 'S' || locationChar == 'M' || locationChar == 'G' || locationChar == 'A') {
+            xy[0] = 0;
+        } else {
+            if (locationChar == '5' || locationChar == 'Z' || locationChar == 'T' || locationChar == 'N' || locationChar == 'H' || locationChar == 'B') {
+                xy[0] = 1;
+            } else {
+                if (locationChar == '6' || locationChar == '0' || locationChar == 'U' || locationChar == 'O' || locationChar == 'I' || locationChar == 'C') {
+                    xy[0] = 2;
+                } else {
+                    if (locationChar == '7' || locationChar == '1' || locationChar == 'V' || locationChar == 'P' || locationChar == 'J' || locationChar == 'D') {
+                        xy[0] = 3;
+                    } else {
+                        if (locationChar == '8' || locationChar == '2' || locationChar == 'W' || locationChar == 'Q' || locationChar == 'K' || locationChar == 'E') {
+                            xy[0] = 4;
+                        } else {
+                            if (locationChar == '9' || locationChar == '3' || locationChar == 'X' || locationChar == 'R' || locationChar == 'L' || locationChar == 'F') {
+                                xy[0] = 5;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (locationChar == '4' || locationChar == '5' || locationChar == '6' || locationChar == '7' || locationChar == '8' || locationChar == '9') {
+            xy[1] = 0;
+        } else {
+            if (locationChar == 'Y' || locationChar == 'Z' || locationChar == '0' || locationChar == '1' || locationChar == '2' || locationChar == '3') {
+                xy[1] = 1;
+            } else {
+                if (locationChar == 'S' || locationChar == 'T' || locationChar == 'U' || locationChar == 'V' || locationChar == 'W' || locationChar == 'X') {
+                    xy[1] = 2;
+                } else {
+                    if (locationChar == 'M' || locationChar == 'N' || locationChar == 'O' || locationChar == 'P' || locationChar == 'Q' || locationChar == 'R') {
+                        xy[1] = 3;
+                    } else {
+                        if (locationChar == 'G' || locationChar == 'H' || locationChar == 'I' || locationChar == 'J' || locationChar == 'K' || locationChar == 'L') {
+                            xy[1] = 4;
+                        } else {
+                            if (locationChar == 'A' || locationChar == 'B' || locationChar == 'C' || locationChar == 'D' || locationChar == 'E' || locationChar == 'F') {
+                                xy[1] = 5;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return xy;
+    }
+
+    public static Color getColor(char kingdom) {
+        if (kingdom == 'a') {
+            return Color.PINK;
+        } else {
+            if (kingdom == 'b') {
+                return Color.YELLOW;
+            } else {
+                if (kingdom == 'c') {
+                    return Color.GREEN;
+                } else {
+                    if (kingdom == 'd') {
+                        return Color.BLUE;
+                    } else {
+                        if (kingdom == 'e') {
+                            return Color.ORANGE;
+                        } else {
+                            if (kingdom == 'f') {
+                                return Color.PURPLE;
+                            } else {
+                                if (kingdom == 'z') {
+                                    return Color.BLACK;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return Color.WHITE;
+    }
+
     void makePlacement(String placement) {
         // FIXME Task 4: implement the simple placement viewer
+        int length = placement.length();
+        TilePane tile = new TilePane();
+        tile.setLayoutX(145);
+        tile.setLayoutY(5);
+        tile.setHgap(50);
+        tile.setVgap(50);
+        tile.setPrefColumns(6);
+
+        for (int i = 0; i < length; i += 3) {
+            int a = determineCoordinate(placement.charAt(i+2))[0];
+            int b = determineCoordinate(placement.charAt(i+2))[1];
+            Rectangle rct = new Rectangle(60*b,60*a,50,50);
+            rct.setFill(getColor(placement.charAt(i)));
+            String str = determineKingdomName(placement.charAt(i)) +  placement.charAt(i+1);
+            Text label = new Text(str);
+            StackPane stackPane = new StackPane();
+            stackPane.getChildren().addAll(rct,label);
+            tile.getChildren().addAll(stackPane);
+        }
+        controls.getChildren().addAll(tile);
     }
 
     /**
