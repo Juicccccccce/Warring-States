@@ -42,6 +42,31 @@ public class Viewer extends Application {
      * @param placement A valid placement string
      */
 
+
+
+    void makePlacement(String placement) {
+        TilePane tile = new TilePane();
+        tile.setLayoutX(145);
+        tile.setLayoutY(5);
+        tile.setHgap(50);
+        tile.setVgap(50);
+        tile.setPrefColumns(6);
+
+        for (int i = 0; i < placement.length() - 1; i += 3) {
+            int a = determineCoordinate(placement.charAt(i+2))[0];
+            int b = determineCoordinate(placement.charAt(i+2))[1];
+            Rectangle rct = new Rectangle(60*b,60*a,60,60);
+            rct.setFill(getColor(placement.charAt(i)));
+            String str = determineKingdomName(placement.charAt(i)) +  placement.charAt(i+1);
+            Text label = new Text(str);
+            StackPane stackPane = new StackPane();
+            stackPane.getChildren().addAll(rct,label);
+            tile.getChildren().addAll(stackPane);
+        }
+        controls.getChildren().addAll(tile);
+    }
+
+
     //Determine which kingdom the char refers to
     public static String determineKingdomName(char a) {
         String b = " ";
@@ -72,7 +97,7 @@ public class Viewer extends Application {
                 break;
         } return b;}
 
-        // Return the coodinate for a locationChar
+        // Return the coordinate for a locationChar
     public static int[] determineCoordinate(char locationChar) {
         int[] xy = new int[2];
         if (locationChar == '4' || locationChar == 'Y' || locationChar == 'S' || locationChar == 'M' || locationChar == 'G' || locationChar == 'A') {
@@ -98,22 +123,22 @@ public class Viewer extends Application {
                 }
             }
         }
-        if (locationChar == '4' || locationChar == '5' || locationChar == '6' || locationChar == '7' || locationChar == '8' || locationChar == '9') {
+        if (locationChar >= '4' && locationChar <= '9') {
             xy[1] = 0;
         } else {
-            if (locationChar == 'Y' || locationChar == 'Z' || locationChar == '0' || locationChar == '1' || locationChar == '2' || locationChar == '3') {
+            if (locationChar == 'Y' || locationChar == 'Z' || locationChar >= '0' && locationChar <= '3') {
                 xy[1] = 1;
             } else {
-                if (locationChar == 'S' || locationChar == 'T' || locationChar == 'U' || locationChar == 'V' || locationChar == 'W' || locationChar == 'X') {
+                if (locationChar >= 'S' && locationChar <= 'X') {
                     xy[1] = 2;
                 } else {
-                    if (locationChar == 'M' || locationChar == 'N' || locationChar == 'O' || locationChar == 'P' || locationChar == 'Q' || locationChar == 'R') {
+                    if (locationChar >= 'M' && locationChar <= 'R') {
                         xy[1] = 3;
                     } else {
-                        if (locationChar == 'G' || locationChar == 'H' || locationChar == 'I' || locationChar == 'J' || locationChar == 'K' || locationChar == 'L') {
+                        if (locationChar >= 'G' && locationChar <= 'L') {
                             xy[1] = 4;
                         } else {
-                            if (locationChar == 'A' || locationChar == 'B' || locationChar == 'C' || locationChar == 'D' || locationChar == 'E' || locationChar == 'F') {
+                            if (locationChar >= 'A' && locationChar <= 'F') {
                                 xy[1] = 5;
                             }
                         }
@@ -161,29 +186,6 @@ public class Viewer extends Application {
         return Color.WHITE;
     }
 
-    void makePlacement(String placement) {
-        // FIXME Task 4: implement the simple placement viewer
-        int length = placement.length();
-        TilePane tile = new TilePane();
-        tile.setLayoutX(145);
-        tile.setLayoutY(5);
-        tile.setHgap(50);
-        tile.setVgap(50);
-        tile.setPrefColumns(6);
-
-        for (int i = 0; i < length; i += 3) {
-            int a = determineCoordinate(placement.charAt(i+2))[0];
-            int b = determineCoordinate(placement.charAt(i+2))[1];
-            Rectangle rct = new Rectangle(60*b,60*a,60,60);
-            rct.setFill(getColor(placement.charAt(i)));
-            String str = determineKingdomName(placement.charAt(i)) +  placement.charAt(i+1);
-            Text label = new Text(str);
-            StackPane stackPane = new StackPane();
-            stackPane.getChildren().addAll(rct,label);
-            tile.getChildren().addAll(stackPane);
-        }
-        controls.getChildren().addAll(tile);
-    }
 
     /**
      * Create a basic text field for input and a refresh button.
