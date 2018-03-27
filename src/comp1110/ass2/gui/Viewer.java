@@ -164,7 +164,7 @@ public class Viewer extends Application {
     void makePlacement(String placement) {
         // FIXME Task 4: implement the simple placement viewer
         int length = placement.length();
-        TilePane tile = new TilePane();
+        TilePane tile = new TilePane();  // idea from Chaahat Jain
         tile.setLayoutX(145);
         tile.setLayoutY(5);
         tile.setHgap(50);
