@@ -45,7 +45,7 @@ public class Viewer extends Application {
 
 
     void makePlacement(String placement) {
-        TilePane tile = new TilePane();
+        TilePane tile = new TilePane();//idea from Chaahat Jain
         tile.setLayoutX(145);
         tile.setLayoutY(5);
         tile.setHgap(50);
