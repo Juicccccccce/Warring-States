@@ -498,6 +498,7 @@ public class WarringStatesGame {
      */
     public static String getSupporters(String setup, String moveSequence, int numPlayers, int playerId) {
         // FIXME Task 7: get the list of supporters for a given player after a sequence of moves
+        // test
         return null;
     }
 
