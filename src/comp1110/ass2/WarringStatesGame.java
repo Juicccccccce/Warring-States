@@ -503,20 +503,14 @@ public class WarringStatesGame {
         ArrayList<String> list = returnSupporters(setup,moveSequence,numPlayers);
         if (playerId == 0) {
             a = list.get(0);
-            System.out.println(a);
         } else {if (playerId == 1) {
             a = list.get(1);
-            System.out.println(a);
         } else {if (playerId == 2) {
             a = list.get(2);
-            System.out.println(a);
         } else {if (playerId == 3) {
             a = list.get(3);
-            System.out.println(a);
         }}}}
-        System.out.println(a);
         a = rearrange(a);
-        System.out.println(a);
         return a;
     }
     //return the list of supports for every player
@@ -681,49 +675,6 @@ public class WarringStatesGame {
         }
         return str;
     }
-
-    //switch the player
-//    public static int switchPlayer(int currentPlayer,int numPlayers) {
-//        int a = 0;
-//        if(numPlayers == 2) {
-//            switch (currentPlayer) {
-//                case 1:
-//                    a = 2;
-//                    break;
-//                case 2:
-//                    a = 1;
-//                    break;
-//            }
-//        }
-//        else {if(numPlayers == 3) {
-//            switch (currentPlayer) {
-//                case 1:
-//                    a = 2;
-//                    break;
-//                case 2:
-//                    a = 3;
-//                    break;
-//                case 3:
-//                    a = 1;
-//                    break;
-//            }
-//        } else {if(numPlayers == 4) {
-//            switch (currentPlayer) {
-//                case 1:
-//                    a = 2;
-//                    break;
-//                case 2:
-//                    a = 3;
-//                    break;
-//                case 3:
-//                    a = 4;
-//                    break;
-//                case 4:
-//                    a = 1;
-//                    break;
-//            }
-//        } else {a = -1;}
-//    }} return a;}
 
     /**
      * Given a setup and move sequence, determine which player controls the flag of each kingdom
