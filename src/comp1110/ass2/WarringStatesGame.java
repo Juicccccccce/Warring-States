@@ -3,6 +3,7 @@ package comp1110.ass2;
 import gittest.A;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -498,9 +499,231 @@ public class WarringStatesGame {
      */
     public static String getSupporters(String setup, String moveSequence, int numPlayers, int playerId) {
         // FIXME Task 7: get the list of supporters for a given player after a sequence of moves
-        // test
-        return null;
+        String a = "";
+        ArrayList<String> list = returnSupporters(setup,moveSequence,numPlayers);
+        if (playerId == 0) {
+            a = list.get(0);
+            System.out.println(a);
+        } else {if (playerId == 1) {
+            a = list.get(1);
+            System.out.println(a);
+        } else {if (playerId == 2) {
+            a = list.get(2);
+            System.out.println(a);
+        } else {if (playerId == 3) {
+            a = list.get(3);
+            System.out.println(a);
+        }}}}
+        System.out.println(a);
+        a = rearrange(a);
+        System.out.println(a);
+        return a;
     }
+    //return the list of supports for every player
+    public static ArrayList<String> returnSupporters(String setup,String moveSequence, int numPlayers) {
+        ArrayList<String> list = new ArrayList<>();
+       String Player1 = "";
+       String Player2 = "";
+       String Player3 = "";
+       String Player4 = "";
+       int j = moveSequence.length();
+       for (int i = 0; i < j; i++) {
+           int a = getCurrentPlayer(i,numPlayers);
+           int x = getThePositionInSetup(setup,moveSequence.charAt(i));
+           if (a == 1) {
+               Player1 += setup.charAt(x);
+               Player1 += setup.charAt(x+1);
+               setup = deleteEmptyLocation(setup, moveSequence.charAt(i));
+               setup += "z9" + moveSequence.charAt(i);
+           } else {if (a == 2) {
+               Player2 += setup.charAt(x);
+               Player2 += setup.charAt(x+1);
+               setup = deleteEmptyLocation(setup, moveSequence.charAt(i));
+               setup += "z9" + moveSequence.charAt(i);
+           } else {if (a == 3) {
+               Player3 += setup.charAt(x);
+               Player3 += setup.charAt(x+1);
+               setup = deleteEmptyLocation(setup, moveSequence.charAt(i));
+               setup += "z9" + moveSequence.charAt(i);
+           } else {if (a == 4) {
+               Player4 += setup.charAt(x);
+               Player4 += setup.charAt(x+1);
+               setup = deleteEmptyLocation(setup, moveSequence.charAt(i));
+               setup += "z9" + moveSequence.charAt(i);
+           }
+       }}}}
+       list.add(Player1);
+       list.add(Player2);
+       list.add(Player3);
+       list.add(Player4);
+       return list;
+    }
+
+    //get current player
+    public static int getCurrentPlayer(int num,int numPlayers) {
+        int d = 0;
+        switch (numPlayers) {
+            case 2:
+                if (num % 2 == 0) {
+                    d = 1;
+                } else {d = 2;
+        }
+        break;
+            case 3:
+                if (num % 3 == 0) {
+                    d = 1;
+                } else {if (num % 3 == 1) {
+                    d = 2;
+                } else {d = 3;
+    }}
+        break;
+            case 4:
+                if (num % 4 == 0) {
+                    d = 1;
+                } else {if (num % 4 == 1) {
+                    d = 2;
+                } else {if (num % 3 == 2) {
+                    d = 3;
+                } else {
+                    d = 4;
+                }}}
+                break;
+             default:
+                 d = -1;}
+                return d;}
+
+    public static String rearrange(String supportors) {
+        ArrayList<Integer> a = new ArrayList();
+        ArrayList<Integer> b = new ArrayList();
+        ArrayList<Integer> c = new ArrayList();
+        ArrayList<Integer> d = new ArrayList();
+        ArrayList<Integer> e = new ArrayList();
+        ArrayList<Integer> f = new ArrayList();
+        ArrayList<Integer> g = new ArrayList();
+        for (int i = 0; i < supportors.length(); i += 2) {
+            if (supportors.charAt(i) == 'a') {
+                a.add(Character.getNumericValue(supportors.charAt(i + 1)));
+            } else {
+                if (supportors.charAt(i) == 'b') {
+                    b.add(Character.getNumericValue(supportors.charAt(i + 1)));
+                } else {
+                    if (supportors.charAt(i) == 'c') {
+                        c.add(Character.getNumericValue(supportors.charAt(i + 1)));
+                    } else {
+                        if (supportors.charAt(i) == 'd') {
+                            d.add(Character.getNumericValue(supportors.charAt(i + 1)));
+                        } else {
+                            if (supportors.charAt(i) == 'e') {
+                                e.add(Character.getNumericValue(supportors.charAt(i + 1)));
+                            } else {
+                                if (supportors.charAt(i) == 'f') {
+                                    f.add(Character.getNumericValue(supportors.charAt(i + 1)));
+                                } else {
+                                    if (supportors.charAt(i) == 'g') {
+                                        g.add(Character.getNumericValue(supportors.charAt(i + 1)));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        Collections.sort(a);
+        Collections.sort(b);
+        Collections.sort(c);
+        Collections.sort(d);
+        Collections.sort(e);
+        Collections.sort(f);
+        Collections.sort(g);
+        String str = "";
+        if(!(a.size()==0) ) {
+            for (int i =0; i < a.size();i++) {
+                str += "a";
+                str += a.get(i);
+            }
+        }
+        if(!(b.size()==0) ) {
+            for (int i =0; i < b.size();i++) {
+                str += "b";
+                str += b.get(i);
+            }
+        }
+        if(!(c.size()==0) ) {
+            for (int i =0; i < c.size();i++) {
+                str += "c";
+                str += c.get(i);
+            }
+        }
+        if(!(d.size()==0) ) {
+            for (int i =0; i < d.size();i++) {
+                str += "d";
+                str += d.get(i);
+            }
+        }
+        if(!(e.size()==0) ) {
+            for (int i =0; i < e.size();i++) {
+                str += "e";
+                str += e.get(i);
+            }
+        }
+        if(!(f.size()==0) ) {
+            for (int i =0; i < f.size();i++) {
+                str += "f";
+                str += f.get(i);
+            }
+        }
+        if(!(g.size()==0) ) {
+            for (int i =0; i < g.size();i++) {
+                str += "g";
+                str += g.get(i);
+            }
+        }
+        return str;
+    }
+
+    //switch the player
+//    public static int switchPlayer(int currentPlayer,int numPlayers) {
+//        int a = 0;
+//        if(numPlayers == 2) {
+//            switch (currentPlayer) {
+//                case 1:
+//                    a = 2;
+//                    break;
+//                case 2:
+//                    a = 1;
+//                    break;
+//            }
+//        }
+//        else {if(numPlayers == 3) {
+//            switch (currentPlayer) {
+//                case 1:
+//                    a = 2;
+//                    break;
+//                case 2:
+//                    a = 3;
+//                    break;
+//                case 3:
+//                    a = 1;
+//                    break;
+//            }
+//        } else {if(numPlayers == 4) {
+//            switch (currentPlayer) {
+//                case 1:
+//                    a = 2;
+//                    break;
+//                case 2:
+//                    a = 3;
+//                    break;
+//                case 3:
+//                    a = 4;
+//                    break;
+//                case 4:
+//                    a = 1;
+//                    break;
+//            }
+//        } else {a = -1;}
+//    }} return a;}
 
     /**
      * Given a setup and move sequence, determine which player controls the flag of each kingdom
