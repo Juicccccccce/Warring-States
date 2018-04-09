@@ -2,10 +2,7 @@ package comp1110.ass2;
 
 import gittest.A;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * This class provides the text interface for the Warring States game
@@ -402,7 +399,6 @@ public class WarringStatesGame {
      * @return True if the placement sequence is valid
      */
     static boolean isMoveSequenceValid(String setup, String moveSequence) {
-        System.out.println(setup);
         // FIXME Task 6: determine whether a placement sequence is valid
         int j = moveSequence.length();
         for (int i = 0; i < j; i++) {
@@ -515,6 +511,7 @@ public class WarringStatesGame {
     }
     //return the list of supports for every player
     public static ArrayList<String> returnSupporters(String setup,String moveSequence, int numPlayers) {
+
         ArrayList<String> list = new ArrayList<>();
        String Player1 = "";
        String Player2 = "";
@@ -523,29 +520,24 @@ public class WarringStatesGame {
        int j = moveSequence.length();
        for (int i = 0; i < j; i++) {
            int a = getCurrentPlayer(i,numPlayers);
-           int x = getThePositionInSetup(setup,moveSequence.charAt(i));
            if (a == 1) {
-               Player1 += setup.charAt(x);
-               Player1 += setup.charAt(x+1);
-               setup = deleteEmptyLocation(setup, moveSequence.charAt(i));
+               Player1 += allPosition(moveSequence.charAt(i),setup);
+               setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
                setup += "z9" + moveSequence.charAt(i);
-           } else {if (a == 2) {
-               Player2 += setup.charAt(x);
-               Player2 += setup.charAt(x+1);
-               setup = deleteEmptyLocation(setup, moveSequence.charAt(i));
+           } else if (a == 2) {
+               Player2 += allPosition(moveSequence.charAt(i),setup);
+               setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
                setup += "z9" + moveSequence.charAt(i);
-           } else {if (a == 3) {
-               Player3 += setup.charAt(x);
-               Player3 += setup.charAt(x+1);
-               setup = deleteEmptyLocation(setup, moveSequence.charAt(i));
+           } else if (a == 3) {
+               Player3 += allPosition(moveSequence.charAt(i),setup);
+               setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
                setup += "z9" + moveSequence.charAt(i);
-           } else {if (a == 4) {
-               Player4 += setup.charAt(x);
-               Player4 += setup.charAt(x+1);
-               setup = deleteEmptyLocation(setup, moveSequence.charAt(i));
+           } else if (a == 4) {
+               Player4 += allPosition(moveSequence.charAt(i),setup);
+               setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
                setup += "z9" + moveSequence.charAt(i);
            }
-       }}}}
+       }
        list.add(Player1);
        list.add(Player2);
        list.add(Player3);
@@ -576,7 +568,7 @@ public class WarringStatesGame {
                     d = 1;
                 } else {if (num % 4 == 1) {
                     d = 2;
-                } else {if (num % 3 == 2) {
+                } else {if (num % 4 == 2) {
                     d = 3;
                 } else {
                     d = 4;
@@ -675,6 +667,66 @@ public class WarringStatesGame {
         }
         return str;
     }
+
+    //get all supports between the initial location and desitination
+    public static String allPosition(char locationChar, String setup) {
+        char zhangLocation = findZhangPosition(setup); // LocationChar
+
+        ArrayList<Character> col = getcol(setup, locationChar);
+
+        ArrayList<Character> row = getrow(setup, locationChar);
+
+        String str = "";
+
+        if (isSameRow(setup, locationChar)) {
+            for (int e = 0; e < row.size(); e++) {
+                int index = getThePositionInSetup(setup,row.get(e));
+                if (index == -1) {
+                    return "";
+                }
+                if (changeToNumber(zhangLocation) > changeToNumber(locationChar)) {
+                    if ((changeToNumber(zhangLocation) >= changeToNumber(row.get(e))) && (changeToNumber(locationChar) <= changeToNumber(row.get(e)))) {
+                        str += setup.substring(index,index +2);
+                    }
+                } else {
+                    if ((changeToNumber(zhangLocation) <= changeToNumber(row.get(e))) && (changeToNumber(locationChar) >= changeToNumber(row.get(e)))) {
+                        str += setup.substring(index,index +2);
+                    }
+                }
+            }
+
+        }
+
+        else {
+            if (isSameColumn(setup, locationChar)) {
+                for (int f = 0; f < col.size(); f++) {
+                    int index = getThePositionInSetup(setup, col.get(f));
+                    if (index == -1) {
+                        return "";
+                    }
+                    if (changeToNumber(zhangLocation) > changeToNumber(locationChar)) {
+                        if ((changeToNumber(zhangLocation) >= changeToNumber(col.get(f))) && (changeToNumber(locationChar) <= changeToNumber(col.get(f)))) {
+                            str += setup.substring(index,index +2);
+                        }
+                    } else {
+                        if ((changeToNumber(zhangLocation) <= changeToNumber(col.get(f))) && (changeToNumber(locationChar) >= changeToNumber(col.get(f)))) {
+                            str += setup.substring(index,index +2);
+                        }
+                    }
+                }
+            }
+        }
+        return str;
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String a = in.next();
+        String b = in.next();
+        char c = b.charAt(0);
+        System.out.println(returnSupporters(a,b,3));
+    }
+
 
     /**
      * Given a setup and move sequence, determine which player controls the flag of each kingdom
