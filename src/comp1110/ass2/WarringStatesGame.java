@@ -768,6 +768,7 @@ public class WarringStatesGame {
      */
     public static char generateMove(String placement) {
         // FIXME Task 10: generate a legal move
+        // test
         return '\0';
     }
 }
