@@ -2,6 +2,9 @@ package comp1110.ass2;
 
 import gittest.A;
 
+import javax.crypto.AEADBadTagException;
+import java.lang.reflect.Array;
+import java.net.Inet4Address;
 import java.util.*;
 
 /**
@@ -719,13 +722,13 @@ public class WarringStatesGame {
         return str;
     }
 
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        String a = in.next();
-        String b = in.next();
-        char c = b.charAt(0);
-        System.out.println(returnSupporters(a,b,3));
-    }
+//    public static void main(String[] args) {
+//        Scanner in = new Scanner(System.in);
+//        String a = in.next();
+//        String b = in.next();
+//        char c = b.charAt(0);
+//        System.out.println(returnSupporters(a,b,3));
+//    }
 
 
     /**
@@ -747,8 +750,252 @@ public class WarringStatesGame {
      */
     public static int[] getFlags(String setup, String moveSequence, int numPlayers) {
         // FIXME Task 8: determine which player controls the flag of each kingdom after a given sequence of moves
-        return null;
+//        ArrayList<String> list = returnSupporters(setup,moveSequence,numPlayers);
+        System.out.println("set up is "+ setup);
+        System.out.println("moveSequence is "+moveSequence);
+        System.out.println("number of player is "+numPlayers);
+        int[] array = new int[7];
+//        String player1 = list.get(0);
+//        String player2 = list.get(1);
+//        String player3 = list.get(2);
+//        String player4 = list.get(3);
+//        ArrayList<Integer> Qin = new ArrayList<>();
+//        ArrayList<Integer> Qi = new ArrayList<>();
+//        ArrayList<Integer> Chu = new ArrayList<>();
+//        ArrayList<Integer> Zhao = new ArrayList<>();
+//        ArrayList<Integer> Han = new ArrayList<>();
+//        ArrayList<Integer> Wei = new ArrayList<>();
+//        ArrayList<Integer> Yan = new ArrayList<>();
+//        Qin.add(getNumber(player1,'a'));
+//        Qin.add(getNumber(player2,'a'));
+//        Qin.add(getNumber(player3,'a'));
+//        Qin.add(getNumber(player4,'a'));
+//        Qi.add(getNumber(player1,'b'));
+//        Qi.add(getNumber(player2,'b'));
+//        Qi.add(getNumber(player3,'b'));
+//        Qi.add(getNumber(player4,'b'));
+//        Chu.add(getNumber(player1,'c'));
+//        Chu.add(getNumber(player2,'c'));
+//        Chu.add(getNumber(player3,'c'));
+//        Chu.add(getNumber(player4,'c'));
+//        Wei.add(getNumber(player1,'f'));
+//        Wei.add(getNumber(player2,'f'));
+//        Wei.add(getNumber(player3,'f'));
+//        Wei.add(getNumber(player4,'f'));
+//        Zhao.add(getNumber(player1,'d'));
+//        Zhao.add(getNumber(player2,'d'));
+//        Zhao.add(getNumber(player3,'d'));
+//        Zhao.add(getNumber(player4,'d'));
+//        Han.add(getNumber(player1,'e'));
+//        Han.add(getNumber(player2,'e'));
+//        Han.add(getNumber(player3,'e'));
+//        Han.add(getNumber(player4,'e'));
+//        Yan.add(getNumber(player1,'g'));
+//        Yan.add(getNumber(player2,'g'));
+//        Yan.add(getNumber(player3,'g'));
+//        Yan.add(getNumber(player4,'g'));
+//        ArrayList<Integer> a = Qin;
+//        ArrayList<Integer> b = Qi;
+//        ArrayList<Integer> c = Chu;
+//        ArrayList<Integer> d = Zhao;
+//        ArrayList<Integer> e = Han;
+//        ArrayList<Integer> f = Wei;
+//        ArrayList<Integer> g = Yan;
+//        Collections.sort(Qin);
+//        Collections.sort(Qi);
+//        Collections.sort(Chu);
+//        Collections.sort(Zhao);
+//        Collections.sort(Han);
+//        Collections.sort(Wei);
+//        Collections.sort(Yan);
+//        if (Qin.get(0) == -1) {
+//            array[0] = -1;
+//        } else {getPlayer(a);}
+//
+//        if (Qi.get(0) == -1) {
+//            array[1] = -1;
+//        } else {getPlayer(b);}
+//
+//        if (Chu.get(0) == -1) {
+//            array[2] = -1;
+//        } else {getPlayer(c);}
+//
+//        if (Zhao.get(0) == -1) {
+//            array[3] = -1;
+//        } else {getPlayer(d);}
+//
+//        if (Han.get(0) == -1) {
+//            array[4] = -1;
+//        } else {getPlayer(e);}
+//
+//        if (Wei.get(0) == -1) {
+//            array[5] = -1;
+//        } else {getPlayer(f);}
+//
+//        if (Yan.get(0) == -1) {
+//            array[6] = -1;
+//        } else {getPlayer(g);}
+        array[0] = getMost(setup,moveSequence,numPlayers,'a');
+        array[1] = getMost(setup,moveSequence,numPlayers,'b');
+        array[2] = getMost(setup,moveSequence,numPlayers,'c');
+        array[3] = getMost(setup,moveSequence,numPlayers,'d');
+        array[4] = getMost(setup,moveSequence,numPlayers,'e');
+        array[5] = getMost(setup,moveSequence,numPlayers,'f');
+        array[6] = getMost(setup,moveSequence,numPlayers,'g');
+        System.out.println(array[0]);
+        System.out.println(array[1]);
+        System.out.println(array[2]);
+        System.out.println(array[3]);
+        System.out.println(array[4]);
+        System.out.println(array[5]);
+        System.out.println(array[6]);
+        return array;
     }
+
+    // return the player who get most cards of a kingdom
+    public static int getMost(String setup, String moveSequence, int numPlayer, char kingdom) {
+        ArrayList<String> list = returnSupporters(setup, moveSequence, numPlayer);
+        String player1 = list.get(0);
+        String player2 = list.get(1);
+        String player3 = list.get(2);
+        String player4 = list.get(3);
+        int playerID = 0;
+        int A = 0;
+        int B = 0;
+        int C = 0;
+        int D = 0;
+        ArrayList<Integer> a = new ArrayList<>(); // store the cards' number that player holds
+        if (player1.indexOf(kingdom) == -1) {
+            a.add(0);
+        } else {
+            for (int i = 0; i < player1.length(); i += 2) {
+                if (player1.charAt(i) == kingdom) {
+                    A += 1;
+                }
+            }
+            a.add(A);
+        }
+
+        if (player2.indexOf(kingdom) == -1) {
+            a.add(0);
+        } else {
+            for (int i = 0; i < player2.length(); i += 2) {
+                if (player2.charAt(i) == kingdom) {
+                    B += 1;
+                }
+            }
+            a.add(B);
+        }
+
+        if (player3.indexOf(kingdom) == -1) {
+            a.add(0);
+        } else {
+            for (int i = 0; i < player3.length(); i += 2) {
+                if (player3.charAt(i) == kingdom) {
+                    C += 1;
+                }
+            }
+            a.add(C);
+        }
+
+        if (player4.indexOf(kingdom) == -1) {
+            a.add(0);
+        } else {
+            for (int i = 0; i < player4.length(); i += 2) {
+                if (player4.charAt(i) == kingdom) {
+                    D += 1;
+                }
+            }
+            a.add(D);
+        }
+        ArrayList<Integer> playerIDs = new ArrayList<>(); // to store playerIDs who holds the same number of cards
+        ArrayList<Integer> New = a; //copy the arraylist for a
+        Collections.sort(a);
+        Collections.reverse(a);
+        ArrayList<Integer> lastShown = new ArrayList<>(); // to store the last shown number for players
+        if (a.get(0) == 0) {
+            playerID = -1;
+        } else {
+            for (int i = 0; i < 4; i++) {
+                if (a.get(0) == New.get(i)) {
+                playerIDs.add(i);
+            }
+        }}
+        for (int i = 0; i <playerIDs.size(); i++) {
+            lastShown.add(helpmethod(setup,moveSequence,numPlayer,playerIDs.get(i),kingdom));
+        }
+        ArrayList<Integer> forLastShown = lastShown;
+        if (playerIDs.size() == 1) {
+            for (int j = 0; j < 4; j++) {
+                if (New.get(j) == a.get(0)) {
+                    playerID = j;
+                }
+            }
+        } else {
+            Collections.sort(lastShown);
+            Collections.reverse(lastShown);
+            for (int i = 0; i < lastShown.size();i++) {
+                if (forLastShown.get(i) == lastShown.get(0)) {
+                    playerID = playerIDs.get(i);
+                }
+            }
+        }
+        return playerID;
+    }
+
+    public static int helpmethod(String setup, String moveSequence,int numPlayer,int playerID,char kingdom) {
+        int a = 0;
+        if (playerID == 0) {
+            a = getNumber(returnSupporters(setup,moveSequence,numPlayer).get(0),kingdom);
+        } else {if (playerID == 1) {
+            a = getNumber(returnSupporters(setup,moveSequence,numPlayer).get(1),kingdom);
+        } else {if (playerID == 2) {
+            a = getNumber(returnSupporters(setup,moveSequence,numPlayer).get(2),kingdom);
+        } else {if (playerID == 3) {
+            a = getNumber(returnSupporters(setup,moveSequence,numPlayer).get(3),kingdom);
+        }
+    }}}
+    return a;
+    }
+
+//    public static int getPlayer(ArrayList<Integer> list) {
+//        ArrayList<Integer> a = list;
+//        Collections.sort(list);
+//        int playerID = 0;
+//            if (!(list.get(0) == -1)) {
+//                for (int i = 0; i < a.size(); i++) {
+//                    if (list.get(0) == list.get(i)) {
+//                     playerID = i;
+//                }
+//            }
+//        }
+//        return playerID;
+//    }
+
+    // get the kingdom last shown index in a supports string
+    public static int getNumber(String suppoters, char kingdom) {
+        int a = suppoters.length();
+        int b = 0;
+        if (!(suppoters.indexOf(kingdom) == -1)) {
+        for (int i = 0; i < a; i++) {
+            if (suppoters.charAt(i) == kingdom) {
+                b = i / 2 + 1;
+            }
+        }
+    } else { b = -1;}
+    return b;
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String a = in.next();
+        String b = in.next();
+        char c = b.charAt(0);
+        String d = in.next();
+        int e = in.nextInt();
+        System.out.println(getMost(a,d,e,c));
+    }
+
 
     /**
      * Generate a legal move, given the provided placement string.
