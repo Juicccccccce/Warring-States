@@ -751,9 +751,9 @@ public class WarringStatesGame {
     public static int[] getFlags(String setup, String moveSequence, int numPlayers) {
         // FIXME Task 8: determine which player controls the flag of each kingdom after a given sequence of moves
 //        ArrayList<String> list = returnSupporters(setup,moveSequence,numPlayers);
-        System.out.println("set up is "+ setup);
-        System.out.println("moveSequence is "+moveSequence);
-        System.out.println("number of player is "+numPlayers);
+//        System.out.println("set up is "+ setup);
+//        System.out.println("moveSequence is "+moveSequence);
+//        System.out.println("number of player is "+numPlayers);
         int[] array = new int[7];
         array[0] = getMost(setup,moveSequence,numPlayers,'a');
         array[1] = getMost(setup,moveSequence,numPlayers,'b');
@@ -762,13 +762,6 @@ public class WarringStatesGame {
         array[4] = getMost(setup,moveSequence,numPlayers,'e');
         array[5] = getMost(setup,moveSequence,numPlayers,'f');
         array[6] = getMost(setup,moveSequence,numPlayers,'g');
-        System.out.println(array[0]);
-        System.out.println(array[1]);
-        System.out.println(array[2]);
-        System.out.println(array[3]);
-        System.out.println(array[4]);
-        System.out.println(array[5]);
-        System.out.println(array[6]);
         return array;
     }
 
@@ -779,8 +772,6 @@ public class WarringStatesGame {
         String player2 = list.get(1);
         String player3 = list.get(2);
         String player4 = list.get(3);
-        System.out.println("p1 supporters "+player1);
-        System.out.println("p2 supporters "+player2);
         int playerID = 0;
         int A = 0;
         int B = 0;
@@ -797,7 +788,6 @@ public class WarringStatesGame {
             }
             a.add(A);
         }
-        System.out.println("player1"+a);
         if (player2.indexOf(kingdom) == -1) {
             a.add(0);
         } else {
@@ -808,7 +798,6 @@ public class WarringStatesGame {
             }
             a.add(B);
         }
-        System.out.println("player2"+a);
         if (player3.indexOf(kingdom) == -1) {
             a.add(0);
         } else {
@@ -819,7 +808,6 @@ public class WarringStatesGame {
             }
             a.add(C);
         }
-        System.out.println("player3"+a);
         if (player4.indexOf(kingdom) == -1) {
             a.add(0);
         } else {
@@ -830,43 +818,33 @@ public class WarringStatesGame {
             }
             a.add(D);
         }
-        System.out.println("player4"+a);
         ArrayList<Integer> playerIDs = new ArrayList<>(); // to store playerIDs who holds the same number of cards
         ArrayList<Integer> New = new ArrayList<>(); //copy the arraylist for a
         New.add(a.get(0));
         New.add(a.get(1));
         New.add(a.get(2));
         New.add(a.get(3));
-        System.out.println("the new is "+New);
         Collections.sort(a);
-//        System.out.println(a);
         Collections.reverse(a);
-        System.out.println("after a is "+a);
         ArrayList<Integer> lastShown = new ArrayList<>(); // to store the last shown number for players
         if (a.get(0) == 0) {
             playerID = -1;
         } else {
             for (int i = 0; i < 4; i++) {
                 if (a.get(0) == New.get(i)) {
-//                    System.out.println("new is"+New);
-//                    System.out.println("a.get(0) is" +a.get(0));
-//                    System.out.println("new.get(0) is"+New.get(0));
-//                    System.out.println("new.get(i) is"+New.get(i));
-//                    System.out.println("i is"+i);
                 playerIDs.add(i);
             }
         }}
-        System.out.println("playerIDS is" + playerIDs);
-        if (playerIDs.size() >= 0) {for (int i = 0; i <playerIDs.size(); i++) {
+        if (playerIDs.size() > 1) {
+        for (int i = 0; i <playerIDs.size(); i++) {
             lastShown.add(helpmethod(setup,moveSequence,numPlayer,playerIDs.get(i),kingdom));
-            System.out.println("test"+lastShown.get(i));
         }}
-        System.out.println("the lastshown is"+lastShown);
         ArrayList<Integer> forLastShown = new ArrayList<>();
-        for (int i = 0; i < lastShown.size(); i ++) {
+        if (lastShown.size() > 0) {
+        {for (int i = 0; i < lastShown.size(); i ++) {
             forLastShown.add(lastShown.get(i));
-        }
-        System.out.println("forlastshown "+forLastShown);
+        }}}
+
         if (playerIDs.size() == 1) {
             for (int j = 0; j < 4; j++) {
                 if (New.get(j) == a.get(0)) {
@@ -882,79 +860,51 @@ public class WarringStatesGame {
                 }
             }
         }
-//        System.out.println(playerID);
         return playerID;
     }
 
     public static int helpmethod(String setup, String moveSequence,int numPlayer,int playerID,char kingdom) {
         int b = 0;
-        if (moveSequence.length() > 0) {
         if (playerID == 0) {
             int a = getNumber(returnSupporters(setup,moveSequence,numPlayer).get(0),kingdom);
-            System.out.println("hello");
+            if (a >= 0) {
             for (int i = 0; i < moveSequence.length();i++) {
                 if (((returnSupporters(setup,moveSequence.substring(0,i+1),numPlayer)).get(0)).length() == a * 2) {
-                   System.out.println("i "+i);
                     b = i;
                     break;
                 }
-            }
+            }}
         }
         else if (playerID == 1) {
             int a = getNumber(returnSupporters(setup,moveSequence,numPlayer).get(1),kingdom);
-            System.out.println("hi");
-            System.out.println("a "+a);
+            if (a >= 0) {
             for (int i = 0; i < moveSequence.length();i++) {
                 if (((returnSupporters(setup,moveSequence.substring(0,i+1),numPlayer)).get(1)).length() == a * 2) {
-                    System.out.println((returnSupporters(setup,moveSequence.substring(0,i+1),numPlayer).get(1)));
-                    System.out.println("i "+i);
                     b = i;
                     break;
                 }
-            }
+            }}
         } else if (playerID == 2) {
             int a = getNumber(returnSupporters(setup,moveSequence,numPlayer).get(2),kingdom);
+            if (a >= 0) {
             for (int i = 0; i < moveSequence.length();i++) {
                 if (((returnSupporters(setup,moveSequence.substring(0,i+1),numPlayer)).get(2)).length() == a * 2) {
                     b = i;
                     break;
                 }
-            }
+            }}
         } else if (playerID == 3) {
             int a = getNumber(returnSupporters(setup,moveSequence,numPlayer).get(3),kingdom);
+            if (a >= 0) {
             for (int i = 0; i < moveSequence.length();i++) {
                 if (((returnSupporters(setup,moveSequence.substring(0,i+1),numPlayer)).get(3)).length() == a * 2) {
                     b = i;
                     break;
                 }
-            }
-        }}
+            }}
+        }
     return b;
     }
-
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        String a = in.next();
-        String b = in.next();
-        int c =in.nextInt();
-        int d = in.nextInt();
-        String e = in.next();
-        char f = e.charAt(0);
-//        System.out.println(helpmethod(a,b,c,d,f));
-    }
-//    public static int getPlayer(ArrayList<Integer> list) {
-//        ArrayList<Integer> a = list;
-//        Collections.sort(list);
-//        int playerID = 0;
-//            if (!(list.get(0) == -1)) {
-//                for (int i = 0; i < a.size(); i++) {
-//                    if (list.get(0) == list.get(i)) {
-//                     playerID = i;
-//                }
-//            }
-//        }
-//        return playerID;
-//    }
 
     // get the kingdom last shown index in a supports string
     public static int getNumber(String suppoters, char kingdom) {
@@ -970,15 +920,6 @@ public class WarringStatesGame {
     return b;
     }
 
-//    public static void main(String[] args) {
-//        Scanner in = new Scanner(System.in);
-//        String a = in.next();
-//        String b = in.next();
-//        char c = b.charAt(0);
-//        String d = in.next();
-//        int e = in.nextInt();
-//        System.out.println(getMost(a,d,e,c));
-//    }
 
 
     /**
