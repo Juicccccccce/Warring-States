@@ -837,7 +837,7 @@ public class WarringStatesGame {
         }}
         if (playerIDs.size() > 1) {
         for (int i = 0; i <playerIDs.size(); i++) {
-            lastShown.add(helpmethod(setup,moveSequence,numPlayer,playerIDs.get(i),kingdom));
+            lastShown.add(getLast(playerIDs.get(i),setup,moveSequence,numPlayer,kingdom));
         }}
         ArrayList<Integer> forLastShown = new ArrayList<>();
         if (lastShown.size() > 0) {
@@ -863,47 +863,60 @@ public class WarringStatesGame {
         return playerID;
     }
 
-    public static int helpmethod(String setup, String moveSequence,int numPlayer,int playerID,char kingdom) {
-        int b = 0;
-        if (playerID == 0) {
-            int a = getNumber(returnSupporters(setup,moveSequence,numPlayer).get(0),kingdom);
-            if (a >= 0) {
-            for (int i = 0; i < moveSequence.length();i++) {
-                if (((returnSupporters(setup,moveSequence.substring(0,i+1),numPlayer)).get(0)).length() == a * 2) {
-                    b = i;
-                    break;
-                }
-            }}
+//    public static int helpmethod(String setup, String moveSequence,int numPlayer,int playerID,char kingdom) {
+//        int b = 0;
+////        System.out.print(kingdom + " ");
+//        if (playerID == 0) {
+////            int a = getNumber(returnSupporters(setup,moveSequence,numPlayer).get(0),kingdom);
+////            if (a >= 0) {
+////            for (int i = 0; i < moveSequence.length(); i++) {
+////                if (((returnSupporters(setup,moveSequence.substring(0,i+1),numPlayer)).get(0)).length() == a * 2) {
+////                    b = i;
+////                    break;
+////                }
+//            b = getLast(playerID,setup,moveSequence,numPlayer,kingdom)
+//            }
+//
+//        else if (playerID == 1) {
+//            int a = getNumber(returnSupporters(setup,moveSequence,numPlayer).get(1),kingdom);
+//            if (a >= 0) {
+//            for (int x = 0; x < moveSequence.length();x++) {
+//                if (((returnSupporters(setup,moveSequence.substring(0,x+1),numPlayer)).get(1)).length() == a * 2) {
+//                    b = x;
+//                    break;
+//                }
+//            }}
+//        } else if (playerID == 2) {
+//            int a = getNumber(returnSupporters(setup,moveSequence,numPlayer).get(2),kingdom);
+//            if (a >= 0) {
+//            for (int y = 0; y < moveSequence.length();y++) {
+//                if (returnSupporters(setup,moveSequence.substring(0,y+1),numPlayer).get(2).length() == a * 2) {
+//                    b = y;
+//                    break;
+//                }
+//            }}
+//        } else if (playerID == 3) {
+//            int a = getNumber(returnSupporters(setup,moveSequence,numPlayer).get(3),kingdom);
+//            if (a >= 0) {
+//            for (int z = 0; z < moveSequence.length();z++) {
+//                if (((returnSupporters(setup,moveSequence.substring(0,z+1),numPlayer)).get(3)).length() == a * 2) {
+//                    b = z;
+//                    break;
+//                }
+//            }}
+//        }
+//    return b;
+//    }
+
+    public static int getLast(int playerId,String setup, String moveSequence, int numPlayer, char kingdom) {
+        int a = getNumber(returnSupporters(setup,moveSequence,numPlayer).get(playerId),kingdom);
+        int re = 0;
+        for (int i = 0; i < moveSequence.length(); i ++) {
+            if (returnSupporters(setup,moveSequence.substring(0,i+1),numPlayer).get(playerId).length() == a * 2) {
+                re = i;
+            }
         }
-        else if (playerID == 1) {
-            int a = getNumber(returnSupporters(setup,moveSequence,numPlayer).get(1),kingdom);
-            if (a >= 0) {
-            for (int i = 0; i < moveSequence.length();i++) {
-                if (((returnSupporters(setup,moveSequence.substring(0,i+1),numPlayer)).get(1)).length() == a * 2) {
-                    b = i;
-                    break;
-                }
-            }}
-        } else if (playerID == 2) {
-            int a = getNumber(returnSupporters(setup,moveSequence,numPlayer).get(2),kingdom);
-            if (a >= 0) {
-            for (int i = 0; i < moveSequence.length();i++) {
-                if (((returnSupporters(setup,moveSequence.substring(0,i+1),numPlayer)).get(2)).length() == a * 2) {
-                    b = i;
-                    break;
-                }
-            }}
-        } else if (playerID == 3) {
-            int a = getNumber(returnSupporters(setup,moveSequence,numPlayer).get(3),kingdom);
-            if (a >= 0) {
-            for (int i = 0; i < moveSequence.length();i++) {
-                if (((returnSupporters(setup,moveSequence.substring(0,i+1),numPlayer)).get(3)).length() == a * 2) {
-                    b = i;
-                    break;
-                }
-            }}
-        }
-    return b;
+        return re;
     }
 
     // get the kingdom last shown index in a supports string
