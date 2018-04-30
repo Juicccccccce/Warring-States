@@ -28,7 +28,7 @@ public class PlacementWellFormedTest {
 
     @Test
     public void testEmpty() {
-        assertFalse("Null placement string is not OK, but passed", WarringStatesGame.isPlacementWellFormed(null));
+        assertFalse("Null  placement string is not OK, but passed", WarringStatesGame.isPlacementWellFormed(null));
         assertFalse("Empty placement string is not OK, but passed", WarringStatesGame.isPlacementWellFormed(""));
         Random r = new Random();
         checkSimpleValid(r);

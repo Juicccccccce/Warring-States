@@ -1,16 +1,13 @@
 package comp1110.ass2.gui;
 
-import com.sun.xml.internal.bind.v2.runtime.Coordinator;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
@@ -100,6 +97,7 @@ public class Viewer extends Application {
         // Return the coordinate for a locationChar
     public static int[] determineCoordinate(char locationChar) {
         int[] xy = new int[2];
+        //xy[0] is the row
         if (locationChar == '4' || locationChar == 'Y' || locationChar == 'S' || locationChar == 'M' || locationChar == 'G' || locationChar == 'A') {
             xy[0] = 0;
         } else {
@@ -123,23 +121,47 @@ public class Viewer extends Application {
                 }
             }
         }
-        if (locationChar >= '4' && locationChar <= '9') {
-            xy[1] = 0;
+        //xy[1] is the column
+//        if (locationChar >= '4' && locationChar <= '9') {
+//            xy[1] = 0;
+//        } else {
+//            if (locationChar == 'Y' || locationChar == 'Z' || locationChar >= '0' && locationChar <= '3') {
+//                xy[1] = 1;
+//            } else {
+//                if (locationChar >= 'S' && locationChar <= 'X') {
+//                    xy[1] = 2;
+//                } else {
+//                    if (locationChar >= 'M' && locationChar <= 'R') {
+//                        xy[1] = 3;
+//                    } else {
+//                        if (locationChar >= 'G' && locationChar <= 'L') {
+//                            xy[1] = 4;
+//                        } else {
+//                            if (locationChar >= 'A' && locationChar <= 'F') {
+//                                xy[1] = 5;
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+        if (locationChar == '4' || locationChar == '5' || locationChar == '6' || locationChar == '7' || locationChar == '8' || locationChar == '9') {
+            xy[1] = 5;
         } else {
-            if (locationChar == 'Y' || locationChar == 'Z' || locationChar >= '0' && locationChar <= '3') {
-                xy[1] = 1;
+            if (locationChar == 'Y' || locationChar == 'Z' || locationChar == '0' || locationChar == '1' || locationChar == '2' || locationChar == '3') {
+                xy[1] = 4;
             } else {
-                if (locationChar >= 'S' && locationChar <= 'X') {
-                    xy[1] = 2;
+                if (locationChar == 'S' || locationChar == 'T' || locationChar == 'U' || locationChar == 'V' || locationChar == 'W' || locationChar == 'X') {
+                    xy[1] = 3;
                 } else {
-                    if (locationChar >= 'M' && locationChar <= 'R') {
-                        xy[1] = 3;
+                    if (locationChar == 'M' || locationChar == 'N' || locationChar == 'O' || locationChar == 'P' || locationChar == 'Q' || locationChar == 'R') {
+                        xy[1] = 2;
                     } else {
-                        if (locationChar >= 'G' && locationChar <= 'L') {
-                            xy[1] = 4;
+                        if (locationChar == 'G' || locationChar == 'H' || locationChar == 'I' || locationChar == 'J' || locationChar == 'K' || locationChar == 'L') {
+                            xy[1] = 1;
                         } else {
-                            if (locationChar >= 'A' && locationChar <= 'F') {
-                                xy[1] = 5;
+                            if (locationChar == 'A' || locationChar == 'B' || locationChar == 'C' || locationChar == 'D' || locationChar == 'E' || locationChar == 'F') {
+                                xy[1] = 0;
                             }
                         }
                     }
