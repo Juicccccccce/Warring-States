@@ -1,12 +1,17 @@
 package comp1110.ass2;
 
+import org.junit.Rule;
 import org.junit.Test;
 import comp1110.ass2.WarringStatesGame.*;
+import org.junit.rules.Timeout;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class rearrangeTest {
+    @Rule
+    public Timeout globalTimeout = Timeout.millis(2000);
+
     @Test
     public void testEmpty() {
         assertFalse("Null  placement string is not OK, but passed", WarringStatesGame.isPlacementWellFormed(null));

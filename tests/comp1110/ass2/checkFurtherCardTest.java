@@ -1,9 +1,15 @@
 package comp1110.ass2;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
+
 import static junit.framework.TestCase.assertFalse;
 
 public class checkFurtherCardTest {
+    @Rule
+    public Timeout globalTimeout = Timeout.millis(2000);
+
     @Test
     public void testTrue() {
         for (int i = 0; i < PLACEMENTS.length; i++ ) {
