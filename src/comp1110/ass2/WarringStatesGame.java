@@ -750,118 +750,165 @@ public class WarringStatesGame {
      */
     public static int[] getFlags(String setup, String moveSequence, int numPlayers) {
         // FIXME Task 8: determine which player controls the flag of each kingdom after a given sequence of moves
+        return null;}
 //        ArrayList<String> list = returnSupporters(setup,moveSequence,numPlayers);
 //        System.out.println("set up is "+ setup);
 //        System.out.println("moveSequence is "+moveSequence);
-//        System.out.println("number of player is "+numPlayers);
-        int[] array = new int[7];
-        array[0] = getMost(setup,moveSequence,numPlayers,'a');
-        array[1] = getMost(setup,moveSequence,numPlayers,'b');
-        array[2] = getMost(setup,moveSequence,numPlayers,'c');
-        array[3] = getMost(setup,moveSequence,numPlayers,'d');
-        array[4] = getMost(setup,moveSequence,numPlayers,'e');
-        array[5] = getMost(setup,moveSequence,numPlayers,'f');
-        array[6] = getMost(setup,moveSequence,numPlayers,'g');
-        return array;
-    }
+////        System.out.println("number of player is "+numPlayers);
+//        int[] array = new int[7];
+//        array[0] = getMost(setup,moveSequence,numPlayers,'a');
+//        array[1] = getMost(setup,moveSequence,numPlayers,'b');
+//        array[2] = getMost(setup,moveSequence,numPlayers,'c');
+//        array[3] = getMost(setup,moveSequence,numPlayers,'d');
+//        array[4] = getMost(setup,moveSequence,numPlayers,'e');
+//        array[5] = getMost(setup,moveSequence,numPlayers,'f');
+//        array[6] = getMost(setup,moveSequence,numPlayers,'g');
+//        return array;
+//    }
+//
+//    // return the player who get most cards of a kingdom
+//    public static int getMost(String setup, String moveSequence, int numPlayer, char kingdom) {
+//        ArrayList<String> list = returnSupporters(setup, moveSequence, numPlayer);
+//        String player1 = list.get(0);
+//        String player2 = list.get(1);
+//        String player3 = list.get(2);
+//        String player4 = list.get(3);
+////        System.out.println("player 1 is "+player1); all good
+////        System.out.println("player 2 is "+player2); all good
+//        int playerID = 0;
+//        int A = 0;
+//        int B = 0;
+//        int C = 0;
+//        int D = 0;
+//        ArrayList<Integer> a = new ArrayList<>(); // store the cards' number that player holds
+//        if (player1.indexOf(kingdom) == -1) {
+//            a.add(0);
+//        } else {
+//            for (int i = 0; i < player1.length(); i += 2) {
+//                if (player1.charAt(i) == kingdom) {
+//                    A += 1;
+//                }
+//            }
+//            a.add(A);
+//        }
+//        if (player2.indexOf(kingdom) == -1) {
+//            a.add(0);
+//        } else {
+//            for (int i = 0; i < player2.length(); i += 2) {
+//                if (player2.charAt(i) == kingdom) {
+//                    B += 1;
+//                }
+//            }
+//            a.add(B);
+//        }
+//        if (player3.indexOf(kingdom) == -1) {
+//            a.add(0);
+//        } else {
+//            for (int i = 0; i < player3.length(); i += 2) {
+//                if (player3.charAt(i) == kingdom) {
+//                    C += 1;
+//                }
+//            }
+//            a.add(C);
+//        }
+//        if (player4.indexOf(kingdom) == -1) {
+//            a.add(0);
+//        } else {
+//            for (int i = 0; i < player4.length(); i += 2) {
+//                if (player4.charAt(i) == kingdom) {
+//                    D += 1;
+//                }
+//            }
+//            a.add(D);
+//        }
+//        ArrayList<Integer> getLast = new ArrayList<>();
+//        int max = Collections.max(a);
+//        if (max == 0) {
+//            playerID = 0;
+//        } else {
+//            if (count(a,max) > 1 ) {
+//                for (int i = 0; i < whenAppear(a,max).size(); i ++) {
+//                    if (getSupporters(setup,moveSequence,numPlayer,whenAppear(a,max).get(i)).length() >= 2) {
+//                    getLast.add(getLast(whenAppear(a,max).get(i),setup,moveSequence,numPlayer,kingdom,getSupporters(setup,moveSequence,numPlayer,whenAppear(a,max).get(i)).substring(getSupporters(setup,moveSequence,numPlayer,whenAppear(a,max).get(i)).length()-2)));
+//                } else {playerID = -2;}}
+//                for (int i = 0; i < whenAppear(a,max).size(); i++) {
+//                    if (getSupporters(setup,moveSequence,numPlayer,whenAppear(a,max).get(i)).length() >= 2) {
+//                    if (Collections.max(getLast) == getLast(whenAppear(a,max).get(i),setup,moveSequence,numPlayer,kingdom,getSupporters(setup,moveSequence,numPlayer,whenAppear(a,max).get(i)).substring(getSupporters(setup,moveSequence,numPlayer,whenAppear(a,max).get(i)).length()-2))) {
+//                        playerID = i;
+//                    }}
+//                }
+//            } else {
+//                for (int i = 0; i < 4; i ++) {
+//                   if ( a.get(i) == i) {
+//                       playerID = i;
+//                   }
+//                }
+//            }
+//        }
+//        ArrayList<Integer> playerIDs = new ArrayList<>(); // to store playerIDs who holds the same number of cards
+//        ArrayList<Integer> New = new ArrayList<>(); //copy the arraylist for a
+//        New.add(a.get(0));
+//        New.add(a.get(1));
+//        New.add(a.get(2));
+//        New.add(a.get(3));
+//        Collections.sort(a);
+//        Collections.reverse(a);
+//        ArrayList<Integer> lastShown = new ArrayList<>(); // to store the last shown number for players
+//        if (a.get(0) == 0) {
+//            playerID = -1;
+//        } else {
+//            for (int i = 0; i < 4; i++) {
+//                if (a.get(0) == New.get(i)) {
+//                playerIDs.add(i);
+//            }
+//        }}
+//        if (playerIDs.size() > 1) {
+//        for (int i = 0; i <playerIDs.size(); i++) {
+//            lastShown.add(getLast(playerIDs.get(i),setup,moveSequence,numPlayer,kingdom));
+//        }}
+//        ArrayList<Integer> forLastShown = new ArrayList<>();
+//        if (lastShown.size() > 0) {
+//        {for (int i = 0; i < lastShown.size(); i ++) {
+//            forLastShown.add(lastShown.get(i));
+//        }}}
+////   System.out.println(forLastShown);
+//        if (playerIDs.size() == 1) {
+//            for (int j = 0; j < 4; j++) {
+//                if (New.get(j) == a.get(0)) {
+//                    playerID = j;
+//                }
+//            }
+//        } else {
+//            Collections.sort(lastShown);
+//            Collections.reverse(lastShown);
+//            for (int i = 0; i < lastShown.size();i++) {
+//                if (forLastShown.get(i) == lastShown.get(0)) {
+//                    playerID = playerIDs.get(i);
+//                }
+//            }
+//        }
+//        System.out.println(playerID);
+//        return playerID;
+//    }
+//
+//    public static ArrayList<Integer> whenAppear(ArrayList<Integer> a, Integer b) {
+//        for (int i = 0; i < a.size(); i ++) {
+//            if (a.get(i) == b) {
+//                a.add(i);
+//            }
+//        }
+//        return a;
+//    }
+//
+//    public static int count(ArrayList<Integer> a, Integer b) {
+//        int c = 0;
+//        for (int i = 0; i < a.size(); i ++ ) {
+//            if (a.get(i) == b) {
+//                c += 1;
+//            }
+//        }
+//        return c;
 
-    // return the player who get most cards of a kingdom
-    public static int getMost(String setup, String moveSequence, int numPlayer, char kingdom) {
-        ArrayList<String> list = returnSupporters(setup, moveSequence, numPlayer);
-        String player1 = list.get(0);
-        String player2 = list.get(1);
-        String player3 = list.get(2);
-        String player4 = list.get(3);
-        int playerID = 0;
-        int A = 0;
-        int B = 0;
-        int C = 0;
-        int D = 0;
-        ArrayList<Integer> a = new ArrayList<>(); // store the cards' number that player holds
-        if (player1.indexOf(kingdom) == -1) {
-            a.add(0);
-        } else {
-            for (int i = 0; i < player1.length(); i += 2) {
-                if (player1.charAt(i) == kingdom) {
-                    A += 1;
-                }
-            }
-            a.add(A);
-        }
-        if (player2.indexOf(kingdom) == -1) {
-            a.add(0);
-        } else {
-            for (int i = 0; i < player2.length(); i += 2) {
-                if (player2.charAt(i) == kingdom) {
-                    B += 1;
-                }
-            }
-            a.add(B);
-        }
-        if (player3.indexOf(kingdom) == -1) {
-            a.add(0);
-        } else {
-            for (int i = 0; i < player3.length(); i += 2) {
-                if (player3.charAt(i) == kingdom) {
-                    C += 1;
-                }
-            }
-            a.add(C);
-        }
-        if (player4.indexOf(kingdom) == -1) {
-            a.add(0);
-        } else {
-            for (int i = 0; i < player4.length(); i += 2) {
-                if (player4.charAt(i) == kingdom) {
-                    D += 1;
-                }
-            }
-            a.add(D);
-        }
-        ArrayList<Integer> playerIDs = new ArrayList<>(); // to store playerIDs who holds the same number of cards
-        ArrayList<Integer> New = new ArrayList<>(); //copy the arraylist for a
-        New.add(a.get(0));
-        New.add(a.get(1));
-        New.add(a.get(2));
-        New.add(a.get(3));
-        Collections.sort(a);
-        Collections.reverse(a);
-        ArrayList<Integer> lastShown = new ArrayList<>(); // to store the last shown number for players
-        if (a.get(0) == 0) {
-            playerID = -1;
-        } else {
-            for (int i = 0; i < 4; i++) {
-                if (a.get(0) == New.get(i)) {
-                playerIDs.add(i);
-            }
-        }}
-        if (playerIDs.size() > 1) {
-        for (int i = 0; i <playerIDs.size(); i++) {
-            lastShown.add(getLast(playerIDs.get(i),setup,moveSequence,numPlayer,kingdom));
-        }}
-        ArrayList<Integer> forLastShown = new ArrayList<>();
-        if (lastShown.size() > 0) {
-        {for (int i = 0; i < lastShown.size(); i ++) {
-            forLastShown.add(lastShown.get(i));
-        }}}
-
-        if (playerIDs.size() == 1) {
-            for (int j = 0; j < 4; j++) {
-                if (New.get(j) == a.get(0)) {
-                    playerID = j;
-                }
-            }
-        } else {
-            Collections.sort(lastShown);
-            Collections.reverse(lastShown);
-            for (int i = 0; i < lastShown.size();i++) {
-                if (forLastShown.get(i) == lastShown.get(0)) {
-                    playerID = playerIDs.get(i);
-                }
-            }
-        }
-        return playerID;
-    }
 
 //    public static int helpmethod(String setup, String moveSequence,int numPlayer,int playerID,char kingdom) {
 //        int b = 0;
@@ -908,30 +955,34 @@ public class WarringStatesGame {
 //    return b;
 //    }
 
-    public static int getLast(int playerId,String setup, String moveSequence, int numPlayer, char kingdom) {
-        int a = getNumber(returnSupporters(setup,moveSequence,numPlayer).get(playerId),kingdom);
-        int re = 0;
-        for (int i = 0; i < moveSequence.length(); i ++) {
-            if (returnSupporters(setup,moveSequence.substring(0,i+1),numPlayer).get(playerId).length() == a * 2) {
-                re = i;
-            }
-        }
-        return re;
-    }
+//    public static int getLast(int playerId,String setup, String moveSequence, int numPlayer, char kingdom,String kingdomset) {
+////        int a = getNumber(returnSupporters(setup,moveSequence,numPlayer).get(playerId),kingdom);
+//        int re = 0;
+//        for (int i = 0; i < moveSequence.length(); i ++) {
+////            if (returnSupporters(setup,moveSequence.substring(0,i+1),numPlayer).get(playerId).length() == a * 2) {
+////                re = i;
+////            }
+//            if (returnSupporters(setup,moveSequence.substring(0,i+1),numPlayer).get(playerId).indexOf(kingdomset) != -1) {
+//                re = i;
+//            }
+//            break;
+//        }
+//        return re;
+//    }
 
     // get the kingdom last shown index in a supports string
-    public static int getNumber(String suppoters, char kingdom) {
-        int a = suppoters.length();
-        int b = 0;
-        if (!(suppoters.indexOf(kingdom) == -1)) {
-        for (int i = 0; i < a; i++) {
-            if (suppoters.charAt(i) == kingdom) {
-                b = i / 2 + 1;
-            }
-        }
-    } else { b = -1;}
-    return b;
-    }
+//    public static int getNumber(String suppoters, char kingdom) {
+//        int a = suppoters.length();
+//        int b = 0;
+//        if (!(suppoters.indexOf(kingdom) == -1)) {
+//        for (int i = 0; i < a; i++) {
+//            if (suppoters.charAt(i) == kingdom) {
+//                b = i / 2 + 1;
+//            }
+//        }
+//    } else { b = -1;}
+//    return b;
+//    }
 
 
 
