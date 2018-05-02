@@ -4,10 +4,12 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
@@ -15,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.control.TextArea;
 
 /**
  * A very simple viewer for card layouts in the Warring States game.
@@ -42,25 +45,27 @@ public class Viewer extends Application {
 
 
     void makePlacement(String placement) {
-        TilePane tile = new TilePane();//idea from Chaahat Jain
-        tile.setLayoutX(145);
-        tile.setLayoutY(5);
-        tile.setHgap(50);
-        tile.setVgap(50);
-        tile.setPrefColumns(6);
+        GridPane grid = new GridPane();
 
+//        TilePane tile = new TilePane();//idea from Chaahat Jain
+//        tile.setLayoutX(145);
+//        tile.setLayoutY(5);
+//        tile.setHgap(50);
+//        tile.setVgap(50);
+//        tile.setPrefColumns(6);
         for (int i = 0; i < placement.length() - 1; i += 3) {
             int a = determineCoordinate(placement.charAt(i+2))[0];
             int b = determineCoordinate(placement.charAt(i+2))[1];
-            Rectangle rct = new Rectangle(60*b,60*a,60,60);
+            Rectangle rct = new Rectangle(60,60);
             rct.setFill(getColor(placement.charAt(i)));
-            String str = determineKingdomName(placement.charAt(i)) +  placement.charAt(i+1);
+            String str = determineKingdomName(placement.charAt(i)) + placement.charAt(i+1);
             Text label = new Text(str);
             StackPane stackPane = new StackPane();
             stackPane.getChildren().addAll(rct,label);
-            tile.getChildren().addAll(stackPane);
+            grid.add(stackPane,a,b);
+//            tile.getChildren().addAll(stackPane);
         }
-        controls.getChildren().addAll(tile);
+        controls.getChildren().addAll(grid);
     }
 
 

@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 
 public class rearrangeTest {
     @Rule
-    public Timeout globalTimeout = Timeout.millis(2000);
+    public Timeout globalTimeout = Timeout.millis(20000);
 
     @Test
     public void testEmpty() {
