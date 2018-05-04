@@ -1,5 +1,6 @@
 package comp1110.ass2;
 
+import com.sun.deploy.util.StringUtils;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import gittest.A;
 
@@ -532,10 +533,6 @@ public class WarringStatesGame {
     //return the list of supports for every player
     public static ArrayList<String> returnSupporters(String setup,String moveSequence, int numPlayers) {
         ArrayList<String> list = new ArrayList<>();
-//       String Player1 = "";
-//       String Player2 = "";
-//       String Player3 = "";
-//       String Player4 = "";
         ArrayList<String> Player1 = new ArrayList<>();
         ArrayList<String> Player2 = new ArrayList<>();
         ArrayList<String> Player3 = new ArrayList<>();
@@ -769,127 +766,93 @@ public class WarringStatesGame {
      */
     public static int[] getFlags(String setup, String moveSequence, int numPlayers) {
         // FIXME Task 8: determine which player controls the flag of each kingdom after a given sequence of moves
-//        ArrayList<String> list = returnSupporters(setup,moveSequence,numPlayers);
-        String a = moveSequence;
-        int[] array = new int[7];
-        array[0] = getMostPlayer(setup,a,numPlayers,'a');
-        array[1] = getMostPlayer(setup,a,numPlayers,'b');
-        array[2] = getMostPlayer(setup,a,numPlayers,'c');
-        array[3] = getMostPlayer(setup,a,numPlayers,'d');
-        array[4] = getMostPlayer(setup,a,numPlayers, 'e');
-        array[5] = getMostPlayer(setup,a,numPlayers,'f');
-        array[6] = getMostPlayer(setup,a,numPlayers,'g');
-        return array;}
-
-    public static ArrayList<String> returnSupportersList(String setup,String moveSequence, int numPlayers,int PlyerID) {
-        ArrayList<String> list = new ArrayList<>();
-        ArrayList<String> Player1 = new ArrayList<>();
-        ArrayList<String> Player2 = new ArrayList<>();
-        ArrayList<String> Player3 = new ArrayList<>();
-        ArrayList<String> Player4 = new ArrayList<>();
-        int j = moveSequence.length();
-        for (int i = 0; i < j; i++) {
+        int[] flags = new int[] {-1,-1,-1,-1,-1,-1,-1};
+        int[] max = new int[] {0,0,0,0,0,0,0};
+        String Player1 = "";
+        String Player2 = "";
+        String Player3 = "";
+        String Player4 = "";
+        for (int i = 0; i < moveSequence.length(); i++) {
             int a = getCurrentPlayer(i,numPlayers);
             if (a == 1) {
-                Player1.add(allPosition(moveSequence.charAt(i),setup));
+                String s = allPosition(moveSequence.charAt(i),setup);
+                Player1 += (s);
+                if (s.length() == 0) {
+                    continue;
+                } else {
+                    char ch = s.charAt(0);
+                    int c = Player1.length() - Player1.replaceAll(Character.toString(ch),"").length();
+                    int d = returnNumber(ch);
+                    if (c >= max[d]) {
+                        max[d] = c;
+                    flags[d] = a -1;}
                 setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
-                setup += "z9" + moveSequence.charAt(i);
+                setup += "z9" + moveSequence.charAt(i);}
             } else if (a == 2) {
-                Player2.add(allPosition(moveSequence.charAt(i),setup));
+                String s = allPosition(moveSequence.charAt(i),setup);
+                Player2+=(s);
+                if (s.length() == 0) {
+                    continue;
+                } else {
+                    char ch = s.charAt(0);
+                int c = Player2.length() - Player2.replaceAll(Character.toString(ch),"").length();
+                int d = returnNumber(ch);
+                if (c >= max[d]) {
+                    max[d] = c;
+                    flags[d] = a -1;}
                 setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
-                setup += "z9" + moveSequence.charAt(i);
+                setup += "z9" + moveSequence.charAt(i);}
             } else if (a == 3) {
-                Player3.add(allPosition(moveSequence.charAt(i),setup));
+                String s = allPosition(moveSequence.charAt(i),setup);
+                Player3+=(s);
+                if (s.length() == 0) {
+                    continue;
+                } else {
+                    char ch = s.charAt(0);
+                int c = Player3.length() - Player3.replaceAll(Character.toString(ch),"").length();
+                int d = returnNumber(ch);
+                if (c >= max[d]) {
+                    max[d] = c;
+                    flags[d] = a -1;}
                 setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
-                setup += "z9" + moveSequence.charAt(i);
+                setup += "z9" + moveSequence.charAt(i);}
             } else if (a == 4) {
-                Player4.add(allPosition(moveSequence.charAt(i),setup));
+                String s = allPosition(moveSequence.charAt(i),setup);
+                Player4+=(s);
+                if (s.length() == 0) {
+                    continue;
+                } else {
+                    char ch = s.charAt(0);
+                int c = Player4.length() - Player4.replaceAll(Character.toString(ch),"").length();
+                int d = returnNumber(ch);
+                if (c >= max[d]) {
+                    max[d] = c;
+                    flags[d] = a -1;}
                 setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
                 setup += "z9" + moveSequence.charAt(i);
+                }
             }
         }
-        if (PlyerID == 0) {
-            list = Player1;
-        } else if (PlyerID == 1) {
-            list= Player2;
-        } else if (PlyerID == 2) {
-            list = Player3;
+        return flags;
+    }
+
+    public static int returnNumber(char kingdom) {
+        if (kingdom == 'a') {
+            return 0;
+        } else if (kingdom == 'b') {
+            return 1;
+        } else if (kingdom == 'c') {
+            return 2;
+        } else if (kingdom == 'd') {
+            return 3;
+        } else if (kingdom == 'e') {
+            return 4;
+        } else if (kingdom == 'f') {
+            return 5;
         } else {
-            list= Player4;
+            return 6;
         }
-        return list;
     }
-
-    public static int getMostPlayer(String setup, String moveSequence, int numPlayer, char kingdom) {
-        int playerID = -6;
-        ArrayList<Integer> num = new ArrayList<>();
-        ArrayList<Integer> IDs = new ArrayList<>();
-        ArrayList<Integer> a = holdNumbers(setup,moveSequence,numPlayer,kingdom);
-        HashMap<Integer,Integer> map = new HashMap<>();
-        int max = Collections.max(a);
-        if (max == 0) {
-            playerID = -1;
-        } else if (count(a,max) == 1) {
-            playerID = whenAppear(a,max).get(0);
-        } else  if (count(a,max) > 1) {
-            IDs = whenAppear(a,max);
-            for (Integer id : IDs) {
-                ArrayList<String> list = returnSupportersList(setup,moveSequence,numPlayer,id);
-                for ( int j = list.size() -1; j >= 0; j --) {
-                    if (list.get(j).indexOf(kingdom) >= 0) {
-                        num.add(j);
-                        break;
-                    }
-                }
-            }
-            int maxi = Collections.max(num);
-//            for (int x = 0; x < num.size(); x ++) {
-//                if (num.get(x) == maxi) {
-//                    playerID = IDs.get(x);
-//                }
-//            }
-            playerID = IDs.get(num.lastIndexOf(maxi));
-        }
-        return playerID;
-    }
-
-    public static ArrayList<Integer> holdNumbers(String setup, String moveSequence, int numPlayer, char kingdom) {
-        ArrayList<String> list = returnSupporters(setup, moveSequence, numPlayer);
-        int num = 0;
-        ArrayList<Integer> a = new ArrayList<>(); // store the cards' number that player holds
-        for (int x = 0; x < numPlayer; x ++) {
-            for (int y = 0; y < list.get(x).length(); y ++) {
-                if (list.get(x).charAt(y) == kingdom) {
-                    num += 1;
-                }
-            }
-            a.add(num);
-            num = 0;
-        }
-        return a;
-    }
-
-    //when shown in a arraylist (the playerids)
-    public static ArrayList<Integer> whenAppear(ArrayList<Integer> a, Integer b) {
-        ArrayList<Integer> list = new ArrayList<>();
-        if (a.size() > 0) {
-        for (int i = 0; i < a.size(); i ++) {
-            if (a.get(i) == b) {
-                list.add(i);
-            }
-        }}
-        return list;
-    }
-
-    //count how many times shown in a arraylist
-    public static int count(ArrayList<Integer> a, Integer b) {
-        int c = 0;
-        for (int i = 0; i < a.size(); i ++ ) {
-            if (a.get(i) == b) {
-                c += 1;
-            }
-        }
-        return c;}
 
     /**
      * Generate a legal move, given the provided placement string.

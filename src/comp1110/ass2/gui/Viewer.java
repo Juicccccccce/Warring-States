@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -18,6 +20,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.control.TextArea;
+
+import java.awt.event.MouseEvent;
 
 /**
  * A very simple viewer for card layouts in the Warring States game.
@@ -53,6 +57,8 @@ public class Viewer extends Application {
 //        tile.setHgap(50);
 //        tile.setVgap(50);
 //        tile.setPrefColumns(6);
+        grid.setVgap(10);
+        grid.setHgap(10);
         for (int i = 0; i < placement.length() - 1; i += 3) {
             int a = determineCoordinate(placement.charAt(i+2))[0];
             int b = determineCoordinate(placement.charAt(i+2))[1];
@@ -60,10 +66,20 @@ public class Viewer extends Application {
             rct.setFill(getColor(placement.charAt(i)));
             String str = determineKingdomName(placement.charAt(i)) + placement.charAt(i+1);
             Text label = new Text(str);
+            rct.setAccessibleText(str);
             StackPane stackPane = new StackPane();
             stackPane.getChildren().addAll(rct,label);
-            grid.add(stackPane,a,b);
+            grid.add(stackPane,b,a);
+//            System.out.println(label+" "+a+" "+ b);
 //            tile.getChildren().addAll(stackPane);
+//            Image image1 = new Image(xx) ;
+//            ImageView imageView1 = new ImageView(image1);
+//            imageView1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+//                @Override
+//                public void handle(MouseEvent event) {
+//
+//                }
+
         }
         controls.getChildren().addAll(grid);
     }
@@ -151,22 +167,22 @@ public class Viewer extends Application {
 //            }
 //        }
         if (locationChar == '4' || locationChar == '5' || locationChar == '6' || locationChar == '7' || locationChar == '8' || locationChar == '9') {
-            xy[1] = 5;
+            xy[1] = 0;
         } else {
             if (locationChar == 'Y' || locationChar == 'Z' || locationChar == '0' || locationChar == '1' || locationChar == '2' || locationChar == '3') {
-                xy[1] = 4;
+                xy[1] =1;
             } else {
                 if (locationChar == 'S' || locationChar == 'T' || locationChar == 'U' || locationChar == 'V' || locationChar == 'W' || locationChar == 'X') {
-                    xy[1] = 3;
+                    xy[1] = 2;
                 } else {
                     if (locationChar == 'M' || locationChar == 'N' || locationChar == 'O' || locationChar == 'P' || locationChar == 'Q' || locationChar == 'R') {
-                        xy[1] = 2;
+                        xy[1] = 3;
                     } else {
                         if (locationChar == 'G' || locationChar == 'H' || locationChar == 'I' || locationChar == 'J' || locationChar == 'K' || locationChar == 'L') {
-                            xy[1] = 1;
+                            xy[1] = 4;
                         } else {
                             if (locationChar == 'A' || locationChar == 'B' || locationChar == 'C' || locationChar == 'D' || locationChar == 'E' || locationChar == 'F') {
-                                xy[1] = 0;
+                                xy[1] = 5;
                             }
                         }
                     }
