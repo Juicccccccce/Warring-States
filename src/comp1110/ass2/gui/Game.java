@@ -78,12 +78,16 @@ public class Game extends Application {
                               if (count % 2 == 0) {
                             Image image3 = new Image("comp1110/ass2/gui/assets/Character/" + supportors.charAt(j) + supportors.charAt(j + 1) + ".png");
                             ImageView imageView = new ImageView(image3);
+                            imageView.setFitHeight(100);
+                            imageView.setFitWidth(100);
                             imageView.setX(680);
                             imageView.setY(580-30*x);
                             root.getChildren().add(imageView);
                             x += 1;
                         } else { Image image3 = new Image("comp1110/ass2/gui/assets/Character/" + supportors.charAt(j) + supportors.charAt(j + 1) + ".png");
                                   ImageView imageView = new ImageView(image3);
+                                  imageView.setFitWidth(100);
+                                  imageView.setFitHeight(100);
                                   imageView.setX(790);
                                   imageView.setY(580-30*y);
                                   root.getChildren().add(imageView);
