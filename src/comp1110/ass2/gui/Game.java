@@ -40,6 +40,7 @@ public class Game extends Application {
                 @Override
                 public void handle(MouseEvent event) {
                     int[] array = mouseEntered(event);
+                    if(WarringStatesGame.isMoveLegal(placement,returnLocationChar(array[0],array[1]))) {
                     char zhang = WarringStatesGame.findZhangPosition(placement);
                     int[] Zhang = Viewer.determineCoordinate(zhang);
 //                    if (array[0] >=0 && array[0] <= 5 && array[1] >= 0 && array[1] <= 5) {
@@ -66,7 +67,7 @@ public class Game extends Application {
                         grid.add(imageview,array[0],array[1]);
                         placement = WarringStatesGame.deleteEmptyLocation(placement,returnLocationChar(array[0],array[1]));  //update the set up information
                         placement += "z9" + returnLocationChar(array[0],array[1]);
-                }
+                }}
             });
         });
         Scene scene = new Scene(root, 935, 732);
