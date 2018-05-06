@@ -309,11 +309,11 @@ public class WarringStatesGame {
             if ((rowlist.get(m + 2)) == locationChar) {
                 n = rowlist.get(m);
 
-        for (int a = 0; a < k; a = a + 3) {
-            if (rowlist.get(a) == n) {
-                row.add(rowlist.get(a + 2));
-            }
-        }}}
+                for (int a = 0; a < k; a = a + 3) {
+                    if (rowlist.get(a) == n) {
+                        row.add(rowlist.get(a + 2));
+                    }
+                }}}
         return row;
     }
 
@@ -460,10 +460,10 @@ public class WarringStatesGame {
         if (isSameRow(setup, locationChar)) {
             row.add(zhangLocation);
             for (int e = 0; e < row.size(); e++) {
-                    int index = getThePositionInSetup(setup,row.get(e));
-                    if (index == -1) {
-                        return "";
-                    }
+                int index = getThePositionInSetup(setup,row.get(e));
+                if (index == -1) {
+                    return "";
+                }
                 if (changeToNumber(zhangLocation) > changeToNumber(locationChar)) {
                     if ((changeToNumber(zhangLocation) >= changeToNumber(row.get(e))) && (changeToNumber(locationChar) <= changeToNumber(row.get(e)))) {
                         setup = setup.substring(0,index) + setup.substring(index + 3);
@@ -517,52 +517,24 @@ public class WarringStatesGame {
     public static String getSupporters(String setup, String moveSequence, int numPlayers, int playerId) {
         // FIXME Task 7: get the list of supporters for a given player after a sequence of moves
         String a = "";
-        ArrayList<String> list = returnSupporters(setup,moveSequence,numPlayers);
-        if (playerId == 0) {
-            a = list.get(0);
-        } else {if (playerId == 1) {
-            a = list.get(1);
-        } else {if (playerId == 2) {
-            a = list.get(2);
-        } else {if (playerId == 3) {
-            a = list.get(3);
-        }}}}
-        a = rearrange(a);
-        return a;
+//        ArrayList<String> list = returnSupporters(setup,moveSequence,numPlayers,playerId);
+//        a = rearrange(a);
+        return returnSupporters(setup,moveSequence,numPlayers,playerId);
     }
     //return the list of supports for every player
-    public static ArrayList<String> returnSupporters(String setup,String moveSequence, int numPlayers) {
-        ArrayList<String> list = new ArrayList<>();
-        ArrayList<String> Player1 = new ArrayList<>();
-        ArrayList<String> Player2 = new ArrayList<>();
-        ArrayList<String> Player3 = new ArrayList<>();
-        ArrayList<String> Player4 = new ArrayList<>();
-       int j = moveSequence.length();
-       for (int i = 0; i < j; i++) {
-           int a = getCurrentPlayer(i,numPlayers);
-           if (a == 1) {
-               Player1.add(allPosition(moveSequence.charAt(i),setup));
-               setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
-               setup += "z9" + moveSequence.charAt(i);
-           } else if (a == 2) {
-               Player2.add(allPosition(moveSequence.charAt(i),setup));
-               setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
-               setup += "z9" + moveSequence.charAt(i);
-           } else if (a == 3) {
-               Player3.add(allPosition(moveSequence.charAt(i),setup));
-               setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
-               setup += "z9" + moveSequence.charAt(i);
-           } else if (a == 4) {
-               Player4.add(allPosition(moveSequence.charAt(i),setup));
-               setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
-               setup += "z9" + moveSequence.charAt(i);
-           }
-       }
-       list.add(returnList(Player1));
-       list.add(returnList(Player2));
-       list.add(returnList(Player3));
-       list.add(returnList(Player4));
-       return list;
+    public static String returnSupporters(String setup,String moveSequence, int numPlayers, int playerID) {
+        String player = "";
+        int j = moveSequence.length();
+        for (int i = 0; i < j; i++) {
+            int a = i % numPlayers;
+            if (a == playerID) {
+                player+=(allPosition(moveSequence.charAt(i), setup));
+            }
+            setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
+            setup += "z9" + moveSequence.charAt(i);
+        }
+
+        return player;
     }
 
     public static String returnList(ArrayList<String> list) {
@@ -581,16 +553,16 @@ public class WarringStatesGame {
                 if (num % 2 == 0) {
                     d = 1;
                 } else {d = 2;
-        }
-        break;
+                }
+                break;
             case 3:
                 if (num % 3 == 0) {
                     d = 1;
                 } else {if (num % 3 == 1) {
                     d = 2;
                 } else {d = 3;
-    }}
-        break;
+                }}
+                break;
             case 4:
                 if (num % 4 == 0) {
                     d = 1;
@@ -602,9 +574,9 @@ public class WarringStatesGame {
                     d = 4;
                 }}}
                 break;
-             default:
-                 d = -1;}
-                return d;}
+            default:
+                d = -1;}
+        return d;}
 
     public static String rearrange(String supportors) {
         ArrayList<Integer> a = new ArrayList();
@@ -773,7 +745,7 @@ public class WarringStatesGame {
         String Player3 = "";
         String Player4 = "";
         for (int i = 0; i < moveSequence.length(); i++) {
-            int a = getCurrentPlayer(i,numPlayers);
+            int a = i%numPlayers + 1;
             if (a == 1) {
                 String s = allPosition(moveSequence.charAt(i),setup);
                 Player1 += (s);
@@ -785,9 +757,9 @@ public class WarringStatesGame {
                     int d = returnNumber(ch);
                     if (c >= max[d]) {
                         max[d] = c;
-                    flags[d] = a -1;}
-                setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
-                setup += "z9" + moveSequence.charAt(i);}
+                        flags[d] = a -1;}
+                    setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
+                    setup += "z9" + moveSequence.charAt(i);}
             } else if (a == 2) {
                 String s = allPosition(moveSequence.charAt(i),setup);
                 Player2+=(s);
@@ -795,13 +767,13 @@ public class WarringStatesGame {
                     continue;
                 } else {
                     char ch = s.charAt(0);
-                int c = Player2.length() - Player2.replaceAll(Character.toString(ch),"").length();
-                int d = returnNumber(ch);
-                if (c >= max[d]) {
-                    max[d] = c;
-                    flags[d] = a -1;}
-                setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
-                setup += "z9" + moveSequence.charAt(i);}
+                    int c = Player2.length() - Player2.replaceAll(Character.toString(ch),"").length();
+                    int d = returnNumber(ch);
+                    if (c >= max[d]) {
+                        max[d] = c;
+                        flags[d] = a -1;}
+                    setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
+                    setup += "z9" + moveSequence.charAt(i);}
             } else if (a == 3) {
                 String s = allPosition(moveSequence.charAt(i),setup);
                 Player3+=(s);
@@ -809,13 +781,13 @@ public class WarringStatesGame {
                     continue;
                 } else {
                     char ch = s.charAt(0);
-                int c = Player3.length() - Player3.replaceAll(Character.toString(ch),"").length();
-                int d = returnNumber(ch);
-                if (c >= max[d]) {
-                    max[d] = c;
-                    flags[d] = a -1;}
-                setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
-                setup += "z9" + moveSequence.charAt(i);}
+                    int c = Player3.length() - Player3.replaceAll(Character.toString(ch),"").length();
+                    int d = returnNumber(ch);
+                    if (c >= max[d]) {
+                        max[d] = c;
+                        flags[d] = a -1;}
+                    setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
+                    setup += "z9" + moveSequence.charAt(i);}
             } else if (a == 4) {
                 String s = allPosition(moveSequence.charAt(i),setup);
                 Player4+=(s);
@@ -823,13 +795,13 @@ public class WarringStatesGame {
                     continue;
                 } else {
                     char ch = s.charAt(0);
-                int c = Player4.length() - Player4.replaceAll(Character.toString(ch),"").length();
-                int d = returnNumber(ch);
-                if (c >= max[d]) {
-                    max[d] = c;
-                    flags[d] = a -1;}
-                setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
-                setup += "z9" + moveSequence.charAt(i);
+                    int c = Player4.length() - Player4.replaceAll(Character.toString(ch),"").length();
+                    int d = returnNumber(ch);
+                    if (c >= max[d]) {
+                        max[d] = c;
+                        flags[d] = a -1;}
+                    setup = deleteEmptyLocation(setup,moveSequence.charAt(i));
+                    setup += "z9" + moveSequence.charAt(i);
                 }
             }
         }
@@ -882,6 +854,6 @@ public class WarringStatesGame {
         if (re != ' ') {
             return re;
         } else {
-        return '\0';
-    }
-}}
+            return '\0';
+        }
+    }}

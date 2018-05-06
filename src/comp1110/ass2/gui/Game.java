@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
@@ -28,13 +29,14 @@ public class Game extends Application {
     // FIXME Task 11: Allow players of your Warring States game to play against your simple agent
 
     // FIXME Task 12: Integrate a more advanced opponent into your game
-
+    int count = 0;
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Warring States");
         Group root = new Group();
         GridPane grid = setup(placement);
-        root.getChildren().add(grid);
+        BorderPane border = setBorder(grid);
+        root.getChildren().add(border);
         grid.getChildren().forEach(item -> {
             item.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -74,6 +76,15 @@ public class Game extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
+    //set border pane
+    public BorderPane setBorder(GridPane grid) {
+        BorderPane border = new BorderPane();
+        border.setLeft(grid);
+        return border;
+    }
+
+
 
     public static void main(String[] args) {
         launch(args);
