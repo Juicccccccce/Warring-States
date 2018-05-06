@@ -1,15 +1,17 @@
 package comp1110.ass2.gui;
 
-import com.sun.org.apache.xpath.internal.FoundIndex;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -23,6 +25,7 @@ import comp1110.ass2.gui.Viewer;
 
 import javafx.event.Event;
 
+import java.awt.*;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -31,6 +34,9 @@ public class Game extends Application {
     private static final int BOARD_HEIGHT = 700;
     int idx = new Random().nextInt(PLACEMENTS.length);
     public String placement = (PLACEMENTS[idx]);
+    String moveSequence = "";
+    int x = 0;
+    int y = 0;
 //    public static String placement = "g0Aa0Bf1Ca1Dc5Ee1Fa4Ge3He2Ia2Jc2Kd0Lf0Mb4Nd4Oa6Pc3Qe0Ra5Sc1Td1Uc4Vb5Wb0Xa7Yf2Zb10a31z92b33b64d35g16b27d28c09";
 
     // FIXME Task 9: Implement a basic playable Warring States game in JavaFX
@@ -39,13 +45,54 @@ public class Game extends Application {
 
     // FIXME Task 12: Integrate a more advanced opponent into your game
     int count = 0;
-    int x = 0;
-    int y = 0;
-    String moveSequence = "";
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Warring States");
+        String txt = "Warring States";
+        Text text1 = new Text(txt);
+        text1.setX(100);
+        text1.setY(300);
+        text1.setFill(Color.BLACK);
+        text1.setFont(Font.font(null, FontWeight.BOLD,100));
+        Button button1 = new Button("Enter Normal Game");
+        button1.setLayoutX(240);
+        button1.setLayoutY(535);
+        Button button2 = new Button("Enter AI Game");
+        button2.setLayoutX(440);
+        button2.setLayoutY(535);
+        Button button3 = new Button("Help");
+        button3.setLayoutX(600);
+        button3.setLayoutY(535);
+        button1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                Group root = startPlay();
+                Scene scene = new Scene(root, 935, 732);
+                primaryStage.setScene(scene);
+                primaryStage.show();
+            }
+        });
+        Group root = new Group();
+        root.getChildren().addAll(button1,button2,button3,text1);
+        Scene scene = new Scene(root, 935, 732);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    //set border pane
+    public BorderPane setBorder(GridPane grid) {
+        BorderPane border = new BorderPane();
+        border.setLeft(grid);
+        return border;
+    }
+
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    public Group startPlay() {
         Group root = new Group();
         GridPane grid = setup(placement);
         BorderPane border = setBorder(grid);
@@ -72,27 +119,27 @@ public class Game extends Application {
                             imageView2.setFitWidth(100);
                             grid.getChildren().remove(getNodeByRowColumnIndex(a[0], a[1], grid));
                             grid.add(imageView2, a[1], a[0]);
-                            moveSequence += returnLocationChar(array[0],array[1]);
                         }
+                        moveSequence += returnLocationChar(array[0],array[1]);
                         for (int j = 0; j < supportors.length(); j +=2) {
-                              if (count % 2 == 0) {
-                            Image image3 = new Image("comp1110/ass2/gui/assets/Character/" + supportors.charAt(j) + supportors.charAt(j + 1) + ".png");
-                            ImageView imageView = new ImageView(image3);
-                            imageView.setFitHeight(100);
-                            imageView.setFitWidth(100);
-                            imageView.setX(680);
-                            imageView.setY(580-30*x);
-                            root.getChildren().add(imageView);
-                            x += 1;
-                        } else { Image image3 = new Image("comp1110/ass2/gui/assets/Character/" + supportors.charAt(j) + supportors.charAt(j + 1) + ".png");
-                                  ImageView imageView = new ImageView(image3);
-                                  imageView.setFitWidth(100);
-                                  imageView.setFitHeight(100);
-                                  imageView.setX(790);
-                                  imageView.setY(580-30*y);
-                                  root.getChildren().add(imageView);
-                                  y += 1;
-                              }
+                            if (count % 2 == 0) {
+                                Image image3 = new Image("comp1110/ass2/gui/assets/Character/" + supportors.charAt(j) + supportors.charAt(j + 1) + ".png");
+                                ImageView imageView = new ImageView(image3);
+                                imageView.setFitHeight(100);
+                                imageView.setFitWidth(100);
+                                imageView.setX(680);
+                                imageView.setY(580-30*x);
+                                root.getChildren().add(imageView);
+                                x += 1;
+                            } else { Image image3 = new Image("comp1110/ass2/gui/assets/Character/" + supportors.charAt(j) + supportors.charAt(j + 1) + ".png");
+                                ImageView imageView = new ImageView(image3);
+                                imageView.setFitWidth(100);
+                                imageView.setFitHeight(100);
+                                imageView.setX(790);
+                                imageView.setY(580-30*y);
+                                root.getChildren().add(imageView);
+                                y += 1;
+                            }
                         }
                         Image ZhangYi = new Image("comp1110/ass2/gui/assets/Character/z9.png");     //replace the destination to ZhangYi
                         ImageView imageview = new ImageView(ZhangYi);
@@ -102,7 +149,6 @@ public class Game extends Application {
                         placement = WarringStatesGame.deleteEmptyLocation(placement, returnLocationChar(array[0], array[1]));  //update the set up information
                         placement += "z9" + returnLocationChar(array[0], array[1]);
                     }
-                    System.out.println(WarringStatesGame.generateMove(placement));
                     if (WarringStatesGame.generateMove(placement) != '\0') {
                         count = count + 1;
                     }
@@ -117,10 +163,10 @@ public class Game extends Application {
                         for (int i = 0; i < 7; i ++) {
                             if (array1[i] == 0) {
                                 num1 += 1;
-                                cal1 += i;
+                                cal1 += 8 - i;
                             } else if (array1[i] == 1) {
                                 num2 += 1;
-                                cal2 += i;
+                                cal2 += 8 - i;
                             }
                         }
                         if (num1 > num2) {
@@ -128,13 +174,12 @@ public class Game extends Application {
                         } else if (num1 < num2) {
                             str = "PLayer2 is WIN";
                         } else if (num1 == num2) {
-                            if(cal1 < cal2) {
+                            if(cal1 > cal2) {
                                 str = "Player1 is WIN";
                             } else {
                                 str = "Player2 is WIN";
                             }
                         }
-                        System.out.println(str);
                         Text text = new Text(str);
                         text.setFill(Color.RED);
                         text.setFont(Font.font(null, FontWeight.BOLD,100));
@@ -142,28 +187,14 @@ public class Game extends Application {
                         text.setX(50);
                         text.setY(300);
                         root.getChildren().add(text);
+                        System.out.println(moveSequence);
                     }
                 }
 
             });
 
         });
-
-        Scene scene = new Scene(root, 935, 732);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-    //set border pane
-    public BorderPane setBorder(GridPane grid) {
-        BorderPane border = new BorderPane();
-        border.setLeft(grid);
-        return border;
-    }
-
-
-    public static void main(String[] args) {
-        launch(args);
+        return root;
     }
 
     public Node getNodeByRowColumnIndex(final int row, final int column, GridPane gridPane) {
