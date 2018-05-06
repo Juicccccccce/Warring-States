@@ -50,18 +50,16 @@ public class Game extends Application {
                     imageView1.setFitHeight(100);
                     grid.getChildren().remove(getNodeByRowColumnIndex(array[1],array[0],grid));
                     grid.add(imageView1,Zhang[1],Zhang[0]);    //Replace the selcted position card with ZhangYi's card
-//                        String supportors = WarringStatesGame.allPosition(returnLocationChar(array[0],array[1]),placement);  //Get all cards which are needed to collect
-//                        for (int i =0; i < supportors.length(); i+=2) {       //replace all cards need to be emptied
-//                            int[] a = Viewer.determineCoordinate(returnLocation(placement,supportors.substring(0,2)));
-////                            ImageView imageView2 = new ImageView(empty);
-////                            imageView2.setFitHeight(100);
-////                            imageView2.setFitWidth(100);
-//                            grid.getChildren().remove(getNodeByRowColumnIndex(a[0],a[1],grid));
-//                            grid.add(imageView1,a[1],a[0]);
-//                            placement = WarringStatesGame.deleteEmptyLocation(placement,returnLocationChar(array[0],array[1]));  //update the set up information
-//                            placement += "z9" + returnLocationChar(array[0],array[1]);
-//                        }
-                        Image ZhangYi = new Image("comp1110/ass2/gui/assets/Character/z9.png");
+                        String supportors = WarringStatesGame.allPosition(returnLocationChar(array[0],array[1]),placement);  //Get all cards which are needed to collect
+                        for (int i =0; i < supportors.length(); i+=2) {                                //replace all cards need to be emptied
+                            int[] a = Viewer.determineCoordinate(returnLocation(placement,supportors.substring(i,i+2)));
+                            ImageView imageView2 = new ImageView(empty);
+                            imageView2.setFitHeight(100);
+                            imageView2.setFitWidth(100);
+                            grid.getChildren().remove(getNodeByRowColumnIndex(a[0],a[1],grid));
+                            grid.add(imageView2,a[1],a[0]);
+                        }
+                        Image ZhangYi = new Image("comp1110/ass2/gui/assets/Character/z9.png");     //replace the destination to ZhangYi
                         ImageView imageview = new ImageView(ZhangYi);
                         imageview.setFitHeight(100);
                         imageview.setFitWidth(100);
