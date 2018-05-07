@@ -844,16 +844,18 @@ public class WarringStatesGame {
      */
     public static char generateMove(String placement) {
         // FIXME Task 10: generate a legal move
-        char re = ' ';
+        String validMove = "";
         for (int i = 0; i < placement.length(); i = i+3) {
             if (isMoveLegal(placement,placement.charAt(i+2)) && placement.charAt(i) != 'z') {
-                re = placement.charAt(i+2);
+                validMove += placement.charAt(i+2);
                 break;
             }
         }
-        if (re != ' ') {
-            return re;
+        if (validMove.length() > 0) {
+            int idx = new Random().nextInt(validMove.length());
+            return validMove.charAt(idx);
         } else {
             return '\0';
         }
-    }}
+    }
+}
