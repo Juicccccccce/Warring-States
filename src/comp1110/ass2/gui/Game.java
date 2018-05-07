@@ -73,6 +73,15 @@ public class Game extends Application {
                 primaryStage.show();
             }
         });
+        button2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Group root = startSimpleAI();
+                Scene scene = new Scene(root, 935, 732);
+                primaryStage.setScene(scene);
+                primaryStage.show();
+            }
+        });
         Group root = new Group();
         root.getChildren().addAll(button1,button2,button3,text1);
         Scene scene = new Scene(root, 935, 732);
@@ -92,6 +101,133 @@ public class Game extends Application {
         launch(args);
     }
 
+    public Group startSimpleAI() {
+        Group root = new Group();
+        GridPane grid = setup(placement);
+        BorderPane border = setBorder(grid);
+        root.getChildren().add(border);
+        grid.getChildren().forEach(item -> {
+            item.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    int[] array = mouseEntered(event);
+                    if (WarringStatesGame.isMoveLegal(placement, returnLocationChar(array[0], array[1]))) {
+                        char zhang = WarringStatesGame.findZhangPosition(placement);
+                        int[] Zhang = Viewer.determineCoordinate(zhang);
+                        Image empty = new Image("comp1110/ass2/gui/assets/Character/empty.png"); //Remove previous ZhangYi's card
+                        ImageView imageView1 = new ImageView(empty);
+                        imageView1.setFitWidth(100);
+                        imageView1.setFitHeight(100);
+                        grid.getChildren().remove(getNodeByRowColumnIndex(array[1], array[0], grid));
+                        grid.add(imageView1, Zhang[1], Zhang[0]);    //Replace the selcted position card with ZhangYi's card
+                        String supportors = WarringStatesGame.allPosition(returnLocationChar(array[0], array[1]), placement);  //Get all cards which are needed to collect
+                        for (int i = 0; i < supportors.length(); i += 2) {                                //replace all cards need to be emptied
+                            int[] a = Viewer.determineCoordinate(returnLocation(placement, supportors.substring(i, i + 2)));
+                            ImageView imageView2 = new ImageView(empty);
+                            imageView2.setFitHeight(100);
+                            imageView2.setFitWidth(100);
+                            grid.getChildren().remove(getNodeByRowColumnIndex(a[0], a[1], grid));
+                            grid.add(imageView2, a[1], a[0]);
+                        }
+                        for (int j = 0; j < supportors.length(); j += 2) {
+                            Image image3 = new Image("comp1110/ass2/gui/assets/Character/" + supportors.charAt(j) + supportors.charAt(j + 1) + ".png");
+                            ImageView imageView = new ImageView(image3);
+                            imageView.setFitHeight(100);
+                            imageView.setFitWidth(100);
+                            imageView.setX(680);
+                            imageView.setY(580 - 30 * x);
+                            root.getChildren().add(imageView);
+                            x += 1;
+                        }
+                        placement = WarringStatesGame.deleteEmptyLocation(placement, returnLocationChar(array[0], array[1]));  //update the set up information
+                        placement += "z9" + returnLocationChar(array[0], array[1]);
+                        moveSequence += returnLocationChar(array[0], array[1]);
+//                        Image empty = new Image("comp1110/ass2/gui/assets/Character/empty.png"); //Remove previous ZhangYi's card
+                        char random = WarringStatesGame.generateMove(placement);
+                        char zhang1 = WarringStatesGame.findZhangPosition(placement);
+                        int[] Zhang1 = Viewer.determineCoordinate(zhang1);
+                        if (random != '\0') {
+                            int[] random1 = Viewer.determineCoordinate(random);
+                            Image empty1 = new Image("comp1110/ass2/gui/assets/Character/empty.png");
+                            ImageView imageView3 = new ImageView(empty1);
+                            imageView3.setFitWidth(100);
+                            imageView3.setFitHeight(100);
+                            grid.getChildren().remove(getNodeByRowColumnIndex(random1[0], random1[1], grid));
+                            grid.add(imageView3, Zhang1[1], Zhang1[0]);
+                            String supportors1 = WarringStatesGame.allPosition(returnLocationChar(random1[1], random1[0]), placement);
+                            for (int i = 0; i < supportors1.length(); i += 2) {                                //replace all cards need to be emptied
+                                int[] x = Viewer.determineCoordinate(returnLocation(placement, supportors1.substring(i, i + 2)));
+                                ImageView imageView2 = new ImageView(empty1);
+                                imageView2.setFitHeight(100);
+                                imageView2.setFitWidth(100);
+                                grid.getChildren().remove(getNodeByRowColumnIndex(x[0], x[1], grid));
+                                grid.add(imageView2, x[1], x[0]);
+                            }
+                            for (int j = 0; j < supportors1.length(); j += 2) {
+                                Image image3 = new Image("comp1110/ass2/gui/assets/Character/" + supportors1.charAt(j) + supportors1.charAt(j + 1) + ".png");
+                                ImageView imageView4 = new ImageView(image3);
+                                imageView4.setFitWidth(100);
+                                imageView4.setFitHeight(100);
+                                imageView4.setX(790);
+                                imageView4.setY(580 - 30 * y);
+                                y += 1;
+                                root.getChildren().add(imageView4);
+                            }
+                            Image ZhangYi = new Image("comp1110/ass2/gui/assets/Character/z9.png");     //replace the destination to ZhangYi
+                            ImageView imageview8 = new ImageView(ZhangYi);
+                            imageview8.setFitHeight(100);
+                            imageview8.setFitWidth(100);
+                            grid.add(imageview8, random1[1], random1[0]);
+                            moveSequence += returnLocationChar(random1[1], random1[0]);
+                            placement = WarringStatesGame.deleteEmptyLocation(placement, returnLocationChar(random1[1], random1[0]));  //update the set up information
+                            placement += "z9" + returnLocationChar(random1[1], random1[0]);
+                        }
+                    }
+                    if (WarringStatesGame.generateMove(placement) == '\0') {
+                        String initial = (PLACEMENTS[idx]);
+                        int num1 = 0;
+                        int num2 = 0;
+                        int cal1 = 0;
+                        int cal2 = 0;
+                        String str = "";
+                        int[] array1 = WarringStatesGame.getFlags(initial, moveSequence, 2);
+                        for (int i = 0; i < 7; i++) {
+                            if (array1[i] == 0) {
+                                num1 += 1;
+                                cal1 += 8 - i;
+                            } else if (array1[i] == 1) {
+                                num2 += 1;
+                                cal2 += 8 - i;
+                            }
+                        }
+                        if (num1 > num2) {
+                            str = "Player1 is WIN";
+                        } else if (num1 < num2) {
+                            str = "PLayer2 is WIN";
+                        } else if (num1 == num2) {
+                            if (cal1 > cal2) {
+                                str = "Player1 is WIN";
+                            } else {
+                                str = "Player2 is WIN";
+                            }
+                        }
+                        Text text = new Text(str);
+                        text.setFill(Color.RED);
+                        text.setFont(Font.font(null, FontWeight.BOLD, 100));
+                        text.setStrokeWidth(20);
+                        text.setX(50);
+                        text.setY(300);
+                        root.getChildren().add(text);
+                        System.out.println(moveSequence);
+                    }
+
+                }
+            });
+        });
+            return root;
+        }
+
+    //two human players version
     public Group startPlay() {
         Group root = new Group();
         GridPane grid = setup(placement);
@@ -281,5 +417,4 @@ public class Game extends Application {
     };
 
 }
-
 
