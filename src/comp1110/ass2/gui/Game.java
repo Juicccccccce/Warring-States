@@ -383,7 +383,7 @@ public class Game extends Application {
     }
 
     //determine which index the mouse is reffered to
-    public int[] mouseEntered(MouseEvent e) {
+    public int[] mouseEntered(MouseEvent e) {   //Ref:https://stackoverflow.com/questions/31095954/how-to-get-gridpane-row-and-column-ids-on-mouse-entered-in-each-cell-of-grid-in
         int[] array = new int[2];
         Node source = (Node) e.getSource();
         Integer colIndex = GridPane.getColumnIndex(source);
