@@ -37,6 +37,8 @@ public class Game extends Application {
     String moveSequence = "";
     int x = 0;
     int y = 0;
+    int z = 0;
+    int xyz = 0;
 //    public static String placement = "g0Aa0Bf1Ca1Dc5Ee1Fa4Ge3He2Ia2Jc2Kd0Lf0Mb4Nd4Oa6Pc3Qe0Ra5Sc1Td1Uc4Vb5Wb0Xa7Yf2Zb10a31z92b33b64d35g16b27d28c09";
 
     // FIXME Task 9: Implement a basic playable Warring States game in JavaFX
@@ -55,36 +57,73 @@ public class Game extends Application {
         text1.setY(300);
         text1.setFill(Color.BLACK);
         text1.setFont(Font.font(null, FontWeight.BOLD,100));
-        Button button1 = new Button("Enter Normal Game");
+        Button button1 = new Button("Normal Game");
         button1.setLayoutX(240);
         button1.setLayoutY(535);
-        Button button2 = new Button("Enter AI Game");
+        button1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Button button11 = new Button("2 Player");
+                button11.setLayoutX(400);
+                button11.setLayoutY(200);
+                button11.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        Group root = startPlay(2);
+                        Scene scene = new Scene(root, 1070, 732);
+                        primaryStage.setScene(scene);
+                        primaryStage.show();
+                    }
+                });
+                Button button12 = new Button("3 Player");
+                button12.setLayoutX(400);
+                button12.setLayoutY(400);
+                button12.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        Group root = startPlay(3);
+                        Scene scene = new Scene(root, 1070, 732);
+                        primaryStage.setScene(scene);
+                        primaryStage.show();
+                    }
+                });
+                Button button13 = new Button("4 Player");
+                button13.setLayoutX(400);
+                button13.setLayoutY(600);
+                button13.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        Group root = startPlay(4);
+                        Scene scene = new Scene(root, 1070, 732);
+                        primaryStage.setScene(scene);
+                        primaryStage.show();
+                    }
+                });
+                Group root11 = new Group();
+                root11.getChildren().addAll(button11,button12,button13);
+                Scene scenex = new Scene(root11,1070,732);
+                primaryStage.setScene(scenex);
+                primaryStage.show();
+            }
+        });
+        Button button2 = new Button("AI Game");
         button2.setLayoutX(440);
         button2.setLayoutY(535);
         Button button3 = new Button("Help");
         button3.setLayoutX(600);
         button3.setLayoutY(535);
-        button1.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                Group root = startPlay();
-                Scene scene = new Scene(root, 935, 732);
-                primaryStage.setScene(scene);
-                primaryStage.show();
-            }
-        });
         button2.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 Group root = startSimpleAI();
-                Scene scene = new Scene(root, 935, 732);
+                Scene scene = new Scene(root, 1070, 732);
                 primaryStage.setScene(scene);
                 primaryStage.show();
             }
         });
         Group root = new Group();
         root.getChildren().addAll(button1,button2,button3,text1);
-        Scene scene = new Scene(root, 935, 732);
+        Scene scene = new Scene(root, 1070, 732);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -112,6 +151,13 @@ public class Game extends Application {
                 public void handle(MouseEvent event) {
                     int[] array = mouseEntered(event);
                     if (WarringStatesGame.isMoveLegal(placement, returnLocationChar(array[0], array[1]))) {
+                        Image emptyy = new Image("comp1110/ass2/gui/assets/Character/empty.png");
+                        ImageView imageViewy = new ImageView(emptyy);       //empty all cards collection information
+                        imageViewy.setFitHeight(20);
+                        imageViewy.setFitWidth(1000);
+                        imageViewy.setX(680);
+                        imageViewy.setY(680);
+                        root.getChildren().addAll(imageViewy);
                         char zhang = WarringStatesGame.findZhangPosition(placement);
                         int[] Zhang = Viewer.determineCoordinate(zhang);
                         Image empty = new Image("comp1110/ass2/gui/assets/Character/empty.png"); //Remove previous ZhangYi's card
@@ -139,10 +185,9 @@ public class Game extends Application {
                             root.getChildren().add(imageView);
                             x += 1;
                         }
+                        moveSequence += returnLocationChar(array[0], array[1]);
                         placement = WarringStatesGame.deleteEmptyLocation(placement, returnLocationChar(array[0], array[1]));  //update the set up information
                         placement += "z9" + returnLocationChar(array[0], array[1]);
-                        moveSequence += returnLocationChar(array[0], array[1]);
-//                        Image empty = new Image("comp1110/ass2/gui/assets/Character/empty.png"); //Remove previous ZhangYi's card
                         char random = WarringStatesGame.generateMove(placement);
                         char zhang1 = WarringStatesGame.findZhangPosition(placement);
                         int[] Zhang1 = Viewer.determineCoordinate(zhang1);
@@ -181,6 +226,19 @@ public class Game extends Application {
                             moveSequence += returnLocationChar(random1[1], random1[0]);
                             placement = WarringStatesGame.deleteEmptyLocation(placement, returnLocationChar(random1[1], random1[0]));  //update the set up information
                             placement += "z9" + returnLocationChar(random1[1], random1[0]);
+                            String initial = (PLACEMENTS[idx]);
+                            int[] Flags = WarringStatesGame.getFlags(initial,moveSequence,2);
+                            for (int j = 0; j < 2 ; j ++) {
+                                String flags = returnFlags(Flags,j);
+                              for (int i = 0; i < flags.length(); i++) {
+                                     Image iamge = new Image("comp1110/ass2/gui/assets/Character/"+flags.charAt(i)+".png");
+                                     ImageView imageViewx = new ImageView(iamge);
+                                     imageViewx.setFitWidth(20);
+                                     imageViewx.setFitHeight(20);
+                                     imageViewx.setX(680+110*j+10*i);
+                                     imageViewx.setY(680);
+                                     root.getChildren().add(imageViewx);
+                            }}
                         }
                     }
                     if (WarringStatesGame.generateMove(placement) == '\0') {
@@ -228,7 +286,7 @@ public class Game extends Application {
         }
 
     //two human players version
-    public Group startPlay() {
+    public Group startPlay(int numPlayer) {
         Group root = new Group();
         GridPane grid = setup(placement);
         BorderPane border = setBorder(grid);
@@ -237,6 +295,7 @@ public class Game extends Application {
             item.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
+                    String initial = (PLACEMENTS[idx]);
                     int[] array = mouseEntered(event);
                     if (WarringStatesGame.isMoveLegal(placement, returnLocationChar(array[0], array[1]))) {
                         char zhang = WarringStatesGame.findZhangPosition(placement);
@@ -257,8 +316,28 @@ public class Game extends Application {
                             grid.add(imageView2, a[1], a[0]);
                         }
                         moveSequence += returnLocationChar(array[0],array[1]);
+                        int[] Flags = WarringStatesGame.getFlags(initial,moveSequence,numPlayer);
+                        Image emptyy = new Image("comp1110/ass2/gui/assets/Character/empty.png");
+                        ImageView imageViewy = new ImageView(emptyy);       //empty all cards collection information
+                        imageViewy.setFitHeight(20);
+                        imageViewy.setFitWidth(1000);
+                        imageViewy.setX(680);
+                        imageViewy.setY(680);
+                        root.getChildren().addAll(imageViewy);
+                        for (int x = 0; x < numPlayer; x ++) {
+                            String flags = returnFlags(Flags,x);
+                            for (int i = 0; i < flags.length(); i++) {
+                                Image iamge = new Image("comp1110/ass2/gui/assets/Character/"+flags.charAt(i)+".png");
+                                ImageView imageViewx = new ImageView(iamge);
+                                imageViewx.setFitWidth(20);
+                                imageViewx.setFitHeight(20);
+                                imageViewx.setX(680+110*x+10*i);
+                                imageViewx.setY(680);
+                                root.getChildren().add(imageViewx);
+                            }
+                        }
                         for (int j = 0; j < supportors.length(); j +=2) {
-                            if (count % 2 == 0) {
+                            if (count % numPlayer == 0) {
                                 Image image3 = new Image("comp1110/ass2/gui/assets/Character/" + supportors.charAt(j) + supportors.charAt(j + 1) + ".png");
                                 ImageView imageView = new ImageView(image3);
                                 imageView.setFitHeight(100);
@@ -267,14 +346,36 @@ public class Game extends Application {
                                 imageView.setY(580-30*x);
                                 root.getChildren().add(imageView);
                                 x += 1;
-                            } else { Image image3 = new Image("comp1110/ass2/gui/assets/Character/" + supportors.charAt(j) + supportors.charAt(j + 1) + ".png");
+                            } else if (count % numPlayer == 1){
+                                Image image3 = new Image("comp1110/ass2/gui/assets/Character/" + supportors.charAt(j) + supportors.charAt(j + 1) + ".png");
                                 ImageView imageView = new ImageView(image3);
                                 imageView.setFitWidth(100);
                                 imageView.setFitHeight(100);
                                 imageView.setX(790);
                                 imageView.setY(580-30*y);
                                 root.getChildren().add(imageView);
+                                String flags = returnFlags(Flags,1);
                                 y += 1;
+                            } else if (count % numPlayer == 2) {
+                                Image image3 = new Image("comp1110/ass2/gui/assets/Character/" + supportors.charAt(j) + supportors.charAt(j + 1) + ".png");
+                                ImageView imageView = new ImageView(image3);
+                                imageView.setFitHeight(100);
+                                imageView.setFitWidth(100);
+                                imageView.setX(900);
+                                imageView.setY(580-30*z);
+                                root.getChildren().add(imageView);
+                                String flags = returnFlags(Flags,2);
+                                z += 1;
+                            } else if (count % numPlayer == 3) {
+                                Image image3 = new Image("comp1110/ass2/gui/assets/Character/" + supportors.charAt(j) + supportors.charAt(j + 1) + ".png");
+                                ImageView imageView = new ImageView(image3);
+                                imageView.setFitHeight(100);
+                                imageView.setFitWidth(100);
+                                imageView.setX(1010);
+                                imageView.setY(580-30*xyz);
+                                root.getChildren().add(imageView);
+                                String flags = returnFlags(Flags,3);
+                                xyz += 1;
                             }
                         }
                         Image ZhangYi = new Image("comp1110/ass2/gui/assets/Character/z9.png");     //replace the destination to ZhangYi
@@ -284,16 +385,21 @@ public class Game extends Application {
                         grid.add(imageview, array[0], array[1]);
                         placement = WarringStatesGame.deleteEmptyLocation(placement, returnLocationChar(array[0], array[1]));  //update the set up information
                         placement += "z9" + returnLocationChar(array[0], array[1]);
+                        count += 1;
                     }
-                    if (WarringStatesGame.generateMove(placement) != '\0') {
-                        count = count + 1;
-                    }
-                    else {
-                        String initial = (PLACEMENTS[idx]);
+//                    if (WarringStatesGame.generateMove(placement) != '\0') {
+//                        count = count + 1;
+//                    }
+//                    else
+                        if (WarringStatesGame.generateMove(placement) == '\0'){
                         int num1 = 0;
                         int num2 = 0;
+                        int num3 = 0;
+                        int num4 = 0;
                         int cal1 = 0;
                         int cal2 = 0;
+                        int cal3 = 0;
+                        int cal4 = 0;
                         String str = "";
                         int[] array1 = WarringStatesGame.getFlags(initial,moveSequence,2);
                         for (int i = 0; i < 7; i ++) {
@@ -303,18 +409,60 @@ public class Game extends Application {
                             } else if (array1[i] == 1) {
                                 num2 += 1;
                                 cal2 += 8 - i;
+                            } else if (array1[i] == 2) {
+                                num3 += 1;
+                                cal3 += 8 - i;
+                            } else if (array1[i] == 3) {
+                                num4 += 1;
+                                cal4 += 8 -i;
                             }
                         }
-                        if (num1 > num2) {
+                        if (num1 > num2 && num1 > num3 && num1 > num4) {
                             str = "Player1 is WIN" ;
-                        } else if (num1 < num2) {
-                            str = "PLayer2 is WIN";
-                        } else if (num1 == num2) {
-                            if(cal1 > cal2) {
+                        } else if (num2 > num1 && num2 > num3 && num3 >num4) {
+                            str = "Player2 is WIN";
+                        } else if (num3 > num1 && num3 > num2 && num3 > num4) {
+                            str = "Player3 is WIN";
+                        } else if (num4 > num1 && num4 > num3 && num4 > num2) {
+                            str = "Player4 is WIN";
+                        } else if (num1 == num2 && num1 > num3 && num1 > num4) {
+                            if (cal1 > cal2) {
                                 str = "Player1 is WIN";
                             } else {
                                 str = "Player2 is WIN";
                             }
+                        } else if (num1 == num3 && num1 > num2 && num1 > num4) {
+                            if (cal1 > cal3) {
+                                str = "Player1 is WIN";
+                            } else {
+                                str = "Player3 is WIN";
+                            }
+                        } else if (num1 == num4 && num1 > num2 && num1 > num3) {
+                            if (cal1 > cal4) {
+                                str = "Player1 is WIN";
+                            } else {
+                                str = "Player4 is WIN";
+                            }
+                        } else if (num2 == num3 && num2 > num1 && num2 > num4) {
+                            if (cal2 > cal4) {
+                                str = "Player2 is WIN";
+                            } else {
+                                str = "Player4 is WIN";
+                            }
+                        } else if (num2 == num4 && num2 > num1 && num2 > num3) {
+                            if (cal2 > cal4) {
+                                str = "Player2 is WIN";
+                            } else {
+                                str = "Player4 is WIN";
+                            }
+                        } else if (num3 == num4 && num3 > num1 && num3 > num2) {
+                            if (cal3 > cal4 ) {
+                                str = "Player3 is WIN";
+                            } else {
+                                str = "Player4 is WIN";
+                            }
+                        } else {
+                            str = "ERROR";
                         }
                         Text text = new Text(str);
                         text.setFill(Color.RED);
@@ -331,6 +479,17 @@ public class Game extends Application {
 
         });
         return root;
+    }
+
+    static String kingdom = "abcdefg";
+    public String returnFlags(int[] array, int playerID) {
+        String str = "";
+        for (int i =0; i < array.length; i++) {
+            if (array[i] == playerID) {
+                str += kingdom.charAt(i);
+            }
+        }
+        return str;
     }
 
     public Node getNodeByRowColumnIndex(final int row, final int column, GridPane gridPane) {
