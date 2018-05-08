@@ -26,6 +26,8 @@ import comp1110.ass2.gui.Viewer;
 import javafx.event.Event;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -387,83 +389,48 @@ public class Game extends Application {
                         placement += "z9" + returnLocationChar(array[0], array[1]);
                         count += 1;
                     }
-//                    if (WarringStatesGame.generateMove(placement) != '\0') {
-//                        count = count + 1;
-//                    }
-//                    else
                         if (WarringStatesGame.generateMove(placement) == '\0'){
-                        int num1 = 0;
-                        int num2 = 0;
-                        int num3 = 0;
-                        int num4 = 0;
-                        int cal1 = 0;
-                        int cal2 = 0;
-                        int cal3 = 0;
-                        int cal4 = 0;
+                        int[] flags = WarringStatesGame.getFlags(initial,moveSequence,numPlayer);
+                        int[] cardNumber = new int[numPlayer];
+                        int[] flagNumber =new int[numPlayer];
+                        for (int x = 0; x < 7; x ++) {
+                            if (flags[x] != -1) {
+                                flagNumber[flags[x]] +=1;
+                                cardNumber[flags[x]] += 8-x;
+                            }
+                        }
+                        int max = 0;
+                        for (int i = 0; i < numPlayer; i ++) {
+                            if (flagNumber[i] > max) {
+                                max = flagNumber[i];
+                            }
+                        }
+                            ArrayList<Integer> list = new ArrayList<>();
+                        for (int i = 0; i < numPlayer; i++) {
+                            if (flagNumber[i] == max) {
+                                list.add(i+1);
+                            }
+                        }
                         String str = "";
-                        int[] array1 = WarringStatesGame.getFlags(initial,moveSequence,2);
-                        for (int i = 0; i < 7; i ++) {
-                            if (array1[i] == 0) {
-                                num1 += 1;
-                                cal1 += 8 - i;
-                            } else if (array1[i] == 1) {
-                                num2 += 1;
-                                cal2 += 8 - i;
-                            } else if (array1[i] == 2) {
-                                num3 += 1;
-                                cal3 += 8 - i;
-                            } else if (array1[i] == 3) {
-                                num4 += 1;
-                                cal4 += 8 -i;
+                        if (list.size() == 1) {
+                            str = "Player"+list.get(0)+" is WIN";
                             }
-                        }
-                        if (num1 > num2 && num1 > num3 && num1 > num4) {
-                            str = "Player1 is WIN" ;
-                        } else if (num2 > num1 && num2 > num3 && num3 >num4) {
-                            str = "Player2 is WIN";
-                        } else if (num3 > num1 && num3 > num2 && num3 > num4) {
-                            str = "Player3 is WIN";
-                        } else if (num4 > num1 && num4 > num3 && num4 > num2) {
-                            str = "Player4 is WIN";
-                        } else if (num1 == num2 && num1 > num3 && num1 > num4) {
-                            if (cal1 > cal2) {
-                                str = "Player1 is WIN";
-                            } else {
-                                str = "Player2 is WIN";
-                            }
-                        } else if (num1 == num3 && num1 > num2 && num1 > num4) {
-                            if (cal1 > cal3) {
-                                str = "Player1 is WIN";
-                            } else {
-                                str = "Player3 is WIN";
-                            }
-                        } else if (num1 == num4 && num1 > num2 && num1 > num3) {
-                            if (cal1 > cal4) {
-                                str = "Player1 is WIN";
-                            } else {
-                                str = "Player4 is WIN";
-                            }
-                        } else if (num2 == num3 && num2 > num1 && num2 > num4) {
-                            if (cal2 > cal4) {
-                                str = "Player2 is WIN";
-                            } else {
-                                str = "Player4 is WIN";
-                            }
-                        } else if (num2 == num4 && num2 > num1 && num2 > num3) {
-                            if (cal2 > cal4) {
-                                str = "Player2 is WIN";
-                            } else {
-                                str = "Player4 is WIN";
-                            }
-                        } else if (num3 == num4 && num3 > num1 && num3 > num2) {
-                            if (cal3 > cal4 ) {
-                                str = "Player3 is WIN";
-                            } else {
-                                str = "Player4 is WIN";
-                            }
-                        } else {
+                            else if (list.size() == 0) {
                             str = "ERROR";
+                        } else
+                                {
+                            ArrayList<Integer> listx = new ArrayList<>();
+                            for (int i =0; i <list.size(); i++) {
+                                listx.add(cardNumber[list.get(i)-1]);
+                            }
+                            int x = Collections.max(listx);
+                            for (int j = 0; j < cardNumber.length; j ++) {
+                                if (cardNumber[j] == x) {
+                                    str = "Player"+j+" is WIN";
+                                }
+                            }
                         }
+
                         Text text = new Text(str);
                         text.setFill(Color.RED);
                         text.setFont(Font.font(null, FontWeight.BOLD,100));
@@ -480,6 +447,7 @@ public class Game extends Application {
         });
         return root;
     }
+
 
     static String kingdom = "abcdefg";
     public String returnFlags(int[] array, int playerID) {
