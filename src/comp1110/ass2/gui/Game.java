@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -56,66 +57,146 @@ public class Game extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Warring States");
         String txt = "Warring States";
+        ImageView i = new ImageView("comp1110/ass2/gui/assets/Character/background.jpg");
+        Group root = new Group();
+        i.setFitHeight(735);
         Text text1 = new Text(txt);
-        text1.setX(100);
+        text1.setX(120);
         text1.setY(300);
         text1.setFill(Color.BLACK);
         text1.setFont(Font.font(null, FontWeight.BOLD,100));
         Button button1 = new Button("Normal Game");
-        button1.setLayoutX(240);
-        button1.setLayoutY(535);
+        button1.setLayoutX(50);
+        button1.setLayoutY(435);
+        button1.setStyle("-fx-padding: 8 15 15 15;\n" +
+                "    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;\n" +
+                "    -fx-background-radius: 8;\n" +
+                "    -fx-background-color: \n" +
+                "        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),\n" +
+                "        #9d4024,\n" +
+                "        #d86e3a,\n" +
+                "        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);\n" +
+                "    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );\n" +
+                "    -fx-font-weight: bold;\n" +
+                "    -fx-font-size: 1.1em;");
         button1.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 Button button11 = new Button("2 Player");
-                button11.setLayoutX(400);
-                button11.setLayoutY(200);
+                button11.setLayoutX(200);
+                button11.setLayoutY(375);
+                button11.setStyle("-fx-padding: 8 15 15 15;\n" +
+                        "    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;\n" +
+                        "    -fx-background-radius: 8;\n" +
+                        "    -fx-background-color: \n" +
+                        "        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),\n" +
+                        "        #9d4024,\n" +
+                        "        #d86e3a,\n" +
+                        "        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);\n" +
+                        "    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );\n" +
+                        "    -fx-font-weight: bold;\n" +
+                        "    -fx-font-size: 1.1em;");
                 button11.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        Group root = startPlay(2);
+                        Group root = new Group();
+                        ImageView i = new ImageView("comp1110/ass2/gui/assets/Character/background.jpg");
+                        i.setFitHeight(735);
+                        root.getChildren().addAll(i,startPlay(2));
                         Scene scene = new Scene(root, 1070, 732);
                         primaryStage.setScene(scene);
                         primaryStage.show();
                     }
                 });
                 Button button12 = new Button("3 Player");
-                button12.setLayoutX(400);
-                button12.setLayoutY(400);
+                button12.setLayoutX(200);
+                button12.setLayoutY(435);
+                button12.setStyle("-fx-padding: 8 15 15 15;\n" +
+                        "    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;\n" +
+                        "    -fx-background-radius: 8;\n" +
+                        "    -fx-background-color: \n" +
+                        "        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),\n" +
+                        "        #9d4024,\n" +
+                        "        #d86e3a,\n" +
+                        "        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);\n" +
+                        "    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );\n" +
+                        "    -fx-font-weight: bold;\n" +
+                        "    -fx-font-size: 1.1em;");
                 button12.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        Group root = startPlay(3);
+                        Group root = new Group();
+                        ImageView i = new ImageView("comp1110/ass2/gui/assets/Character/background.jpg");
+                        i.setFitHeight(735);
+                        root.getChildren().addAll(i,startPlay(3));
                         Scene scene = new Scene(root, 1070, 732);
                         primaryStage.setScene(scene);
                         primaryStage.show();
                     }
                 });
                 Button button13 = new Button("4 Player");
-                button13.setLayoutX(400);
-                button13.setLayoutY(600);
+                button13.setLayoutX(200);
+                button13.setLayoutY(500);
+                button13.setStyle("-fx-padding: 8 15 15 15;\n" +
+                        "    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;\n" +
+                        "    -fx-background-radius: 8;\n" +
+                        "    -fx-background-color: \n" +
+                        "        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),\n" +
+                        "        #9d4024,\n" +
+                        "        #d86e3a,\n" +
+                        "        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);\n" +
+                        "    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );\n" +
+                        "    -fx-font-weight: bold;\n" +
+                        "    -fx-font-size: 1.1em;");
                 button13.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        Group root = startPlay(4);
+                        Group root = new Group();
+                        ImageView i = new ImageView("comp1110/ass2/gui/assets/Character/background.jpg");
+                        i.setFitHeight(735);
+                        root.getChildren().addAll(i,startPlay(4));
                         Scene scene = new Scene(root, 1070, 732);
                         primaryStage.setScene(scene);
                         primaryStage.show();
                     }
                 });
-                Group root11 = new Group();
-                root11.getChildren().addAll(button11,button12,button13);
-                Scene scenex = new Scene(root11,1070,732);
-                primaryStage.setScene(scenex);
-                primaryStage.show();
+//                Group root11 = new Group();
+//                i.setFitHeight(735);
+//                root11.getChildren().addAll(i,button11,button12,button13);
+//                Scene scenex = new Scene(root11,1070,732);
+//                primaryStage.setScene(scenex);
+//                primaryStage.show();
+                root.getChildren().addAll(button11,button12,button13);
             }
         });
         Button button2 = new Button("AI Game");
-        button2.setLayoutX(440);
+        button2.setLayoutX(50);
         button2.setLayoutY(535);
+        button2.setStyle("-fx-padding: 8 15 15 15;\n" +
+                "    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;\n" +
+                "    -fx-background-radius: 8;\n" +
+                "    -fx-background-color: \n" +
+                "        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),\n" +
+                "        #9d4024,\n" +
+                "        #d86e3a,\n" +
+                "        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);\n" +
+                "    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );\n" +
+                "    -fx-font-weight: bold;\n" +
+                "    -fx-font-size: 1.1em;");
         Button button3 = new Button("Help");
-        button3.setLayoutX(600);
-        button3.setLayoutY(535);
+        button3.setLayoutX(50);
+        button3.setLayoutY(635);
+        button3.setStyle("-fx-padding: 8 15 15 15;\n" +
+                "    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;\n" +
+                "    -fx-background-radius: 8;\n" +
+                "    -fx-background-color: \n" +
+                "        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),\n" +
+                "        #9d4024,\n" +
+                "        #d86e3a,\n" +
+                "        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);\n" +
+                "    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );\n" +
+                "    -fx-font-weight: bold;\n" +
+                "    -fx-font-size: 1.1em;");
         button2.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -125,8 +206,8 @@ public class Game extends Application {
                 primaryStage.show();
             }
         });
-        Group root = new Group();
-        root.getChildren().addAll(button1,button2,button3,text1);
+        root.getChildren().addAll(i,button1,button2,button3,text1);
+//        root.getChildren().addAll(i,text1);
         Scene scene = new Scene(root, 1070, 732);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -346,6 +427,7 @@ public class Game extends Application {
                     if (WarringStatesGame.isMoveLegal(placement, returnLocationChar(array[0], array[1]))) {
                         char zhang = WarringStatesGame.findZhangPosition(placement);
                         int[] Zhang = Viewer.determineCoordinate(zhang);
+                        BoxBlur bb = new BoxBlur();
                         Image empty = new Image("comp1110/ass2/gui/assets/Character/empty.png"); //Remove previous ZhangYi's card
                         ImageView imageView1 = new ImageView(empty);
                         imageView1.setFitWidth(100);
@@ -363,10 +445,8 @@ public class Game extends Application {
                         }
                         moveSequence += returnLocationChar(array[0],array[1]);
                         int[] Flags = WarringStatesGame.getFlags(initial,moveSequence,numPlayer);
-                        Image emptyy = new Image("comp1110/ass2/gui/assets/Character/empty.png");
+                        Image emptyy = new Image("comp1110/ass2/gui/assets/Character/fit.png");
                         ImageView imageViewy = new ImageView(emptyy);       //empty all cards collection information
-                        imageViewy.setFitHeight(20);
-                        imageViewy.setFitWidth(1000);
                         imageViewy.setX(680);
                         imageViewy.setY(680);
                         root.getChildren().addAll(imageViewy);
@@ -492,6 +572,22 @@ public class Game extends Application {
         return root;
     }
 
+
+    public int getScores(String placement, String moveSequence, char move, int numPlayer,int PlayerID) {
+        int score = 0;
+        if(WarringStatesGame.isMoveLegal(placement,move)) {
+            placement = WarringStatesGame.deleteEmptyLocation(placement,move);
+            placement += "z9" + move;
+            moveSequence += move;
+            int[] flags = WarringStatesGame.getFlags(placement,moveSequence,numPlayer);
+            for (int i = 0; i < flags.length; i++) {
+                if (flags[i] == PlayerID) {
+                    score += 1;
+                }
+            }
+        }
+        return score;
+    }
 
     static String kingdom = "abcdefg";
     public String returnFlags(int[] array, int playerID) {
