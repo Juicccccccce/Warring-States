@@ -573,6 +573,7 @@ public class Game extends Application {
     }
 
 
+    //give the score for each move
     public int getScores(String placement, String moveSequence, char move, int numPlayer,int PlayerID) {
         int score = 0;
         if(WarringStatesGame.isMoveLegal(placement,move)) {
