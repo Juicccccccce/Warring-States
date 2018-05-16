@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -41,6 +42,7 @@ public class Game extends Application {
     int y = 0;
     int z = 0;
     int xyz = 0;
+    public int[] test = {0,0};
 //    public static String placement = "g0Aa0Bf1Ca1Dc5Ee1Fa4Ge3He2Ia2Jc2Kd0Lf0Mb4Nd4Oa6Pc3Qe0Ra5Sc1Td1Uc4Vb5Wb0Xa7Yf2Zb10a31z92b33b64d35g16b27d28c09";
 
     // FIXME Task 9: Implement a basic playable Warring States game in JavaFX
@@ -146,7 +148,28 @@ public class Game extends Application {
         Group root = new Group();
         GridPane grid = setup(placement);
         BorderPane border = setBorder(grid);
+        DropShadow shadow = new DropShadow();      //update the UI design
+        grid.setEffect(shadow);
         root.getChildren().add(border);
+        grid.getChildren().forEach(item -> {
+            item.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    int[] enter = mouseEntered(event);
+                    if ( WarringStatesGame.isMoveLegal(placement,returnLocationChar(enter[0],enter[1]))) {
+                        getNodeByRowColumnIndex(enter[1],enter[0],grid).setEffect(shadow);
+                        test[0] = enter[1];
+                        test[1] = enter[0];
+                    }
+                }
+            });
+            item.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    getNodeByRowColumnIndex(test[0],test[1],grid).setEffect(null);
+                }
+            });
+        });
         grid.getChildren().forEach(item -> {
             item.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -292,7 +315,28 @@ public class Game extends Application {
         Group root = new Group();
         GridPane grid = setup(placement);
         BorderPane border = setBorder(grid);
+        DropShadow shadow = new DropShadow();
+        grid.setEffect(shadow);          // update the UI design
         root.getChildren().add(border);
+        grid.getChildren().forEach(item -> {
+            item.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    int[] enter = mouseEntered(event);
+                    if ( WarringStatesGame.isMoveLegal(placement,returnLocationChar(enter[0],enter[1]))) {
+                        getNodeByRowColumnIndex(enter[1],enter[0],grid).setEffect(shadow);
+                        test[0] = enter[1];
+                        test[1] = enter[0];
+                    }
+                }
+            });
+            item.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    getNodeByRowColumnIndex(test[0],test[1],grid).setEffect(null);
+                }
+            });
+        });
         grid.getChildren().forEach(item -> {
             item.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
