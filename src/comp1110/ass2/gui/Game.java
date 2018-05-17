@@ -30,6 +30,7 @@ import javafx.event.Event;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -151,7 +152,6 @@ public class Game extends Application {
                 button13.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        Group root = new Group();
                         ImageView i = new ImageView("comp1110/ass2/gui/assets/Character/background.jpg");
                         i.setFitHeight(735);
                         root.getChildren().addAll(i,startPlay(4));
@@ -200,12 +200,61 @@ public class Game extends Application {
         button2.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Group root = startSimpleAI();
-                Scene scene = new Scene(root, 1070, 732);
-                primaryStage.setScene(scene);
-                primaryStage.show();
+                Button button_1 = new Button("Simple AI");
+                button_1.setLayoutX(200);
+                button_1.setLayoutY(495);
+                button_1.setStyle("-fx-padding: 8 15 15 15;\n" +
+                        "    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;\n" +
+                        "    -fx-background-radius: 8;\n" +
+                        "    -fx-background-color: \n" +
+                        "        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),\n" +
+                        "        #9d4024,\n" +
+                        "        #d86e3a,\n" +
+                        "        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);\n" +
+                        "    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );\n" +
+                        "    -fx-font-weight: bold;\n" +
+                        "    -fx-font-size: 1.1em;");
+                Button button_2 = new Button("Harder AI");
+                button_1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        ImageView i = new ImageView("comp1110/ass2/gui/assets/Character/background.jpg");
+                        i.setFitHeight(735);
+                        Group root = new Group();
+                        root.getChildren().addAll(i,startSimpleAI());
+                        Scene scene = new Scene(root, 1070, 732);
+                        primaryStage.setScene(scene);
+                        primaryStage.show();
+                    }
+                });
+                button_2.setLayoutX(200);
+                button_2.setLayoutY(545);
+                button_2.setStyle("-fx-padding: 8 15 15 15;\n" +
+                        "    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;\n" +
+                        "    -fx-background-radius: 8;\n" +
+                        "    -fx-background-color: \n" +
+                        "        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),\n" +
+                        "        #9d4024,\n" +
+                        "        #d86e3a,\n" +
+                        "        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);\n" +
+                        "    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );\n" +
+                        "    -fx-font-weight: bold;\n" +
+                        "    -fx-font-size: 1.1em;");
+                root.getChildren().addAll(button_1,button_2);
+//                Scene scene = new Scene(root, 1070, 732);
+//                primaryStage.setScene(scene);
+//                primaryStage.show();
             }
         });
+//        button2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                Group root = startSimpleAI();
+//                Scene scene = new Scene(root, 1070, 732);
+//                primaryStage.setScene(scene);
+//                primaryStage.show();
+//            }
+//        });
         root.getChildren().addAll(i,button1,button2,button3,text1);
 //        root.getChildren().addAll(i,text1);
         Scene scene = new Scene(root, 1070, 732);
@@ -257,10 +306,8 @@ public class Game extends Application {
                 public void handle(MouseEvent event) {
                     int[] array = mouseEntered(event);
                     if (WarringStatesGame.isMoveLegal(placement, returnLocationChar(array[0], array[1]))) {
-                        Image emptyy = new Image("comp1110/ass2/gui/assets/Character/empty.png");
+                        Image emptyy = new Image("comp1110/ass2/gui/assets/Character/fit.png");
                         ImageView imageViewy = new ImageView(emptyy);       //empty all cards collection information
-                        imageViewy.setFitHeight(20);
-                        imageViewy.setFitWidth(1000);
                         imageViewy.setX(680);
                         imageViewy.setY(680);
                         root.getChildren().addAll(imageViewy);
@@ -427,7 +474,7 @@ public class Game extends Application {
                     if (WarringStatesGame.isMoveLegal(placement, returnLocationChar(array[0], array[1]))) {
                         char zhang = WarringStatesGame.findZhangPosition(placement);
                         int[] Zhang = Viewer.determineCoordinate(zhang);
-                        BoxBlur bb = new BoxBlur();
+//                        BoxBlur bb = new BoxBlur();
                         Image empty = new Image("comp1110/ass2/gui/assets/Character/empty.png"); //Remove previous ZhangYi's card
                         ImageView imageView1 = new ImageView(empty);
                         imageView1.setFitWidth(100);
@@ -574,17 +621,14 @@ public class Game extends Application {
 
 
     //give the score for each move
-    public int getScores(String placement, String moveSequence, char move, int numPlayer,int PlayerID) {
+    public static int getScores(String placement, String moveSequence, int numPlayer,int PlayerID) {
         int score = 0;
-        if(WarringStatesGame.isMoveLegal(placement,move)) {
-            placement = WarringStatesGame.deleteEmptyLocation(placement,move);
-            placement += "z9" + move;
-            moveSequence += move;
+
             int[] flags = WarringStatesGame.getFlags(placement,moveSequence,numPlayer);
             for (int i = 0; i < flags.length; i++) {
                 if (flags[i] == PlayerID) {
                     score += 1;
-                }
+
             }
         }
         return score;
@@ -648,6 +692,25 @@ public class Game extends Application {
 
         }
         return grid;
+    }
+
+    //move to the locationChar with the best score (depth = 1) -- simple AI
+    public char bestMove(String placement,String moveSequence) {
+        String moves = WarringStatesGame.generateAllMove(placement);
+        char re = ' ';
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < moves.length(); i++) {
+            moveSequence += moves.charAt(i);
+            list.add(getScores(placement,moveSequence,2,1));      //assume the AI player is the player2 with playerID 1
+        }
+        int max = Collections.max(list);
+        for (int i =0; i < list.size(); i++) {
+            if (list.get(i) == max) {
+                re = moves.charAt(i);
+                break;
+            }
+        }
+        return re;
     }
 
     //determine which index the mouse is reffered to
