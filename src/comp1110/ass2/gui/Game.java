@@ -3,6 +3,7 @@ package comp1110.ass2.gui;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -18,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -160,12 +162,6 @@ public class Game extends Application {
                         primaryStage.show();
                     }
                 });
-//                Group root11 = new Group();
-//                i.setFitHeight(735);
-//                root11.getChildren().addAll(i,button11,button12,button13);
-//                Scene scenex = new Scene(root11,1070,732);
-//                primaryStage.setScene(scenex);
-//                primaryStage.show();
                 root.getChildren().addAll(button11,button12,button13);
             }
         });
@@ -197,6 +193,12 @@ public class Game extends Application {
                 "    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );\n" +
                 "    -fx-font-weight: bold;\n" +
                 "    -fx-font-size: 1.1em;");
+        button3.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                display();
+            }
+        });
         button2.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -241,25 +243,56 @@ public class Game extends Application {
                         "    -fx-font-weight: bold;\n" +
                         "    -fx-font-size: 1.1em;");
                 root.getChildren().addAll(button_1,button_2);
-//                Scene scene = new Scene(root, 1070, 732);
-//                primaryStage.setScene(scene);
-//                primaryStage.show();
             }
         });
-//        button2.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                Group root = startSimpleAI();
-//                Scene scene = new Scene(root, 1070, 732);
-//                primaryStage.setScene(scene);
-//                primaryStage.show();
-//            }
-//        });
         root.getChildren().addAll(i,button1,button2,button3,text1);
-//        root.getChildren().addAll(i,text1);
         Scene scene = new Scene(root, 1070, 732);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+
+    //set the display window after clicking the help button
+    public static void display(){
+        Stage window = new Stage();
+        window.setTitle("Game description");
+        window.initModality(Modality.APPLICATION_MODAL);
+        ImageView i = new ImageView("comp1110/ass2/gui/assets/Character/background.jpg");
+        window.setMinWidth(400);
+        window.setMinHeight(400);
+        Button button = new Button("Close the window");
+        button.setOnAction(e -> window.close());
+        Text t = new Text("In ancient China, there was an era \n" +
+                        " called Warring States Period. During \n" +
+                         "5th century B.C. to 221 B.C., seven \n" +
+                        "Kingdoms are at war: Qin, Qi, Chu, Zhao, \n" +
+                         " Han, Wei and Yan. The world is in the flames \n" +
+                         "of war. In such a massive situation, no small \n" +
+                        " kingdom can survive along without alliance. As a \n" +
+                        "king, you don’t have much military force. But, Zhang \n" +
+                        "Yi, one of the most cunning diplomat in Chinese \n" +
+                         "history, can give you help. You can order Zhang \n" +
+                         "Yi, to travel from palace to palace, whispering \n" +
+                         "in the ears of other kings, making great alliance, \n" +
+                         "and support you to become the new Emperor of China. \n" +
+                         " But, Zhang Yi doesn’t only work for you. You must \n" +
+                        "make the greatest alliance across the world to become \n" +
+                        " the Emperor, otherwise, those kings with greater \n" +
+                        " alliance won’t leave you any chance.");
+        t.setFont(Font.font(null, FontWeight.BLACK,18));
+        t.setFill(Color.BLACK);
+        t.setX(5);
+        t.setY(20);
+//        VBox layout = new VBox(10);
+//        layout.getChildren().addAll(i,t, button);
+//        layout.setAlignment(Pos.CENTER);
+        Group p = new Group();
+        p.getChildren().addAll(i,t);
+        Scene scene = new Scene(p);
+        window.setMaxHeight(430);
+        window.setMaxWidth(500);
+        window.setScene(scene);
+        window.showAndWait();
     }
 
     //set border pane
