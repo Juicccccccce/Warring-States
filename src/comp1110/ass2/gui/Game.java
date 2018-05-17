@@ -3,18 +3,14 @@ package comp1110.ass2.gui;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -25,16 +21,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import comp1110.ass2.WarringStatesGame;
-import comp1110.ass2.gui.Viewer;
 
-import javafx.event.Event;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Game extends Application {
     private static final int BOARD_WIDTH = 933;
@@ -58,6 +50,7 @@ public class Game extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        Stage s = new Stage();
         primaryStage.setTitle("Warring States");
         String txt = "Warring States";
         ImageView i = new ImageView("comp1110/ass2/gui/assets/Character/background.jpg");
@@ -154,11 +147,12 @@ public class Game extends Application {
                 button13.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
+                        Group root_1 = new Group();
                         ImageView i = new ImageView("comp1110/ass2/gui/assets/Character/background.jpg");
                         i.setFitHeight(735);
-                        root.getChildren().addAll(i,startPlay(4));
-                        Scene scene = new Scene(root, 1070, 732);
-                        primaryStage.setScene(scene);
+                        root_1.getChildren().addAll(i,startPlay(4));
+                        Scene scenes = new Scene(root_1, 1070, 732);
+                        primaryStage.setScene(scenes);
                         primaryStage.show();
                     }
                 });
@@ -223,7 +217,7 @@ public class Game extends Application {
                         ImageView i = new ImageView("comp1110/ass2/gui/assets/Character/background.jpg");
                         i.setFitHeight(735);
                         Group root = new Group();
-                        root.getChildren().addAll(i,startSimpleAI());
+                        root.getChildren().addAll(i,startHarderAI());
                         Scene scene = new Scene(root, 1070, 732);
                         primaryStage.setScene(scene);
                         primaryStage.show();
@@ -242,6 +236,18 @@ public class Game extends Application {
                         "    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );\n" +
                         "    -fx-font-weight: bold;\n" +
                         "    -fx-font-size: 1.1em;");
+                button_2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        ImageView i = new ImageView("comp1110/ass2/gui/assets/Character/background.jpg");
+                        i.setFitHeight(735);
+                        Group root = new Group();
+                        root.getChildren().addAll(i,startSimpleAI());
+                        Scene scene = new Scene(root, 1070, 732);
+                        primaryStage.setScene(scene);
+                        primaryStage.show();
+                    }
+                });
                 root.getChildren().addAll(button_1,button_2);
             }
         });
@@ -250,7 +256,6 @@ public class Game extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
 
     //set the display window after clicking the help button
     public static void display(){
@@ -471,6 +476,172 @@ public class Game extends Application {
             return root;
         }
 
+
+    public Group startHarderAI() {
+        Group root = new Group();
+        GridPane grid = setup(placement);
+        BorderPane border = setBorder(grid);
+        DropShadow shadow = new DropShadow();      //update the UI design
+        grid.setEffect(shadow);
+        root.getChildren().add(border);
+        grid.getChildren().forEach(item -> {
+            item.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    int[] enter = mouseEntered(event);
+                    if ( WarringStatesGame.isMoveLegal(placement,returnLocationChar(enter[0],enter[1]))) {
+                        getNodeByRowColumnIndex(enter[1],enter[0],grid).setEffect(shadow);
+                        test[0] = enter[1];
+                        test[1] = enter[0];
+                    }
+                }
+            });
+            item.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    getNodeByRowColumnIndex(test[0],test[1],grid).setEffect(null);
+                }
+            });
+        });
+        grid.getChildren().forEach(item -> {
+            item.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    int[] array = mouseEntered(event);
+                    if (WarringStatesGame.isMoveLegal(placement, returnLocationChar(array[0], array[1]))) {
+                        Image emptyy = new Image("comp1110/ass2/gui/assets/Character/fit.png");
+                        ImageView imageViewy = new ImageView(emptyy);       //empty all cards collection information
+                        imageViewy.setX(680);
+                        imageViewy.setY(680);
+                        root.getChildren().addAll(imageViewy);
+                        char zhang = WarringStatesGame.findZhangPosition(placement);
+                        int[] Zhang = Viewer.determineCoordinate(zhang);
+                        Image empty = new Image("comp1110/ass2/gui/assets/Character/empty.png"); //Remove previous ZhangYi's card
+                        ImageView imageView1 = new ImageView(empty);
+                        imageView1.setFitWidth(100);
+                        imageView1.setFitHeight(100);
+                        grid.getChildren().remove(getNodeByRowColumnIndex(array[1], array[0], grid));
+                        grid.add(imageView1, Zhang[1], Zhang[0]);    //Replace the selcted position card with ZhangYi's card
+                        String supportors = WarringStatesGame.allPosition(returnLocationChar(array[0], array[1]), placement);  //Get all cards which are needed to collect
+                        for (int i = 0; i < supportors.length(); i += 2) {                                //replace all cards need to be emptied
+                            int[] a = Viewer.determineCoordinate(returnLocation(placement, supportors.substring(i, i + 2)));
+                            ImageView imageView2 = new ImageView(empty);
+                            imageView2.setFitHeight(100);
+                            imageView2.setFitWidth(100);
+                            grid.getChildren().remove(getNodeByRowColumnIndex(a[0], a[1], grid));
+                            grid.add(imageView2, a[1], a[0]);
+                        }
+                        for (int j = 0; j < supportors.length(); j += 2) {
+                            Image image3 = new Image("comp1110/ass2/gui/assets/Character/" + supportors.charAt(j) + supportors.charAt(j + 1) + ".png");
+                            ImageView imageView = new ImageView(image3);
+                            imageView.setFitHeight(100);
+                            imageView.setFitWidth(100);
+                            imageView.setX(680);
+                            imageView.setY(580 - 30 * x);
+                            root.getChildren().add(imageView);
+                            x += 1;
+                        }
+                        moveSequence += returnLocationChar(array[0], array[1]);
+                        placement = WarringStatesGame.deleteEmptyLocation(placement, returnLocationChar(array[0], array[1]));  //update the set up information
+                        placement += "z9" + returnLocationChar(array[0], array[1]);
+                        String initial = (PLACEMENTS[idx]);
+                        char random = WarringStatesGame.generateMove(placement);
+                        char zhang1 = WarringStatesGame.findZhangPosition(placement);
+                        int[] Zhang1 = Viewer.determineCoordinate(zhang1);
+                        if (random != '\0') {
+                            char move = Minimax.makeMove(placement,moveSequence,initial,1);     //Assume there are only two players and AI is playerID = 1
+                            int[] random1 = Viewer.determineCoordinate(move);
+                            Image empty1 = new Image("comp1110/ass2/gui/assets/Character/empty.png");
+                            ImageView imageView3 = new ImageView(empty1);
+                            imageView3.setFitWidth(100);
+                            imageView3.setFitHeight(100);
+                            grid.getChildren().remove(getNodeByRowColumnIndex(random1[0], random1[1], grid));
+                            grid.add(imageView3, Zhang1[1], Zhang1[0]);
+                            String supportors1 = WarringStatesGame.allPosition(returnLocationChar(random1[1], random1[0]), placement);
+                            for (int i = 0; i < supportors1.length(); i += 2) {                                //replace all cards need to be emptied
+                                int[] x = Viewer.determineCoordinate(returnLocation(placement, supportors1.substring(i, i + 2)));
+                                ImageView imageView2 = new ImageView(empty1);
+                                imageView2.setFitHeight(100);
+                                imageView2.setFitWidth(100);
+                                grid.getChildren().remove(getNodeByRowColumnIndex(x[0], x[1], grid));
+                                grid.add(imageView2, x[1], x[0]);
+                            }
+                            for (int j = 0; j < supportors1.length(); j += 2) {
+                                Image image3 = new Image("comp1110/ass2/gui/assets/Character/" + supportors1.charAt(j) + supportors1.charAt(j + 1) + ".png");
+                                ImageView imageView4 = new ImageView(image3);
+                                imageView4.setFitWidth(100);
+                                imageView4.setFitHeight(100);
+                                imageView4.setX(790);
+                                imageView4.setY(580 - 30 * y);
+                                y += 1;
+                                root.getChildren().add(imageView4);
+                            }
+                            Image ZhangYi = new Image("comp1110/ass2/gui/assets/Character/z9.png");     //replace the destination to ZhangYi
+                            ImageView imageview8 = new ImageView(ZhangYi);
+                            imageview8.setFitHeight(100);
+                            imageview8.setFitWidth(100);
+                            grid.add(imageview8, random1[1], random1[0]);
+                            moveSequence += returnLocationChar(random1[1], random1[0]);
+                            placement = WarringStatesGame.deleteEmptyLocation(placement, returnLocationChar(random1[1], random1[0]));  //update the set up information
+                            placement += "z9" + returnLocationChar(random1[1], random1[0]);
+                            int[] Flags = WarringStatesGame.getFlags(initial,moveSequence,2);
+                            for (int j = 0; j < 2 ; j ++) {
+                                String flags = returnFlags(Flags,j);
+                                for (int i = 0; i < flags.length(); i++) {
+                                    Image iamge = new Image("comp1110/ass2/gui/assets/Character/"+flags.charAt(i)+".png");
+                                    ImageView imageViewx = new ImageView(iamge);
+                                    imageViewx.setFitWidth(20);
+                                    imageViewx.setFitHeight(20);
+                                    imageViewx.setX(680+110*j+10*i);
+                                    imageViewx.setY(680);
+                                    root.getChildren().add(imageViewx);
+                                }}
+                        }
+                    }
+                    if (WarringStatesGame.generateMove(placement) == '\0') {
+                        String initial = (PLACEMENTS[idx]);
+                        int num1 = 0;
+                        int num2 = 0;
+                        int cal1 = 0;
+                        int cal2 = 0;
+                        String str = "";
+                        int[] array1 = WarringStatesGame.getFlags(initial, moveSequence, 2);
+                        for (int i = 0; i < 7; i++) {
+                            if (array1[i] == 0) {
+                                num1 += 1;
+                                cal1 += 8 - i;
+                            } else if (array1[i] == 1) {
+                                num2 += 1;
+                                cal2 += 8 - i;
+                            }
+                        }
+                        if (num1 > num2) {
+                            str = "Player1 is WIN";
+                        } else if (num1 < num2) {
+                            str = "PLayer2 is WIN";
+                        } else if (num1 == num2) {
+                            if (cal1 > cal2) {
+                                str = "Player1 is WIN";
+                            } else {
+                                str = "Player2 is WIN";
+                            }
+                        }
+                        Text text = new Text(str);
+                        text.setFill(Color.RED);
+                        text.setFont(Font.font(null, FontWeight.BOLD, 100));
+                        text.setStrokeWidth(20);
+                        text.setX(50);
+                        text.setY(300);
+                        root.getChildren().add(text);
+                        System.out.println(moveSequence);
+                    }
+
+                }
+            });
+        });
+        return root;
+    }
+
     //two human players version
     public Group startPlay(int numPlayer) {
         Group root = new Group();
@@ -619,10 +790,9 @@ public class Game extends Application {
                         if (list.size() == 1) {
                             str = "Player"+list.get(0)+" is WIN";
                             }
-                            else if (list.size() == 0) {
-                            str = "ERROR";
-                        } else
-                                {
+//                            else if (list.size() == 0) {
+//                            str = "ERROR";
+                         else {
                             ArrayList<Integer> listx = new ArrayList<>();
                             for (int i =0; i <list.size(); i++) {
                                 listx.add(cardNumber[list.get(i)-1]);
@@ -630,7 +800,9 @@ public class Game extends Application {
                             int x = Collections.max(listx);
                             for (int j = 0; j < cardNumber.length; j ++) {
                                 if (cardNumber[j] == x) {
-                                    str = "Player"+j+" is WIN";
+                                    int jj = j + 1;
+                                    str = "Player"+jj+" is WIN";
+                                    break;
                                 }
                             }
                         }
