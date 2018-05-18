@@ -1,15 +1,14 @@
-In addition to the features that are auto-graded, the graphical user interface
+CIn addition to the features that are auto-graded, the graphical user interface
 of our project implements the following features:
 
 *(Remove those that are unimplemented)*
 
- - A simple placement viewer (Task 4)
- - A basic playable Warring States game (Tasks 2-3, 5-7)
- - A basic playable link Warring States game that allows legal moves and collects supporters (Task 8)
- - Compute scoring (Task 9)
- - Generate a valid move (Task 10)
- - Basic computer opponent (Task 11)
- - Advanced computer opponent (Task 12)
+User Interface:
+1.Help button: give a general description about the game, which can help the player to know the princeples of the game
+2.Normal game & AI version: give more options for the player
+3.Add shadow to the card: when mouse entered to a valid move, the frame of the card will have a shadow, help the player to know which is valid move
+4.Card Collection: when a card is selected, at the right side of the scree will show the card collections and flag collections, which can
+help the player to know the general game state
 
 additional features...
 
